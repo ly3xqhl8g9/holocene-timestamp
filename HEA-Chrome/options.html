@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>HEA Options</title>
+        <style>
+            html, body {
+                padding: 5px;
+            }
+
+            h1 {
+                font-size: 16px;
+                line-height: 130%;
+                padding:5px 0;
+                margin:0;
+            }
+
+            .OptionsField {
+                padding-bottom: 15px;
+                font-size: 12px;
+                line-height: 200%;
+            }
+
+            .OptionsField label {
+                padding-left: 5px;
+            }
+
+            .spanDefault {
+                color: hsl(0, 0%, 50%);
+            }
+
+            .TopTextField {
+                padding-bottom: 10px;
+            }
+
+            .BottomTextField {
+                padding-top: 10px;
+            }
+
+            p {
+                line-height: 150%;
+                margin-bottom: 5px;
+                font-size: 12px;
+            }
+
+            a {
+                color: hsl(0, 0%, 0%);
+            }
+
+            a:link {
+                text-decoration: none;
+                font-style: italic;
+            }
+
+            a:hover {
+                text-decoration: underline;
+            }
+
+            #resetButton {
+                margin-top: 5px;
+                margin-bottom: 15px;
+            }
+
+        </style>
+    </head>
+    <body>
+
+        <div class="TopTextField">
+                <p>The extension adds the Holocene Epoch timestamp before or after the timestamps read from the webpage (or replaces them completely).</p>
+                <p>e.g.<br>
+                "1 Aug. 2017" can become "1 Aug. 2017 [12017 HE]"<br>
+                "399 BC" can become "/9602 HE/ 399 BC"<br>
+                "10 Sep. 259 BC" can become "10 Sep. 9742 HE"</p>
+        </div>
+
+        <hr>
+
+        <div class="OptionsField">
+            <form action="activeOptions">
+                <h1>Active</h1>
+                <input type="radio" name="activation" value="onWiki" id="onWiki" checked><label for="onWiki">only on Wikipedia/Wikiwand <span class="spanDefault">[default]</span></label><br>
+                <input type="radio" name="activation" value="onSite" id="onSite"><label for="onSite">on every site</label><br>
+                <input type="radio" name="activation" value="off" id="off"><label for="off">off</label><br>
+            </form>
+        </div>
+
+        <div class="OptionsField">
+            <h1>Insert the Holocene Epoch timestamps</h1>
+            <form action="insertBeforeAfter">
+                <input type="radio" name="activation" value="after" id="after" checked><label for="after">after the webpage timestamps <span class="spanDefault">[default]</span></label><br>
+                <input type="radio" name="activation" value="before" id="before"><label for="before">before the webpage timestamps</label><br>
+            </form>
+        </div>
+
+        <div class="OptionsField">
+            <h1>Insert the Holocene Epoch timestamp between</h1>
+            <form action="insertBetween">
+                <input type="radio" name="activation" value="brackets" id="brackets" checked><label for="brackets">[ ] <span class="spanDefault">[default]</span></label><br>
+                <input type="radio" name="activation" value="accolades" id="accolades"><label for="accolades">{ }</label><br>
+                <input type="radio" name="activation" value="slashes" id="slashes"><label for="slashes">/ /</label><br>
+                <input type="radio" name="activation" value="nothing" id="nothing"><label for="nothing">nothing</label><br>
+            </form>
+        </div>
+
+        <div class="OptionsField">
+            <h1>Style of the Holocene Epoch timestamp is</h1>
+            <form action="holoceneStyle">
+                <input type="radio" name="activation" value="regular" id="regular" checked><label for="regular">regular <span class="spanDefault">[default]</span></label><br>
+                <input type="radio" name="activation" value="italic" id="italic"><label for="italic">italic</label><br>
+            </form>
+        </div>
+
+        <div class="OptionsField">
+            <h1>Replace the webpage timestamps with the Holocene Epoch timestamps?</h1>
+            <form action="holoceneReplace">
+                <input type="radio" name="activation" value="no" id="no" checked><label for="no">No <span class="spanDefault">[default]</span></label><br>
+                <input type="radio" name="activation" value="yes" id="yes"><label for="yes">Yes</label><br>
+            </form>
+        </div>
+
+        <button type="reset" name="reset" id="resetButton">Reset to default</button>
+
+        <hr>
+
+        <div class="BottomTextField">
+            <h1>What is the Holocene Epoch?</h1>
+            <p><a href="https://www.wikiwand.com/en/Holocene" target="_blank">Holocene Epoch Wiki</a></p>
+            <p><a href="https://www.wikiwand.com/en/Holocene_calendar" target="_blank">Holocene Calendar Wiki</a></p>
+            <p><a href="emiliani/emilianisproposal.pdf" target="_blank">Emiliani’s Proposal</a></p>
+            <p><a href="https://www.youtube.com/watch?v=czgOWmtGVGs" target="_blank">Kurzgesagt’s Summary</a></p>
+        </div>
+
+    </body>
+</html>

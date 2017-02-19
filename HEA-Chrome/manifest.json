@@ -1,0 +1,21 @@
+{
+    "manifest_version" : 2,
+    "name" : "Holocene Epoch Addverter",
+    "description" : "The extension adds the Holocene Epoch timestamp before or after the timestamps read from the webpage (or replaces them completely).",
+    "version" : "1.0",
+    "browser_action" : {
+        "default_title" : "Holocene Epoch Addverter",
+        "default_icon" : "icons/icon.png",
+        "default_popup" : "popup.html"
+    },
+    "icons" : {
+        "16" : "icons/icon16.png",
+        "32" : "icons/icon32.png",
+        "48" : "icons/icon48.png",
+        "128" : "icons/icon128.png"
+    },
+    "options_ui": {
+    "page": "options.html",
+    "chrome_style": true
+    }
+}
