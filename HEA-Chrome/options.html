@@ -8,11 +8,12 @@
     <body>
         <div class="container">
             <div class="TopTextField">
-                    <p>The extension adds the Holocene Epoch timestamp before or after the timestamps read from the webpage (or replaces them completely).</p>
+                    <p>Add the Holocene Epoch timestamp before or after the timestamps read from the webpage (or replace them).</p>
+                    <p>The Holocene Epoch sets the first year of the "recent" epoch 10,000 years before the first Anno Domini (1 AD) for a better grasping of the development of the human civilization. The proposal was advanced by Cesare Emiliani in 1993 (see more in the What is the Holocene Epoch? section).</p>
                     <p>e.g.<br>
-                    "1 Aug. 2017" can become "1 Aug. 2017 [12017 HE]"<br>
-                    "399 BC" can become "/9602 HE/ 399 BC"<br>
-                    "10 Sep. 259 BC" can become "10 Sep. 9742 HE"</p>
+                    "1 Aug. 2017" can become "1 Aug. 2017 [12017 HE]";<br>
+                    "399 BC" can become "/9602 HE/ 399 BC";<br>
+                    "10 Sep. 259 BC" can become "10 Sep. 9742 HE".</p>
             </div>
 
             <hr>
@@ -54,10 +55,18 @@
                 </div>
 
                 <div class="OptionsField">
+                    <h1>Make HE appear on page as a link to the <a href="https://en.wikipedia.org/wiki/Holocene_calendar">Holocene Calendar</a> Wikipedia Page?</h1>
+                    <fieldset id="holoceneAnchorTag">
+                        <input type="radio" name="holoceneAnchorTag" value="no" id="yesAnchor" checked><label for="yesAnchor">Yes <span class="spanDefault">[default]</span></label><br>
+                        <input type="radio" name="holoceneAnchorTag" value="yes" id="noAnchor"><label for="noAnchor">No</label><br>
+                    </fieldset>
+                </div>
+
+                <div class="OptionsField">
                     <h1>Replace the webpage timestamps with the Holocene Epoch timestamps?</h1>
                     <fieldset id="holoceneReplaceForm">
-                        <input type="radio" name="holoceneReplaceForm" value="no" id="no" checked><label for="no">No <span class="spanDefault">[default]</span></label><br>
-                        <input type="radio" name="holoceneReplaceForm" value="yes" id="yes"><label for="yes">Yes</label><br>
+                        <input type="radio" name="holoceneReplaceForm" value="no" id="noReplace" checked><label for="noReplace">No <span class="spanDefault">[default]</span></label><br>
+                        <input type="radio" name="holoceneReplaceForm" value="yes" id="yesReplace"><label for="yesReplace">Yes</label><br>
                     </fieldset>
                 </div>
             </form>
@@ -67,14 +76,14 @@
 
             <div class="BottomTextField">
                 <h1>What is the Holocene Epoch?</h1>
-                <p><a href="https://www.wikiwand.com/en/Holocene" target="_blank">Holocene Epoch Wiki</a></p>
-                <p><a href="https://www.wikiwand.com/en/Holocene_calendar" target="_blank">Holocene Calendar Wiki</a></p>
+                <p><a href="https://en.wikipedia.org/wiki/Holocene" target="_blank">Holocene Epoch Wiki</a></p>
+                <p><a href="https://en.wikipedia.org/wiki/Holocene_calendar" target="_blank">Holocene Calendar Wiki</a></p>
                 <p><a href="emiliani/emilianisproposal.pdf" target="_blank">Emiliani’s Proposal</a></p>
                 <p><a href="https://www.youtube.com/watch?v=czgOWmtGVGs" target="_blank">Kurzgesagt’s Summary</a></p>
             </div>
         </div>
 
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script src="js/jquery-3.1.1.min.js"></script>
         <script src="js/popup_script.js"></script>
 
     </body>
