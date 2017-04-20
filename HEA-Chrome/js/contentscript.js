@@ -68,26 +68,36 @@ function hasNumbers(arrayToBeChecked) {
 }
 
 arrayHasNumbers = hasNumbers(cleanedArray);
-console.log(arrayHasNumbers);
+// console.log(arrayHasNumbers);
 
 
-// var cleanArray = [];
-//
-// for (var i = 0; i< bodyTextArray.Length; i++) {
-//     var regex = new RegExp(/ \d{4} /, 'g');
-//     if(regex.test(bodyTextArray[i])) {
-//         cleanArray += bodyTextArray[i];
-//         console.log(bodyTextArray[i]);
-//     }
-// }
+function withFourNumbers(arrayToBeChecked) {
+    // the function checks if array element has 4 and only 4 numbers
+    var arrayWithFourNumbers = new Array();
+    for (var i = 0; i < arrayToBeChecked.length; i++) {
+        if (/^\d{4}$/.test(arrayToBeChecked[i])) {
+            arrayWithFourNumbers.push(arrayToBeChecked[i]);
+        }
+    }
+    return arrayWithFourNumbers;
+}
+
+arrayWithFourNumbers = withFourNumbers(arrayHasNumbers);
+// console.log(arrayWithFourNumbers);
+
+for(var i = 0; i < arrayWithFourNumbers.length; i++) {
+    if (arrayWithFourNumbers[i] > 1000 && arrayWithFourNumbers[i] < 2100) {
+        heYear = parseInt(arrayWithFourNumbers[i]) + 10000;
+        // console.log(heYear);
+        $("*").replaceText(arrayWithFourNumbers[i], arrayWithFourNumbers[i] + " [" + heYear + " <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>] ");
+    }
+}
 
 
-// for (var i = 0; i < bodyTextArray.length; i++) {
-//     var regex = new RegExp(/\d{4}+/, "g");
-//     if(bodyTextArray[i].indexOf(regex) != -1) {
-//         console.log(bodyTextArray[i]);
-//     }
-// }
+
+
+
+
 
 
 
