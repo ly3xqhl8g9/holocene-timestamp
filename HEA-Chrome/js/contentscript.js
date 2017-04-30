@@ -1,29 +1,29 @@
 // ### Ben Alman's replaceText plugin
 // ### http://www.benalman.com/projects/jquery-replacetext-plugin/
 $.fn.replaceText = function( search, replace, text_only ) {
-  return this.each(function(){
-    var node = this.firstChild,
-      val,
-      new_val,
-      remove = [];
-    if ( node ) {
-      do {
-        if ( node.nodeType === 3 ) {
-          val = node.nodeValue;
-          new_val = val.replace( search, replace );
-          if ( new_val !== val ) {
-            if ( !text_only && /</.test( new_val ) ) {
-              $(node).before( new_val );
-              remove.push( node );
-            } else {
-              node.nodeValue = new_val;
-            }
-          }
+    return this.each(function(){
+        var node = this.firstChild,
+            val,
+            new_val,
+            remove = [];
+        if ( node ) {
+            do {
+                if ( node.nodeType === 3 ) {
+                    val = node.nodeValue;
+                    new_val = val.replace( search, replace );
+                    if ( new_val !== val ) {
+                        if ( !text_only && /</.test( new_val ) ) {
+                            $(node).before( new_val );
+                            remove.push( node );
+                        } else {
+                            node.nodeValue = new_val;
+                        }
+                    }
+                }
+            } while ( node = node.nextSibling );
         }
-      } while ( node = node.nextSibling );
-    }
-    remove.length && $(remove).remove();
-  });
+        remove.length && $(remove).remove();
+    });
 };
 
 
@@ -68,22 +68,25 @@ function hasNumbers(arrayToBeChecked) {
 }
 
 arrayHasNumbers = hasNumbers(cleanedArray);
-// console.log(arrayHasNumbers);
+//console.log(arrayHasNumbers);
 
 
 function withFourNumbers(arrayToBeChecked) {
     // the function checks if array element has 4 and only 4 numbers
     var arrayWithFourNumbers = new Array();
     for (var i = 0; i < arrayToBeChecked.length; i++) {
-        if (/^\d{4}$/.test(arrayToBeChecked[i])) {
-            arrayWithFourNumbers.push(arrayToBeChecked[i]);
+        if (/\b(\d{4})\b/.test(arrayToBeChecked[i])) {
+            arrayWithFourNumbers.push(RegExp.$1);
+        }
+        if (/\d{4}s/.test(arrayToBeChecked[i])) {
+            arrayWithFourNumbers.push(RegExp.$1.slice(0,3));
         }
     }
     return arrayWithFourNumbers;
 }
 
 arrayWithFourNumbers = withFourNumbers(arrayHasNumbers);
-//console.log(arrayWithFourNumbers);
+console.log(arrayWithFourNumbers);
 
 for(var i = 0; i < arrayWithFourNumbers.length; i++) {
     if (arrayWithFourNumbers[i] > 1000 && arrayWithFourNumbers[i] < 2100) {
@@ -91,54 +94,17 @@ for(var i = 0; i < arrayWithFourNumbers.length; i++) {
         // console.log(heYear);
         var regexstring = '\\b(' + arrayWithFourNumbers[i] + ')\\b';
         //console.log(regexstring);
-        var regex = new RegExp(regexstring, "g");
-        var replaceString = ' ' + heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a> ';
-        console.log(replaceString);
+        var regex = new RegExp(regexstring, "");
+        //var replaceString = '$1' + ' [' + heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
+        //var replaceString = heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>';
+        var replaceString = heYear;
+        //console.log(replaceString);
         $("*").replaceText(regex, replaceString);
     }
 }
 
 
 //$("*").replaceText(/\b(1755)\b/gi, "$1 [11755 <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>] ");
-
-
-// $("*").replaceText(/\b1755\b/gi, "TEXT")
-// console.log("(/\b1755\b/")
-
-
-
-
-// function replace() {
-    // Replace logic
-    // for (var i = 0; i < textArray.length; i++) {
-    //
-    //     // console.log(textArray[i]);
-    //     var regex = new RegExp(/Oliver/, "g");
-    //     if(textArray[i].indexOf(regex) != -1) {
-    //         console.log(textArray[i]);
-    //     }
-
-
-        // Define regex for if validation test
-
-    	// if (textArray[i] === "1755") {
-
-            // Test to determine how to add, substract the HE 10,000 years
-
-            // Conversion of textArray[i] to number and operation
-
-
-    		// var regex = new RegExp (" " + textArray[i] + " ");
-    		// $("*").replaceText(regex, " [11755 <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>] ");
-    		// console.log(i);
-    	// }
-//     }
-// }
-//
-// replace();
-
-
-
 
 
 
