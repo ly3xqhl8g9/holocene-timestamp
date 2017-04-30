@@ -83,20 +83,27 @@ function withFourNumbers(arrayToBeChecked) {
 }
 
 arrayWithFourNumbers = withFourNumbers(arrayHasNumbers);
-// console.log(arrayWithFourNumbers);
+//console.log(arrayWithFourNumbers);
 
 for(var i = 0; i < arrayWithFourNumbers.length; i++) {
     if (arrayWithFourNumbers[i] > 1000 && arrayWithFourNumbers[i] < 2100) {
         heYear = parseInt(arrayWithFourNumbers[i]) + 10000;
         // console.log(heYear);
-        $("*").replaceText(arrayWithFourNumbers[i], arrayWithFourNumbers[i] + " [" + heYear + " <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>] ");
+        var regexstring = '\\b(' + arrayWithFourNumbers[i] + ')\\b';
+        //console.log(regexstring);
+        var regex = new RegExp(regexstring, "g");
+        var replaceString = ' ' + heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a> ';
+        console.log(replaceString);
+        $("*").replaceText(regex, replaceString);
     }
 }
 
 
+//$("*").replaceText(/\b(1755)\b/gi, "$1 [11755 <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>] ");
 
 
-
+// $("*").replaceText(/\b1755\b/gi, "TEXT")
+// console.log("(/\b1755\b/")
 
 
 
