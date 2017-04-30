@@ -78,23 +78,20 @@ function withFourNumbers(arrayToBeChecked) {
         if (/\b(\d{4})\b/.test(arrayToBeChecked[i])) {
             arrayWithFourNumbers.push(RegExp.$1);
         }
-        if (/\d{4}s/.test(arrayToBeChecked[i])) {
-            arrayWithFourNumbers.push(RegExp.$1.slice(0,3));
-        }
     }
     return arrayWithFourNumbers;
 }
 
 arrayWithFourNumbers = withFourNumbers(arrayHasNumbers);
-console.log(arrayWithFourNumbers);
+//console.log(arrayWithFourNumbers);
 
 for(var i = 0; i < arrayWithFourNumbers.length; i++) {
     if (arrayWithFourNumbers[i] > 1000 && arrayWithFourNumbers[i] < 2100) {
         heYear = parseInt(arrayWithFourNumbers[i]) + 10000;
         // console.log(heYear);
-        var regexstring = '\\b(' + arrayWithFourNumbers[i] + ')\\b';
+        var regexString = '\\b(' + arrayWithFourNumbers[i] + ')\\b';
         //console.log(regexstring);
-        var regex = new RegExp(regexstring, "");
+        var regex = new RegExp(regexString, "");
         //var replaceString = '$1' + ' [' + heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
         //var replaceString = heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>';
         var replaceString = heYear;
@@ -106,6 +103,56 @@ for(var i = 0; i < arrayWithFourNumbers.length; i++) {
 
 //$("*").replaceText(/\b(1755)\b/gi, "$1 [11755 <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>] ");
 
+
+// #### Century replacement rules
+for(var i = 1; i < 22; i++) {
+    if (i < 10) {
+        if (i == 1) {
+            regexString = '\\b' + i + 'st century' + '\\b';
+            console.log(regexString);
+            regex = new RegExp (regexString, "");
+            replaceString = '10' + i + 'st century';
+            $("*").replaceText(regex, replaceString);
+        } else if (i == 2) {
+            regexString = '\\b' + i + 'nd century' + '\\b';
+            regex = new RegExp (regexString, "");
+            replaceString = '10' + i + 'nd century';
+            $("*").replaceText(regex, replaceString);
+        } else if (i == 3) {
+            regexString = '\\b' + i + 'rd century' + '\\b';
+            regex = new RegExp (regexString, "");
+            replaceString = '10' + i + 'rd century';
+            $("*").replaceText(regex, replaceString);
+        } else {
+            regexString = '\\b' + i + 'th century' + '\\b';
+            regex = new RegExp (regexString, "");
+            replaceString = '10' + i + 'th century';
+            $("*").replaceText(regex, replaceString);
+        }
+    } else {
+        if (i == 21) {
+            regexString = '\\b' + i + 'st century' + '\\b';
+            regex = new RegExp (regexString, "");
+            replaceString = '1' + i + 'st century';
+            $("*").replaceText(regex, replaceString);
+        } else if (i == 22) {
+            regexString = '\\b' + i + 'nd century' + '\\b';
+            regex = new RegExp (regexString, "");
+            replaceString = '1' + i + 'nd century';
+            $("*").replaceText(regex, replaceString);
+        } else if (i == 23) {
+            regexString = '\\b' + i + 'rd century' + '\\b';
+            regex = new RegExp (regexString, "");
+            replaceString = '1' + i + 'rd century';
+            $("*").replaceText(regex, replaceString);
+        } else {
+            regexString = '\\b' + i + 'th century' + '\\b';
+            regex = new RegExp (regexString, "");
+            replaceString = '1' + i + 'th century';
+            $("*").replaceText(regex, replaceString);
+        }
+    }
+}
 
 
 
