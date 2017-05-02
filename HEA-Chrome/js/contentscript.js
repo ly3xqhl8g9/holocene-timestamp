@@ -102,7 +102,7 @@ function makeArrays(arrayToBeChecked) {
             arrayOfYears["TwoDigitsYearAD"].push(arrayToBeChecked[i]);
         } else if (/\b\d{3}/.test(arrayToBeChecked[i]) && /AD/.test(arrayToBeChecked[i+1])) {
             arrayOfYears["ThreeDigitsYearAD"].push(arrayToBeChecked[i]);
-        } else if (/[^\[\-\d]\d{3}[^\[\-\d]/.test(arrayToBeChecked[i]) && !/p\. \d{3}/.test(arrayToBeChecked[i])) {
+        } else if (/[^\[\-\d]\d{3}[^\[\-\d]/.test(arrayToBeChecked[i]) && !/p+.\s\d{3}/.test(arrayToBeChecked[i])) {
             arrayOfYears["ThreeDigitsYear"].push(arrayToBeChecked[i]);
         } else if (/\d{4}/.test(arrayToBeChecked[i]) && /AD/.test(arrayToBeChecked[i+1])) {
             arrayOfYears["FourDigitsYearAD"].push(arrayToBeChecked[i]);
@@ -112,8 +112,10 @@ function makeArrays(arrayToBeChecked) {
             arrayOfYears["FourDigitsDashFourDigits"].push(arrayToBeChecked[i]);
         } else if (/\b\d{4}–\d{2}\b/.test(arrayToBeChecked[i])) {
             arrayOfYears["FourDigitsDashTwoDigits"].push(arrayToBeChecked[i]);
-        } else if (/\b\d{4}\b/.test(arrayToBeChecked[i])) {
-            arrayOfYears["FourDigitsYear"].push(arrayToBeChecked[i]);
+        } else if (/\b\d{4}\b/.test(arrayToBeChecked[i]) && !/[a-zA-Z]/.test(arrayToBeChecked[i])) {
+            if (parseInt(/\b\d{4}\b/.exec(arrayToBeChecked[i])[0]) <= 2200 && parseInt(/\b\d{4}\b/.exec(arrayToBeChecked[i])[0]) >= 1000) {
+                arrayOfYears["FourDigitsYear"].push(parseInt(/\b\d{4}\b/.exec(arrayToBeChecked[i])[0]));
+            }
         }
     }
     return arrayOfYears;
