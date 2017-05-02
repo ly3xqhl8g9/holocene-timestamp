@@ -85,16 +85,25 @@ function withFourNumbers(arrayToBeChecked) {
 arrayWithFourNumbers = withFourNumbers(arrayHasNumbers);
 //console.log(arrayWithFourNumbers);
 
-for(var i = 0; i < arrayWithFourNumbers.length; i++) {
-    if (arrayWithFourNumbers[i] > 1000 && arrayWithFourNumbers[i] < 2100) {
-        heYear = parseInt(arrayWithFourNumbers[i]) + 10000;
+function unique(a) {
+   return Array.from(new Set(a));
+}
+
+arrayWithFourNumbersUnique = unique(arrayWithFourNumbers);
+//console.log(arrayWithFourNumbersUnique);
+
+
+
+for(var i = 0; i < arrayWithFourNumbersUnique.length; i++) {
+    if (arrayWithFourNumbersUnique[i] > 1000 && arrayWithFourNumbersUnique[i] < 2100) {
+        heYear = parseInt(arrayWithFourNumbersUnique[i]) + 10000;
         // console.log(heYear);
-        var regexString = '\\b(' + arrayWithFourNumbers[i] + ')\\b';
+        var regexString = '\\b(' + arrayWithFourNumbersUnique[i] + ')\\b';
         //console.log(regexstring);
         var regex = new RegExp(regexString, "");
-        //var replaceString = '$1' + ' [' + heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
+        var replaceString = '$1' + ' [' + heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
         //var replaceString = heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>';
-        var replaceString = heYear;
+        //var replaceString = heYear;
         //console.log(replaceString);
         $("*").replaceText(regex, replaceString);
     }
@@ -109,46 +118,46 @@ for(var i = 1; i < 22; i++) {
     if (i < 10) {
         if (i == 1) {
             regexString = '\\b' + i + 'st century' + '\\b';
-            console.log(regexString);
+            //console.log(regexString);
             regex = new RegExp (regexString, "");
-            replaceString = '10' + i + 'st century';
+            replaceString = i + 'st century ' + ' [10' + i + 'st century <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
             $("*").replaceText(regex, replaceString);
         } else if (i == 2) {
             regexString = '\\b' + i + 'nd century' + '\\b';
             regex = new RegExp (regexString, "");
-            replaceString = '10' + i + 'nd century';
+            replaceString = i + 'nd century ' + ' [10' + i + 'nd century <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
             $("*").replaceText(regex, replaceString);
         } else if (i == 3) {
             regexString = '\\b' + i + 'rd century' + '\\b';
             regex = new RegExp (regexString, "");
-            replaceString = '10' + i + 'rd century';
+            replaceString = i + 'rd century ' + ' [10' + i + 'rd century <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
             $("*").replaceText(regex, replaceString);
         } else {
             regexString = '\\b' + i + 'th century' + '\\b';
             regex = new RegExp (regexString, "");
-            replaceString = '10' + i + 'th century';
+            replaceString = i + 'th century ' + ' [10' + i + 'th century <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
             $("*").replaceText(regex, replaceString);
         }
     } else {
         if (i == 21) {
             regexString = '\\b' + i + 'st century' + '\\b';
             regex = new RegExp (regexString, "");
-            replaceString = '1' + i + 'st century';
+            replaceString = i + 'st century ' + ' [1' + i + 'st century <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
             $("*").replaceText(regex, replaceString);
         } else if (i == 22) {
             regexString = '\\b' + i + 'nd century' + '\\b';
             regex = new RegExp (regexString, "");
-            replaceString = '1' + i + 'nd century';
+            replaceString = i + 'nd century ' + ' [1' + i + 'nd century <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
             $("*").replaceText(regex, replaceString);
         } else if (i == 23) {
             regexString = '\\b' + i + 'rd century' + '\\b';
             regex = new RegExp (regexString, "");
-            replaceString = '1' + i + 'rd century';
+            replaceString = i + 'rd century ' + ' [1' + i + 'rd century <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
             $("*").replaceText(regex, replaceString);
         } else {
             regexString = '\\b' + i + 'th century' + '\\b';
             regex = new RegExp (regexString, "");
-            replaceString = '1' + i + 'th century';
+            replaceString = i + 'th century ' + ' [1' + i + 'th century <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
             $("*").replaceText(regex, replaceString);
         }
     }
