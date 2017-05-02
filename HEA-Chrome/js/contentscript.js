@@ -106,12 +106,21 @@ function makeArrays(arrayToBeChecked) {
             arrayOfYears["ThreeDigitsYear"].push(arrayToBeChecked[i]);
         } else if (/\d{4}/.test(arrayToBeChecked[i]) && /AD/.test(arrayToBeChecked[i+1])) {
             arrayOfYears["FourDigitsYearAD"].push(arrayToBeChecked[i]);
-        } else if (/\d{4}s/.test(arrayToBeChecked[i])) {
-            arrayOfYears["FourDigitsAndS"].push(arrayToBeChecked[i]);
+        } else if (/\b\d{4}s/.test(arrayToBeChecked[i])) {
+            var fourDigitsAndSValue = /\b\d{4}s/.exec(arrayToBeChecked[i]);
+            arrayOfYears["FourDigitsAndS"].push(parseInt(fourDigitsAndSValue[0].slice(0,4)));
         } else if (/\b\d{4}–\d{4}\b/.test(arrayToBeChecked[i])) {
-            arrayOfYears["FourDigitsDashFourDigits"].push(arrayToBeChecked[i]);
-        } else if (/\b\d{4}–\d{2}\b/.test(arrayToBeChecked[i])) {
-            arrayOfYears["FourDigitsDashTwoDigits"].push(arrayToBeChecked[i]);
+            var dashFourDigitsArray = [];
+            var matchDashFourDigits = /\b(\d{4})–(\d{4})\b/.exec(arrayToBeChecked[i]);
+            dashFourDigitsArray[0] = parseInt(RegExp.$1);
+            dashFourDigitsArray[1] = parseInt(RegExp.$2);
+            arrayOfYears["FourDigitsDashFourDigits"].push(dashFourDigitsArray);
+        } else if (/\b\d{4}–\d{1,2}\b/.test(arrayToBeChecked[i])) {
+            var dashTwoDigitsArray = [];
+            var matchDashTwoDigits = /\b(\d{4})–(\d{1,2})\b/.exec(arrayToBeChecked[i]);
+            dashTwoDigitsArray[0] = parseInt(RegExp.$1);
+            dashTwoDigitsArray[1] = parseInt(RegExp.$2);
+            arrayOfYears["FourDigitsDashTwoDigits"].push(dashTwoDigitsArray);
         } else if (/\b\d{4}\b/.test(arrayToBeChecked[i]) && !/[a-zA-Z]/.test(arrayToBeChecked[i])) {
             if (parseInt(/\b\d{4}\b/.exec(arrayToBeChecked[i])[0]) <= 2200 && parseInt(/\b\d{4}\b/.exec(arrayToBeChecked[i])[0]) >= 1000) {
                 arrayOfYears["FourDigitsYear"].push(parseInt(/\b\d{4}\b/.exec(arrayToBeChecked[i])[0]));
@@ -122,95 +131,38 @@ function makeArrays(arrayToBeChecked) {
 }
 
 arrayOfYears = makeArrays(cleanedArray);
+//console.log(arrayOfYears);
+
+function unique(arrayToBeChecked) {
+    if (typeof(arrayToBeChecked[0])==="number") {
+        return Array.from(new Set(arrayToBeChecked));
+    } else if (typeof(arrayToBeChecked[0])==="object") {
+        var seen = {};
+        return arrayToBeChecked.filter(function(item) {
+            return seen.hasOwnProperty(item) ? false : (seen[item] = true);
+        });
+    }
+}
+
+arrayOfYears["FourDigitsAndS"] = unique(arrayOfYears["FourDigitsAndS"]);
+arrayOfYears["FourDigitsYear"] = unique(arrayOfYears["FourDigitsYear"]);
+arrayOfYears["FourDigitsDashFourDigits"] = unique(arrayOfYears["FourDigitsDashFourDigits"]);
+arrayOfYears["FourDigitsDashTwoDigits"] = unique(arrayOfYears["FourDigitsDashTwoDigits"]);
 console.log(arrayOfYears);
 
 
-
-
-
-function hasNumbers(arrayToBeChecked) {
-    // the function checks if array element has numbers
-    var arrayHasNumbers = new Array();
-    for (var i = 0; i < arrayToBeChecked.length; i++) {
-        if (/\d/.test(arrayToBeChecked[i])) {
-            arrayHasNumbers.push(arrayToBeChecked[i]);
-        }
-    }
-    return arrayHasNumbers;
+for(var i = 0; i < arrayOfYears["FourDigitsYear"].length; i++) {
+    heYear = arrayOfYears["FourDigitsYear"][i] + 10000;
+    // console.log(heYear);
+    var regexString = '\\b(' + arrayOfYears["FourDigitsYear"][i] + ')\\b';
+    //console.log(regexstring);
+    var regex = new RegExp(regexString, "");
+    var replaceString = '$1' + ' [' + heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
+    //var replaceString = heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>';
+    //var replaceString = heYear;
+    //console.log(replaceString);
+    $("*").replaceText(regex, replaceString);
 }
-
-arrayHasNumbers = hasNumbers(cleanedArray);
-//console.log(arrayHasNumbers);
-
-
-function withFourNumbers(arrayToBeChecked) {
-    // the function checks if array element has 4 and only 4 numbers
-    var arrayWithFourNumbers = new Array();
-    for (var i = 0; i < arrayToBeChecked.length; i++) {
-        if (/\b(\d{4})\b/.test(arrayToBeChecked[i])) {
-            arrayWithFourNumbers.push(RegExp.$1);
-        }
-    }
-    return arrayWithFourNumbers;
-}
-
-arrayWithFourNumbers = withFourNumbers(arrayHasNumbers);
-//console.log(arrayWithFourNumbers);
-
-function unique(arrayToBeChecked) {
-   return Array.from(new Set(arrayToBeChecked));
-}
-
-arrayWithFourNumbersUnique = unique(arrayWithFourNumbers);
-//console.log(arrayWithFourNumbersUnique);
-
-function withThreeNumbers(arrayToBeChecked) {
-    // the function checks if array element has 4 and only 4 numbers
-    var arrayWithThreeNumbers = new Array();
-    for (var i = 0; i < arrayToBeChecked.length; i++) {
-        if (/\b(\d{3})\b/.test(arrayToBeChecked[i])) {
-            arrayWithThreeNumbers.push(RegExp.$1);
-        }
-    }
-    return arrayWithThreeNumbers;
-}
-
-arrayWithThreeNumbers = withThreeNumbers(arrayHasNumbers);
-//console.log(arrayWithThreeNumbers);
-
-arrayWithThreeNumbersUnique = unique(arrayWithThreeNumbers);
-
-
-// for(var i = 0; i < arrayWithFourNumbersUnique.length; i++) {
-//     if (arrayWithFourNumbersUnique[i] > 1000 && arrayWithFourNumbersUnique[i] < 2100) {
-//         heYear = parseInt(arrayWithFourNumbersUnique[i]) + 10000;
-//         // console.log(heYear);
-//         var regexString = '\\b(' + arrayWithFourNumbersUnique[i] + ')\\b';
-//         //console.log(regexstring);
-//         var regex = new RegExp(regexString, "");
-//         var replaceString = '$1' + ' [' + heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
-//         //var replaceString = heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>';
-//         //var replaceString = heYear;
-//         //console.log(replaceString);
-//         $("*").replaceText(regex, replaceString);
-//     }
-// }
-//
-// for(var i = 0; i < arrayWithThreeNumbersUnique.length; i++) {
-//     if (arrayWithThreeNumbersUnique[i] > 200) {
-//         heYear = parseInt(arrayWithThreeNumbersUnique[i]) + 10000;
-//         // console.log(heYear);
-//         var regexString = '\\b(' + arrayWithThreeNumbersUnique[i] + ')\\b';
-//         //console.log(regexstring);
-//         var regex = new RegExp(regexString, "");
-//         var replaceString = '$1' + ' [' + heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
-//         //var replaceString = heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>';
-//         //var replaceString = heYear;
-//         //console.log(replaceString);
-//         $("*").replaceText(regex, replaceString);
-//     }
-// }
-
 
 
 //$("*").replaceText(/\b(1755)\b/gi, "$1 [11755 <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>] ");
