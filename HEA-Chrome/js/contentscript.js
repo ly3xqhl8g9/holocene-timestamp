@@ -92,6 +92,21 @@ function unique(a) {
 arrayWithFourNumbersUnique = unique(arrayWithFourNumbers);
 //console.log(arrayWithFourNumbersUnique);
 
+function withThreeNumbers(arrayToBeChecked) {
+    // the function checks if array element has 4 and only 4 numbers
+    var arrayWithThreeNumbers = new Array();
+    for (var i = 0; i < arrayToBeChecked.length; i++) {
+        if (/\b(\d{3})\b/.test(arrayToBeChecked[i])) {
+            arrayWithThreeNumbers.push(RegExp.$1);
+        }
+    }
+    return arrayWithThreeNumbers;
+}
+
+arrayWithThreeNumbers = withThreeNumbers(arrayHasNumbers);
+//console.log(arrayWithThreeNumbers);
+
+arrayWithThreeNumbersUnique = unique(arrayWithThreeNumbers);
 
 
 for(var i = 0; i < arrayWithFourNumbersUnique.length; i++) {
@@ -108,6 +123,22 @@ for(var i = 0; i < arrayWithFourNumbersUnique.length; i++) {
         $("*").replaceText(regex, replaceString);
     }
 }
+
+for(var i = 0; i < arrayWithThreeNumbersUnique.length; i++) {
+    if (arrayWithThreeNumbersUnique[i] > 200) {
+        heYear = parseInt(arrayWithThreeNumbersUnique[i]) + 10000;
+        // console.log(heYear);
+        var regexString = '\\b(' + arrayWithThreeNumbersUnique[i] + ')\\b';
+        //console.log(regexstring);
+        var regex = new RegExp(regexString, "");
+        var replaceString = '$1' + ' [' + heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
+        //var replaceString = heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>';
+        //var replaceString = heYear;
+        //console.log(replaceString);
+        $("*").replaceText(regex, replaceString);
+    }
+}
+
 
 
 //$("*").replaceText(/\b(1755)\b/gi, "$1 [11755 <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>] ");
@@ -172,3 +203,5 @@ for(var i = 1; i < 22; i++) {
 //  4 digit with a sign before  - e.g. (1755
 //  4 digits dash 4 digits      - e.g. 1790-1801
 //  4 digits dash 2 digits      - e.g. 1783-90
+
+//  to solve the 1790s 1930s problem
