@@ -1,0 +1,19 @@
+Capture a string delimited by spaces
+
+Form an array of all the strings from the page
+
+
+Questions to ask:
+Does the string has numbers?
+    Yes: Does it have three numbers?
+            Yes: Is the next string BC?
+                Yes: Add to BCstrings array
+                No: Is the next string AD?
+                    Yes: Add to ADstrings array
+                    No: Add to ThreeDigits array (maybe a year, but maybe not, how to do further tests?)
+    Yes: Does it have four numbers?
+            Yes: Is the next string BC?
+                Yes: Add to BCstrings array
+                No: Is the next string AD?
+                    Yes: Add to ADstrings array
+                    No: Add to FourDigits array (maybe a year, but maybe not, how to do further tests? limits between 1000 and 2100?)
