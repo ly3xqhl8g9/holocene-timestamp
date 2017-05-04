@@ -17,3 +17,10 @@ Does the string has numbers?
                 No: Is the next string AD?
                     Yes: Add to ADstrings array
                     No: Add to FourDigits array (maybe a year, but maybe not, how to do further tests? limits between 1000 and 2100?)
+
+
+
+Failings:
+(1950) - the ( is replaced with space from lookbehind fail
+AD/BC 2000 - doesn't know about the AD/BC
+pp. 320 - doesn't know about pp.
