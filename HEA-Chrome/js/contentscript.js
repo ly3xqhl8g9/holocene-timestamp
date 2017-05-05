@@ -54,7 +54,7 @@ function cleanArray(arrayToBeCleaned) {
 }
 
 cleanedArray = cleanArray(bodyTextArray);
-//console.log(cleanedArray)
+console.log(cleanedArray)
 
 
 // need to make x arrays:
@@ -74,40 +74,54 @@ cleanedArray = cleanArray(bodyTextArray);
 
 function makeArrays(arrayToBeChecked) {
     var arrayOfYears = {};
+    arrayOfYears["FiveDigitsYearBC"] = [];
     arrayOfYears["FourDigitsYearBC"] = [];
     arrayOfYears["ThreeDigitsYearBC"] = [];
     arrayOfYears["TwoDigitsYearBC"] = [];
     arrayOfYears["OneDigitYearBC"] = [];
     arrayOfYears["OneDigitYearAD"] = [];
+    arrayOfYears["OneDigitYearCE"] = [];
     arrayOfYears["TwoDigitsYearAD"] = [];
+    arrayOfYears["TwoDigitsYearCE"] = [];
     arrayOfYears["ThreeDigitsYearAD"] = [];
+    arrayOfYears["ThreeDigitsYearCE"] = [];
     arrayOfYears["ThreeDigitsYear"] = [];
+    arrayOfYears["FourDigitsYearAD"] = [];
     arrayOfYears["FourDigitsAndS"] = [];
     arrayOfYears["FourDigitsDashFourDigits"] = [];
     arrayOfYears["FourDigitsDashTwoDigits"] = [];
     arrayOfYears["FourDigitsYear"] = [];
     for (var i = 0; i < arrayToBeChecked.length; i++) {
-        if (/\d{4} BC/.test(arrayToBeChecked[i]) && /BC/.test(arrayToBeChecked[i+1])) {
-            arrayOfYears["FourDigitsYearBC"].push(arrayToBeChecked[i]);
-        } else if (/\b\d{3}/.test(arrayToBeChecked[i]) && /BC/.test(arrayToBeChecked[i+1])) {
-            arrayOfYears["ThreeDigitsYearBC"].push(arrayToBeChecked[i]);
-        } else if (/\b\d{2}/.test(arrayToBeChecked[i]) && /BC/.test(arrayToBeChecked[i+1])) {
-            arrayOfYears["TwoDigitsYearBC"].push(arrayToBeChecked[i]);
-        } else if (/\b\d{1}/.test(arrayToBeChecked[i]) && /BC/.test(arrayToBeChecked[i+1])) {
-            arrayOfYears["OneDigitYearBC"].push(arrayToBeChecked[i]);
-        } else if (/\b\d{1}/.test(arrayToBeChecked[i]) && /AD/.test(arrayToBeChecked[i+1])) {
-            arrayOfYears["OneDigitYearBC"].push(arrayToBeChecked[i]);
-        } else if (/\b\d{2}/.test(arrayToBeChecked[i]) && /AD/.test(arrayToBeChecked[i+1])) {
-            arrayOfYears["TwoDigitsYearAD"].push(arrayToBeChecked[i]);
-        } else if (/\b\d{3}/.test(arrayToBeChecked[i]) && /AD/.test(arrayToBeChecked[i+1])) {
-            arrayOfYears["ThreeDigitsYearAD"].push(arrayToBeChecked[i]);
+        if (/\b\d{5}\b/.test(arrayToBeChecked[i]) && /BC/.test(arrayToBeChecked[i+1])) {
+            arrayOfYears["FiveDigitsYearBC"].push(parseInt(/\b\d{5}\b/.exec(arrayToBeChecked[i])[0]));
+        } else if (/\b\d{4}\b/.test(arrayToBeChecked[i]) && /BC/.test(arrayToBeChecked[i+1])) {
+            arrayOfYears["FourDigitsYearBC"].push(parseInt(/\b\d{4}\b/.exec(arrayToBeChecked[i])[0]));
+        } else if (/\b\d{3}\b/.test(arrayToBeChecked[i]) && /BC/.test(arrayToBeChecked[i+1])) {
+            arrayOfYears["ThreeDigitsYearBC"].push(parseInt(/\b\d{3}\b/.exec(arrayToBeChecked[i])[0]));
+        } else if (/\b\d{2}\b/.test(arrayToBeChecked[i]) && /BC/.test(arrayToBeChecked[i+1])) {
+            arrayOfYears["TwoDigitsYearBC"].push(parseInt(/\b\d{2}\b/.exec(arrayToBeChecked[i])[0]));
+        } else if (/\b\d{1}\b/.test(arrayToBeChecked[i]) && /BC/.test(arrayToBeChecked[i+1])) {
+            arrayOfYears["OneDigitYearBC"].push(parseInt(/\b\d{1}\b/.exec(arrayToBeChecked[i])[0]));
+        } else if (/\b\d{1}\b/.test(arrayToBeChecked[i]) && /AD/.test(arrayToBeChecked[i+1])) {
+            arrayOfYears["OneDigitYearAD"].push(parseInt(/\b\d{1}\b/.exec(arrayToBeChecked[i])[0]));
+        } else if (/\b\d{1}\b/.test(arrayToBeChecked[i]) && /CE/.test(arrayToBeChecked[i+1])) {
+            arrayOfYears["OneDigitYearCE"].push(parseInt(/\b\d{1}\b/.exec(arrayToBeChecked[i])[0]));
+        } else if (/\b\d{2}\b/.test(arrayToBeChecked[i]) && /AD/.test(arrayToBeChecked[i+1])) {
+            arrayOfYears["TwoDigitsYearAD"].push(parseInt(/\b\d{2}\b/.exec(arrayToBeChecked[i])[0]));
+        } else if (/\b\d{2}\b/.test(arrayToBeChecked[i]) && /CE/.test(arrayToBeChecked[i+1])) {
+            arrayOfYears["TwoDigitsYearCE"].push(parseInt(/\b\d{2}\b/.exec(arrayToBeChecked[i])[0]));
+        } else if (/\b\d{3}\b/.test(arrayToBeChecked[i]) && /AD/.test(arrayToBeChecked[i+1])) {
+            arrayOfYears["ThreeDigitsYearAD"].push(parseInt(/\b\d{3}\b/.exec(arrayToBeChecked[i])[0]));
+        } else if (/\b\d{4}\b/.test(arrayToBeChecked[i]) && /AD/.test(arrayToBeChecked[i+1])) {
+            arrayOfYears["FourDigitsYearAD"].push(parseInt(/\b\d{4}\b/.exec(arrayToBeChecked[i])[0]));
+        } else if (/\b\d{3}\b/.test(arrayToBeChecked[i]) && /CE/.test(arrayToBeChecked[i+1])) {
+            arrayOfYears["ThreeDigitsYearCE"].push(parseInt(/\b\d{3}\b/.exec(arrayToBeChecked[i])[0]));
         } else if (/\b\d{3}\b(?!])/.test(arrayToBeChecked[i])
-                    && (!/(–|-)/i.test(arrayToBeChecked[i])
-                    || !/p+.\s\d{3}/.test(arrayToBeChecked[i])
-                    || /(in|by|during|and|year|ca\.|c\.|around|late|january|february|march|april|may|june|july|august|september|october|november|december)/i.test(arrayToBeChecked[i-1])
-                    || !/AD/.test(arrayToBeChecked[i+1])
-                    || !/BC/.test(arrayToBeChecked[i+1]))) {
-            //arrayOfYears["ThreeDigitsYear"].push(arrayToBeChecked[i]);
+                    && !/(–|-)/i.test(arrayToBeChecked[i])
+                    && !/p+.\s\d{3}/.test(arrayToBeChecked[i])
+                    && /(in|by|during|and|year|ca\.|c\.|to|between|around|late|january|february|march|april|may|june|july|august|september|october|november|december)/i.test(arrayToBeChecked[i-1])
+                    && !/AD/.test(arrayToBeChecked[i+1])
+                    && !/BC/.test(arrayToBeChecked[i+1])) {
             arrayOfYears["ThreeDigitsYear"].push(parseInt(/\b\d{3}\b(?!])/.exec(arrayToBeChecked[i])[0]));
         } else if (/\b\d{4}s/.test(arrayToBeChecked[i])) {
             var fourDigitsAndSValue = /\b\d{4}s/.exec(arrayToBeChecked[i]);
@@ -151,11 +165,22 @@ function unique(arrayToBeChecked) {
 
 arrayOfYears["FourDigitsAndS"] = unique(arrayOfYears["FourDigitsAndS"]);
 arrayOfYears["FourDigitsYear"] = unique(arrayOfYears["FourDigitsYear"]);
+arrayOfYears["FourDigitsYearAD"] = unique(arrayOfYears["FourDigitsYearAD"]);
 arrayOfYears["FourDigitsDashFourDigits"] = unique(arrayOfYears["FourDigitsDashFourDigits"]);
 arrayOfYears["FourDigitsDashTwoDigits"] = unique(arrayOfYears["FourDigitsDashTwoDigits"]);
 arrayOfYears["ThreeDigitsYear"] = unique(arrayOfYears["ThreeDigitsYear"]);
+arrayOfYears["ThreeDigitsYearAD"] = unique(arrayOfYears["ThreeDigitsYearAD"]);
+arrayOfYears["ThreeDigitsYearCE"] = unique(arrayOfYears["ThreeDigitsYearCE"]);
+arrayOfYears["TwoDigitsYearAD"] = unique(arrayOfYears["TwoDigitsYearAD"]);
+arrayOfYears["TwoDigitsYearCE"] = unique(arrayOfYears["TwoDigitsYearCE"]);
+arrayOfYears["OneDigitYearAD"] = unique(arrayOfYears["OneDigitYearAD"]);
+arrayOfYears["OneDigitYearCE"] = unique(arrayOfYears["OneDigitYearCE"]);
+arrayOfYears["OneDigitYearBC"] = unique(arrayOfYears["OneDigitYearBC"]);
+arrayOfYears["TwoDigitsYearBC"] = unique(arrayOfYears["TwoDigitsYearBC"]);
+arrayOfYears["ThreeDigitsYearBC"] = unique(arrayOfYears["ThreeDigitsYearBC"]);
+arrayOfYears["FourDigitsYearBC"] = unique(arrayOfYears["FourDigitsYearBC"]);
+arrayOfYears["FiveDigitsYearBC"] = unique(arrayOfYears["FiveDigitsYearBC"]);
 console.log(arrayOfYears);
-
 
 if (typeof arrayOfYears["FourDigitsYear"] != 'undefined') {
     for(var i = 0; i < arrayOfYears["FourDigitsYear"].length; i++) {
@@ -231,6 +256,199 @@ if (typeof arrayOfYears["ThreeDigitsYear"] != 'undefined') {
         //var replaceString = heYear;
         //console.log(replaceString);
         $("*").replaceText(regex, replaceString);
+    }
+}
+
+if (typeof arrayOfYears["FourDigitsYearAD"] != 'undefined') {
+    for(var i = 0; i < arrayOfYears["FourDigitsYearAD"].length; i++) {
+        heYear = arrayOfYears["FourDigitsYearAD"][i] + 10000;
+        // console.log(heYear);
+        var regexString = '((?!([–])).|^)\\b(' + arrayOfYears["FourDigitsYearAD"][i] + '\\sAD)\\b(?!–)(?!s)(?!\\sBC)'; // combination of lookbehind and lookahead for en-dash, and lookahead for s
+        //console.log(regexString);
+        var regex = new RegExp(regexString, "i");
+        var replaceString = ' $3' + ' [' + heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
+        //var replaceString = heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>';
+        //var replaceString = heYear;
+        //console.log(replaceString);
+        $("*").replaceText(regex, replaceString);
+    }
+}
+
+if (typeof arrayOfYears["ThreeDigitsYearAD"] != 'undefined') {
+    for(var i = 0; i < arrayOfYears["ThreeDigitsYearAD"].length; i++) {
+        heYear = arrayOfYears["ThreeDigitsYearAD"][i] + 10000;
+        // console.log(heYear);
+        var regexString = '((?!([–])).|^)\\b(' + arrayOfYears["ThreeDigitsYearAD"][i] + '\\sAD)\\b(?!–)(?!s)(?!\\sBC)'; // combination of lookbehind and lookahead for en-dash, and lookahead for s
+        //console.log(regexString);
+        var regex = new RegExp(regexString, "i");
+        var replaceString = ' $3' + ' [' + heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
+        //var replaceString = heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>';
+        //var replaceString = heYear;
+        //console.log(replaceString);
+        $("*").replaceText(regex, replaceString);
+    }
+}
+
+if (typeof arrayOfYears["ThreeDigitsYearCE"] != 'undefined') {
+    for(var i = 0; i < arrayOfYears["ThreeDigitsYearCE"].length; i++) {
+        heYear = arrayOfYears["ThreeDigitsYearCE"][i] + 10000;
+        // console.log(heYear);
+        var regexString = '((?!([–])).|^)\\b(' + arrayOfYears["ThreeDigitsYearCE"][i] + '\\sCE)\\b(?!–)(?!s)(?!\\sBC)'; // combination of lookbehind and lookahead for en-dash, and lookahead for s
+        //console.log(regexString);
+        var regex = new RegExp(regexString, "i");
+        var replaceString = ' $3' + ' [' + heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
+        //var replaceString = heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>';
+        //var replaceString = heYear;
+        //console.log(replaceString);
+        $("*").replaceText(regex, replaceString);
+    }
+}
+
+if (typeof arrayOfYears["TwoDigitsYearAD"] != 'undefined') {
+    for(var i = 0; i < arrayOfYears["TwoDigitsYearAD"].length; i++) {
+        heYear = arrayOfYears["TwoDigitsYearAD"][i] + 10000;
+        // console.log(heYear);
+        var regexString = '((?!([–])).|^)\\b(' + arrayOfYears["TwoDigitsYearAD"][i] + '\\sAD)\\b(?!–)(?!s)(?!\\sBC)'; // combination of lookbehind and lookahead for en-dash, and lookahead for s
+        //console.log(regexString);
+        var regex = new RegExp(regexString, "i");
+        var replaceString = ' $3' + ' [' + heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
+        //var replaceString = heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>';
+        //var replaceString = heYear;
+        //console.log(replaceString);
+        $("*").replaceText(regex, replaceString);
+    }
+}
+
+if (typeof arrayOfYears["TwoDigitsYearCE"] != 'undefined') {
+    for(var i = 0; i < arrayOfYears["TwoDigitsYearCE"].length; i++) {
+        heYear = arrayOfYears["TwoDigitsYearCE"][i] + 10000;
+        // console.log(heYear);
+        var regexString = '((?!([–])).|^)\\b(' + arrayOfYears["TwoDigitsYearCE"][i] + '\\sCE)\\b(?!–)(?!s)(?!\\sBC)'; // combination of lookbehind and lookahead for en-dash, and lookahead for s
+        //console.log(regexString);
+        var regex = new RegExp(regexString, "i");
+        var replaceString = ' $3' + ' [' + heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
+        //var replaceString = heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>';
+        //var replaceString = heYear;
+        //console.log(replaceString);
+        $("*").replaceText(regex, replaceString);
+    }
+}
+
+if (typeof arrayOfYears["OneDigitYearAD"] != 'undefined') {
+    for(var i = 0; i < arrayOfYears["OneDigitYearAD"].length; i++) {
+        heYear = arrayOfYears["OneDigitYearAD"][i] + 10000;
+        // console.log(heYear);
+        var regexString = '((?!([–])).|^)\\b(' + arrayOfYears["OneDigitYearAD"][i] + '\\sAD)\\b(?!–)(?!s)(?!\\sBC)'; // combination of lookbehind and lookahead for en-dash, and lookahead for s
+        //console.log(regexString);
+        var regex = new RegExp(regexString, "i");
+        var replaceString = ' $3' + ' [' + heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
+        //var replaceString = heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>';
+        //var replaceString = heYear;
+        //console.log(replaceString);
+        $("*").replaceText(regex, replaceString);
+    }
+}
+
+if (typeof arrayOfYears["OneDigitYearCE"] != 'undefined') {
+    for(var i = 0; i < arrayOfYears["OneDigitYearCE"].length; i++) {
+        heYear = arrayOfYears["OneDigitYearCE"][i] + 10000;
+        // console.log(heYear);
+        var regexString = '((?!([–])).|^)\\b(' + arrayOfYears["OneDigitYearCE"][i] + '\\sCE)\\b(?!–)(?!s)(?!\\sBC)'; // combination of lookbehind and lookahead for en-dash, and lookahead for s
+        //console.log(regexString);
+        var regex = new RegExp(regexString, "i");
+        var replaceString = ' $3' + ' [' + heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
+        //var replaceString = heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>';
+        //var replaceString = heYear;
+        //console.log(replaceString);
+        $("*").replaceText(regex, replaceString);
+    }
+}
+
+if (typeof arrayOfYears["OneDigitYearBC"] != 'undefined') {
+    for(var i = 0; i < arrayOfYears["OneDigitYearBC"].length; i++) {
+        heYear = 10001 - arrayOfYears["OneDigitYearBC"][i];
+        // console.log(heYear);
+        var regexString = '((?!([–])).|^)\\b(' + arrayOfYears["OneDigitYearBC"][i] + '\\sBC)\\b(?!–)(?!s)'; // combination of lookbehind and lookahead for en-dash, and lookahead for s
+        //console.log(regexString);
+        var regex = new RegExp(regexString, "i");
+        var replaceString = ' $3' + ' [' + heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
+        //var replaceString = heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>';
+        //var replaceString = heYear;
+        //console.log(replaceString);
+        $("*").replaceText(regex, replaceString);
+    }
+}
+
+if (typeof arrayOfYears["TwoDigitsYearBC"] != 'undefined') {
+    for(var i = 0; i < arrayOfYears["TwoDigitsYearBC"].length; i++) {
+        heYear = 10001 - arrayOfYears["TwoDigitsYearBC"][i];
+        // console.log(heYear);
+        var regexString = '((?!([–])).|^)\\b(' + arrayOfYears["TwoDigitsYearBC"][i] + '\\sBC)\\b(?!–)(?!s)'; // combination of lookbehind and lookahead for en-dash, and lookahead for s
+        //console.log(regexString);
+        var regex = new RegExp(regexString, "i");
+        var replaceString = ' $3' + ' [' + heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
+        //var replaceString = heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>';
+        //var replaceString = heYear;
+        //console.log(replaceString);
+        $("*").replaceText(regex, replaceString);
+    }
+}
+
+if (typeof arrayOfYears["ThreeDigitsYearBC"] != 'undefined') {
+    for(var i = 0; i < arrayOfYears["ThreeDigitsYearBC"].length; i++) {
+        heYear = 10001 - arrayOfYears["ThreeDigitsYearBC"][i];
+        // console.log(heYear);
+        var regexString = '((?!([–])).|^)\\b(' + arrayOfYears["ThreeDigitsYearBC"][i] + '\\sBC)\\b(?!–)(?!s)'; // combination of lookbehind and lookahead for en-dash, and lookahead for s
+        //console.log(regexString);
+        var regex = new RegExp(regexString, "i");
+        var replaceString = ' $3' + ' [' + heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
+        //var replaceString = heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>';
+        //var replaceString = heYear;
+        //console.log(replaceString);
+        $("*").replaceText(regex, replaceString);
+    }
+}
+
+if (typeof arrayOfYears["FourDigitsYearBC"] != 'undefined') {
+    for(var i = 0; i < arrayOfYears["FourDigitsYearBC"].length; i++) {
+        heYear = 10001 - arrayOfYears["FourDigitsYearBC"][i];
+        // console.log(heYear);
+        var regexString = '((?!([–])).|^)\\b(' + arrayOfYears["FourDigitsYearBC"][i] + '\\sBC)\\b(?!–)(?!s)'; // combination of lookbehind and lookahead for en-dash, and lookahead for s
+        //console.log(regexString);
+        var regex = new RegExp(regexString, "i");
+        var replaceString = ' $3' + ' [' + heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
+        //var replaceString = heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>';
+        //var replaceString = heYear;
+        //console.log(replaceString);
+        $("*").replaceText(regex, replaceString);
+    }
+}
+
+if (typeof arrayOfYears["FiveDigitsYearBC"] != 'undefined') {
+    for(var i = 0; i < arrayOfYears["FiveDigitsYearBC"].length; i++) {
+        if (arrayOfYears["FiveDigitsYearBC"][i] < 10001) {
+            heYear = 10001 - arrayOfYears["FiveDigitsYearBC"][i];
+            // console.log(heYear);
+            var regexString = '((?!([–])).|^)\\b(' + arrayOfYears["FiveDigitsYearBC"][i] + '\\sBC)\\b(?!–)(?!s)'; // combination of lookbehind and lookahead for en-dash, and lookahead for s
+            //console.log(regexString);
+            var regex = new RegExp(regexString, "i");
+            var replaceString = ' $3' + ' [' + heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
+            //var replaceString = heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>';
+            //var replaceString = heYear;
+            //console.log(replaceString);
+            $("*").replaceText(regex, replaceString);
+        } else  {
+            heYear = arrayOfYears["FiveDigitsYearBC"][i] - 10000;
+            // console.log(heYear);
+            var regexString = '((?!([–])).|^)\\b(' + arrayOfYears["FiveDigitsYearBC"][i] + '\\sBC)\\b(?!–)(?!s)'; // combination of lookbehind and lookahead for en-dash, and lookahead for s
+            //console.log(regexString);
+            var regex = new RegExp(regexString, "i");
+            var replaceString = ' $3' + ' [' + heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">BHE</a>]';
+            //var replaceString = heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>';
+            //var replaceString = heYear;
+            //console.log(replaceString);
+            $("*").replaceText(regex, replaceString);
+        }
     }
 }
 
