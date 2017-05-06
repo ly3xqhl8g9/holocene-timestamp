@@ -21,6 +21,5 @@ Does the string has numbers?
 
 
 Failings:
-(1950) - the ( is replaced with space from lookbehind fail
-AD/BC 2000 - doesn't know about the AD/BC
-pp. 320 - doesn't know about pp.
+(1950) - the ( is replaced with space from lookbehind fail -- hard
+fix BC centuries replacement

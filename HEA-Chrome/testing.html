@@ -3,13 +3,155 @@
     <head>
         <meta charset="utf-8">
         <title>Testing</title>
+        <style media="screen">
+            hr {
+                width: 70%;
+                margin: 0;
+            }
+        </style>
     </head>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <body>
         <div class="container">
-            <h5>aa 1 AD</h5>
-            <h5>aa 1 BC</h5>
+            <h2>Timestamp's Modes of Appearing</h2>
+            <hr>
+            <h3>Lone Digits</h3>
+            <h4>somewhat dangerous to track</h4>
+            <h5>2201</h5>
+            <h5>2200</h5>
+            <h5>2199</h5>
+            <h5>1543</h5>
+            <h5>1000</h5>
+            <h5>999</h5>
+            <h5>564</h5>
+            <h5>100</h5>
+            <h5>99</h5>
+            <h5>25</h5>
+            <h5>2</h5>
+            <h5>1</h5>
+            <hr>
+            <h3>Lone Digits in context</h3>
+            <h4>somewhat dangerous to track</h4>
+            <h5>words 2201 words</h5>
+            <h5>words (2200) words</h5>
+            <h5>words [2199] words</h5>
+            <h5>words 1543.</h5>
+            <h5>words (1000) words</h5>
+            <h5>words [999] words</h5>
+            <h5>words (564) words</h5>
+            <h5>words 100% words</h5>
+            <h5>words 100 CE words</h5>
+            <h5>words 99: words</h5>
+            <h5>words 25 words</h5>
+            <h5>words 2 words</h5>
+            <h5>words 1 words</h5>
+            <hr>
+            <h3>Lone Digits with Year Description</h3>
+            <h4>easy to track</h4>
+            <h5>2201 AD</h5>
+            <h5>2200 CE</h5>
+            <h5>2199 AD</h5>
+            <h5>1543 CE</h5>
+            <h5>1000 AD</h5>
+            <h5>999 AD</h5>
+            <h5>564 CE</h5>
+            <h5>100 AD</h5>
+            <h5>99 CE</h5>
+            <h5>25 AD</h5>
+            <h5>2 CE</h5>
+            <h5>1 CE</h5>
+            <h5>1 BC</h5>
+            <h5>2 BCE</h5>
+            <h5>9 BCE</h5>
+            <h5>10 BCE</h5>
+            <h5>99 BCE</h5>
+            <h5>100 BCE</h5>
+            <h5>999 BCE</h5>
+            <h5>1000 BC</h5>
+            <h5>1001 BCE</h5>
+            <h5>1530 BC</h5>
+            <h5>9850 BC</h5>
+            <h5>9999 BCE</h5>
+            <h5>10000 BCE</h5>
+            <h5>10001 BC</h5>
+            <h5>10002 BCE</h5>
+            <h5>10003 BC</h5>
+            <h5>10010 BCE</h5>
+            <h5>54532 BC</h5>
+            <h5>99999 BCE</h5>
+            <h5>100000 BC</h5>
+            <hr>
+            <h3>Digits with strings nearby</h3>
+            <h4>somewhat easy to track, but tricky</h4>
+            <h5>in 190</h5>
+            <h5>year 399</h5>
+            <h5>by 399 </h5>
+            <h5>during 399 </h5>
+            <h5>ca. 399 </h5>
+            <h5>c. 399 </h5>
+            <h5>late 399 </h5>
+            <h5>january 399 </h5>
+            <hr>
+            <h3>Digits with en-dash, minus</h3>
+            <h4>somewhat easy to track, but tricky</h4>
+            <h5>1950-1960</h5>
+            <h5>1950–1960</h5>
+            <h5>1950-60</h5>
+            <h5>1950–60</h5>
+            <h5>1950-6</h5>
+            <h5>1950–6</h5>
+            <h5>550-560</h5>
+            <h5>550–560</h5>
+            <h5>words (550–560) words</h5>
+            <h5>pp. 550–560</h5>
+            <h5>pp. 532–542</h5>
+            <h5>p. 532</h5>
+            <h5>550-60</h5>
+            <h5>550–60</h5>
+            <h5>550–6</h5>
+            <h5>55-60</h5>
+            <h5>55–60</h5>
+            <h5>55-6</h5>
+            <h5>55–6</h5>
+            <h5>55-6 BC</h5>
+            <h5>55–6 BC</h5>
+            <h5>55-60 BCE</h5>
+            <h5>55–60 BCE</h5>
+            <h5>550-60 BC</h5>
+            <h5>550–60 BC</h5>
+            <h5>550-560 BC</h5>
+            <h5>550–560 BC</h5>
+            <h5>1950-60 BCE</h5>
+            <h5>1950–60 BC</h5>
+            <h5>1950-1960 BC</h5>
+            <h5>1950–1960 BCE</h5>
+            <hr>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <h5>aa 2 BC</h5>
+            <h5>aa 4,300 aa</h5>
             <h5>aa 5 CE</h5>
+            <h5>agjag 7:30 jdgaj</h5>
+            <h5>/ 4:31</h5>
             <h5>aa 35 AD</h5>
             <h5>aa 35 CE</h5>
             <h5>aa 135 CE</h5>
@@ -29,6 +171,7 @@
             <h5>2005–2010 -- en-dash</h5>
             <h5>2005–10 -- en-dash</h5>
             <h5>1920 AD</h5>
+            <h5>1920s</h5>
             <h5>AD 1920</h5>
             <h5>1920 BC</h5>
             <h5>1920 BCE</h5>
