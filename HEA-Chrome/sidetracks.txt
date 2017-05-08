@@ -23,3 +23,14 @@ Does the string has numbers?
 Failings:
 (1950) - the ( is replaced with space from lookbehind fail -- hard
 fix BC centuries replacement
+
+
+How the years beteen 1000-2017 might appear on wikipedia
+4 digits between spaces     - e.g. 1755
+4 digits with a sign after  - e.g. 1819)  or  1783.  or  1783[
+4 digit with a sign before  - e.g. (1755
+4 digits dash 4 digits      - e.g. 1790-1801
+4 digits dash 2 digits      - e.g. 1783-90
+
+
+FourDigitsYear and ThreeDigitsYear break google. No why apparently
