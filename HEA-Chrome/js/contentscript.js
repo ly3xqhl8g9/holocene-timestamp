@@ -43,6 +43,7 @@ bodyTextArray = $.each(bodyText.split(" ").slice(0,-1), function(index, item) { 
 // console.log(bodyTextArray);
 
 
+
 // ##########################################################################
 // #### simple clean
 // function cleanArray(arrayToBeCleaned) {
@@ -249,32 +250,38 @@ function unique(arrayToBeChecked) {
     }
 }
 
-arrayOfYears["FourDigitsAndS"] = unique(arrayOfYears["FourDigitsAndS"]);
+
+arrayOfYears["FiveDigitsYearBC"] = unique(arrayOfYears["FiveDigitsYearBC"]);
+arrayOfYears["FiveDigitsYearBCE"] = unique(arrayOfYears["FiveDigitsYearBCE"]);
+
 arrayOfYears["FourDigitsYear"] = unique(arrayOfYears["FourDigitsYear"]);
 arrayOfYears["FourDigitsYearAD"] = unique(arrayOfYears["FourDigitsYearAD"]);
+arrayOfYears["FourDigitsAndS"] = unique(arrayOfYears["FourDigitsAndS"]);
 arrayOfYears["FourDigitsDashFourDigits"] = unique(arrayOfYears["FourDigitsDashFourDigits"]);
 arrayOfYears["FourDigitsDashOneTwoDigits"] = unique(arrayOfYears["FourDigitsDashOneTwoDigits"]);
+arrayOfYears["FourDigitsYearBC"] = unique(arrayOfYears["FourDigitsYearBC"]);
+arrayOfYears["FourDigitsYearBCE"] = unique(arrayOfYears["FourDigitsYearBCE"]);
+
 arrayOfYears["ThreeDigitsYear"] = unique(arrayOfYears["ThreeDigitsYear"]);
-arrayOfYears["ThreeDigitsDashThreeDigits"] = unique(arrayOfYears["ThreeDigitsDashThreeDigits"]);
-arrayOfYears["ThreeDigitsDashOneTwoDigits"] = unique(arrayOfYears["ThreeDigitsDashOneTwoDigits"]);
 arrayOfYears["ThreeDigitsYearAD"] = unique(arrayOfYears["ThreeDigitsYearAD"]);
 arrayOfYears["ThreeDigitsYearCE"] = unique(arrayOfYears["ThreeDigitsYearCE"]);
+arrayOfYears["ThreeDigitsDashThreeDigits"] = unique(arrayOfYears["ThreeDigitsDashThreeDigits"]);
+arrayOfYears["ThreeDigitsDashOneTwoDigits"] = unique(arrayOfYears["ThreeDigitsDashOneTwoDigits"]);
+arrayOfYears["ThreeDigitsYearBC"] = unique(arrayOfYears["ThreeDigitsYearBC"]);
+arrayOfYears["ThreeDigitsYearBCE"] = unique(arrayOfYears["ThreeDigitsYearBCE"]);
+
 arrayOfYears["TwoDigitsYearAD"] = unique(arrayOfYears["TwoDigitsYearAD"]);
 arrayOfYears["TwoDigitsYearCE"] = unique(arrayOfYears["TwoDigitsYearCE"]);
 arrayOfYears["TwoDigitsDashOneTwoDigitsAD"] = unique(arrayOfYears["TwoDigitsDashOneTwoDigitsAD"]);
 arrayOfYears["TwoDigitsDashOneTwoDigitsCE"] = unique(arrayOfYears["TwoDigitsDashOneTwoDigitsCE"]);
+arrayOfYears["TwoDigitsYearBC"] = unique(arrayOfYears["TwoDigitsYearBC"]);
+arrayOfYears["TwoDigitsYearBCE"] = unique(arrayOfYears["TwoDigitsYearBCE"]);
+
 arrayOfYears["OneDigitYearAD"] = unique(arrayOfYears["OneDigitYearAD"]);
 arrayOfYears["OneDigitYearCE"] = unique(arrayOfYears["OneDigitYearCE"]);
 arrayOfYears["OneDigitYearBC"] = unique(arrayOfYears["OneDigitYearBC"]);
 arrayOfYears["OneDigitYearBCE"] = unique(arrayOfYears["OneDigitYearBCE"]);
-arrayOfYears["TwoDigitsYearBC"] = unique(arrayOfYears["TwoDigitsYearBC"]);
-arrayOfYears["TwoDigitsYearBCE"] = unique(arrayOfYears["TwoDigitsYearBCE"]);
-arrayOfYears["ThreeDigitsYearBC"] = unique(arrayOfYears["ThreeDigitsYearBC"]);
-arrayOfYears["ThreeDigitsYearBCE"] = unique(arrayOfYears["ThreeDigitsYearBCE"]);
-arrayOfYears["FourDigitsYearBC"] = unique(arrayOfYears["FourDigitsYearBC"]);
-arrayOfYears["FourDigitsYearBCE"] = unique(arrayOfYears["FourDigitsYearBCE"]);
-arrayOfYears["FiveDigitsYearBC"] = unique(arrayOfYears["FiveDigitsYearBC"]);
-arrayOfYears["FiveDigitsYearBCE"] = unique(arrayOfYears["FiveDigitsYearBCE"]);
+
 console.log(arrayOfYears);
 
 
@@ -672,7 +679,7 @@ if (typeof arrayOfYears["TwoDigitsYearBCE"] != 'undefined') {
     }
 }
 
-// #### One Digits
+// #### One Digit
 // #### AD/CE
 if (typeof arrayOfYears["OneDigitYearAD"] != 'undefined') {
     for(var i = 0; i < arrayOfYears["OneDigitYearAD"].length; i++) {
@@ -739,7 +746,7 @@ if (typeof arrayOfYears["OneDigitYearBCE"] != 'undefined') {
 
 // ##########################################################################
 // #### Century replacement rules
-for(var i = 1; i < 50; i++) {
+for(var i = 1; i < 25; i++) {
     if (i < 10) {
         if (i == 1) {
             regexString = '\\b' + i + 'st century' + '\\b(?!\\sBC)';
