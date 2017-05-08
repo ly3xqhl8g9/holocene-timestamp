@@ -442,8 +442,8 @@ if (typeof arrayOfYears["FourDigitsDashFourDigits"] != 'undefined') {
 }
 
 if (typeof arrayOfYears["FourDigitsDashOneTwoDigits"] != 'undefined') {
-    if (arrayOfYears["FourDigitsDashOneTwoDigits"][i][0] < 2200) {
-        for(var i = 0; i < arrayOfYears["FourDigitsDashOneTwoDigits"].length; i++) {
+    for(var i = 0; i < arrayOfYears["FourDigitsDashOneTwoDigits"].length; i++) {
+        if (arrayOfYears["FourDigitsDashOneTwoDigits"][i][0] < 2200) {
             heYearOne = arrayOfYears["FourDigitsDashOneTwoDigits"][i][0] + 10000;
             heYearTwo = arrayOfYears["FourDigitsDashOneTwoDigits"][i][1];
             //console.log(heYearOne, heYearTwo);
