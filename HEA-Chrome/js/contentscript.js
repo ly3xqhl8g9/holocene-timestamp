@@ -77,7 +77,7 @@ function cleanArray(arrayToBeCleaned) {
   return cleanedArray;
 }
 
-cleanedArray = cleanArray(bodyTextArray);
+var cleanedArray = cleanArray(bodyTextArray);
 console.log(cleanedArray)
 
 
@@ -86,33 +86,39 @@ console.log(cleanedArray)
 // #### make array of arrays to contain the detected numbers that are years
 function makeArrays(arrayToBeChecked) {
     var arrayOfYears = {};
-    arrayOfYears["FiveDigitsYearBC"] = [];
+
     arrayOfYears["FiveDigitsYearBCE"] = [];
-    arrayOfYears["FourDigitsYearBC"] = [];
-    arrayOfYears["FourDigitsYearBCE"] = [];
-    arrayOfYears["ThreeDigitsYearBC"] = [];
-    arrayOfYears["ThreeDigitsYearBCE"] = [];
-    arrayOfYears["TwoDigitsYearBC"] = [];
-    arrayOfYears["TwoDigitsYearBCE"] = [];
-    arrayOfYears["OneDigitYearBC"] = [];
-    arrayOfYears["OneDigitYearBCE"] = [];
-    arrayOfYears["OneDigitYearAD"] = [];
-    arrayOfYears["OneDigitYearCE"] = [];
-    arrayOfYears["TwoDigitsYearAD"] = [];
-    arrayOfYears["TwoDigitsYearCE"] = [];
-    arrayOfYears["TwoDigitsDashOneTwoDigitsAD"] = [];
-    arrayOfYears["TwoDigitsDashOneTwoDigitsCE"] = [];
-    arrayOfYears["ThreeDigitsYearAD"] = [];
-    arrayOfYears["ThreeDigitsYearCE"] = [];
-    arrayOfYears["ThreeDigitsYear"] = [];
-    arrayOfYears["ThreeDigitsDashThreeDigits"] = [];
-    arrayOfYears["ThreeDigitsDashOneTwoDigits"] = [];
+    arrayOfYears["FiveDigitsYearBC"] = [];
+
+    arrayOfYears["FourDigitsYear"] = [];
     arrayOfYears["FourDigitsYearAD"] = [];
     arrayOfYears["FourDigitsYearCE"] = [];
     arrayOfYears["FourDigitsAndS"] = [];
     arrayOfYears["FourDigitsDashFourDigits"] = [];
     arrayOfYears["FourDigitsDashOneTwoDigits"] = [];
-    arrayOfYears["FourDigitsYear"] = [];
+    arrayOfYears["FourDigitsYearBCE"] = [];
+    arrayOfYears["FourDigitsYearBC"] = [];
+
+    arrayOfYears["ThreeDigitsYearAD"] = [];
+    arrayOfYears["ThreeDigitsYearCE"] = [];
+    arrayOfYears["ThreeDigitsYear"] = [];
+    arrayOfYears["ThreeDigitsDashThreeDigits"] = [];
+    arrayOfYears["ThreeDigitsDashOneTwoDigits"] = [];
+    arrayOfYears["ThreeDigitsYearBCE"] = [];
+    arrayOfYears["ThreeDigitsYearBC"] = [];
+
+    arrayOfYears["TwoDigitsYearAD"] = [];
+    arrayOfYears["TwoDigitsYearCE"] = [];
+    arrayOfYears["TwoDigitsDashOneTwoDigitsAD"] = [];
+    arrayOfYears["TwoDigitsDashOneTwoDigitsCE"] = [];
+    arrayOfYears["TwoDigitsYearBCE"] = [];
+    arrayOfYears["TwoDigitsYearBC"] = [];
+
+    arrayOfYears["OneDigitYearAD"] = [];
+    arrayOfYears["OneDigitYearCE"] = [];
+    arrayOfYears["OneDigitYearBC"] = [];
+    arrayOfYears["OneDigitYearBCE"] = [];
+
     for (var i = 0; i < arrayToBeChecked.length; i++) {
         if (/\b\d{5}\b/.test(arrayToBeChecked[i]) && /BCE/.test(arrayToBeChecked[i+1])) {
             arrayOfYears["FiveDigitsYearBCE"].push(parseInt(/\b\d{5}\b/.exec(arrayToBeChecked[i])[0]));
@@ -240,13 +246,15 @@ arrayOfYears = makeArrays(cleanedArray);
 // ##########################################################################
 // #### making items from the array of arrays unique
 function unique(arrayToBeChecked) {
-    if (typeof(arrayToBeChecked[0])==="number") {
-        return Array.from(new Set(arrayToBeChecked));
-    } else if (typeof(arrayToBeChecked[0])==="object") {
-        var seen = {};
-        return arrayToBeChecked.filter(function(item) {
-            return seen.hasOwnProperty(item) ? false : (seen[item] = true);
-        });
+    if (typeof arrayToBeChecked != 'undefined') {
+        if (typeof(arrayToBeChecked[0])==="number") {
+            return Array.from(new Set(arrayToBeChecked));
+        } else if (typeof(arrayToBeChecked[0])==="object") {
+            var seen = {};
+            return arrayToBeChecked.filter(function(item) {
+                return seen.hasOwnProperty(item) ? false : (seen[item] = true);
+            });
+        }
     }
 }
 
