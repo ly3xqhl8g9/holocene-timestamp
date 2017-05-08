@@ -69,7 +69,7 @@ function cleanArray(arrayToBeCleaned) {
     var firstCleanArray = new Array();
     var secondCleanArray = new Array();
     for (var i = 0; i < arrayToBeCleaned.length; i++) {
-        if (/\b\d+\b/.test(arrayToBeCleaned[i]) && /\S/.test(arrayToBeCleaned[i])) {
+        if (/\b\d+\b/.test(arrayToBeCleaned[i]) && /\S/.test(arrayToBeCleaned[i]) && !/\d+]/.test(arrayToBeCleaned[i]) && !/p+\.\s\d+/.test(arrayToBeCleaned[i])) {
             firstCleanArray.push(arrayToBeCleaned[i-1]);
             firstCleanArray.push(arrayToBeCleaned[i]);
             firstCleanArray.push(arrayToBeCleaned[i+1]);
