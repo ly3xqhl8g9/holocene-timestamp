@@ -71,7 +71,7 @@ function cleanArray(arrayToBeCleaned) {
     var thirdCleanArray = new Array();
 
     for (var i = 0; i < arrayToBeCleaned.length; i++) {
-        if (/\b\d+\b/.test(arrayToBeCleaned[i]) && /\S/.test(arrayToBeCleaned[i]) && !/\d+]/.test(arrayToBeCleaned[i]) && !/p+\.\s\d+/.test(arrayToBeCleaned[i])) {
+        if (/\b\d+s?\b/.test(arrayToBeCleaned[i]) && /\S/.test(arrayToBeCleaned[i]) && !/\d+]/.test(arrayToBeCleaned[i]) && !/p+\.\s\d+/.test(arrayToBeCleaned[i])) {
             firstCleanArray.push(arrayToBeCleaned[i-1]);
             firstCleanArray.push(arrayToBeCleaned[i]);
             firstCleanArray.push(arrayToBeCleaned[i+1]);
@@ -92,7 +92,7 @@ function cleanArray(arrayToBeCleaned) {
 
     for (var k = 0; k < secondCleanArray.length; k++) {
         if(/\b\d{1,5}s?\b/.test(secondCleanArray[k])
-            || /(\bin\b)|(\blate\b)|(\bAD\b)|(\bB?CE?\b)/i.test(secondCleanArray[k])
+            || /(\bin\b)|(\bby\b)|(\bduring\b)|(\byear\b)|(\bca\.\b)|(\bc\.\b)|(\blate\b)|(\bjanuary\b)|(\bfebruary\b)|(\bmarch\b)|(\bapril\b)|(\bmay\b)|(\bjune\b)|(\bjuly\b)|(\baugust\b)|(\bseptember\b)|(\boctober\b)|(\bnovember\b)|(\bdecember\b)|(\blate\b)|(\bAD\b)|(\bB?CE?\b)/i.test(secondCleanArray[k])
             && !/(\bISBN\b)|(\bISSN\b)/.test(secondCleanArray[k])) {
             thirdCleanArray.push(secondCleanArray[k]);
         }
@@ -126,6 +126,7 @@ function makeArrays(arrayToBeChecked) {
     arrayOfYears["ThreeDigitsYearAD"] = [];
     arrayOfYears["ThreeDigitsYearCE"] = [];
     arrayOfYears["ThreeDigitsYear"] = [];
+    arrayOfYears["ThreeDigitsAndS"] = [];
     arrayOfYears["ThreeDigitsDashThreeDigits"] = [];
     arrayOfYears["ThreeDigitsDashOneTwoDigits"] = [];
     arrayOfYears["ThreeDigitsYearBCE"] = [];
@@ -156,6 +157,9 @@ function makeArrays(arrayToBeChecked) {
             arrayOfYears["FourDigitsYearBCE"].push(parseInt(/\b\d{4}\b/.exec(arrayToBeChecked[i])[0]));
         } else if (/\b\d{4}\b/.test(arrayToBeChecked[i]) && /BC/.test(arrayToBeChecked[i+1])) {
             arrayOfYears["FourDigitsYearBC"].push(parseInt(/\b\d{4}\b/.exec(arrayToBeChecked[i])[0]));
+        } else if (/\b\d{3}s/.test(arrayToBeChecked[i]) && !/BCE?/.test(arrayToBeChecked[i+1])) {
+            var threeDigitsAndSValue = /\b\d{3}s/.exec(arrayToBeChecked[i]);
+            arrayOfYears["ThreeDigitsAndS"].push(parseInt(threeDigitsAndSValue[0].slice(0,3)));
         } else if (/\b\d{3}(–|-)\d{3}\b/.test(arrayToBeChecked[i]) && /BC\b/.test(arrayToBeChecked[i+1])) {
             var dashThreeDigitsArrayBC = [];
             var matchDashThreeDigitsBC = /\b(\d{3})(–|-)(\d{3})\b/.exec(arrayToBeChecked[i]);
@@ -311,6 +315,7 @@ arrayOfYears["FourDigitsYearBCE"] = unique(arrayOfYears["FourDigitsYearBCE"]);
 arrayOfYears["ThreeDigitsYear"] = unique(arrayOfYears["ThreeDigitsYear"]);
 arrayOfYears["ThreeDigitsYearAD"] = unique(arrayOfYears["ThreeDigitsYearAD"]);
 arrayOfYears["ThreeDigitsYearCE"] = unique(arrayOfYears["ThreeDigitsYearCE"]);
+arrayOfYears["ThreeDigitsAndS"] = unique(arrayOfYears["ThreeDigitsAndS"]);
 arrayOfYears["ThreeDigitsDashThreeDigits"] = unique(arrayOfYears["ThreeDigitsDashThreeDigits"]);
 arrayOfYears["ThreeDigitsDashOneTwoDigits"] = unique(arrayOfYears["ThreeDigitsDashOneTwoDigits"]);
 arrayOfYears["ThreeDigitsYearBC"] = unique(arrayOfYears["ThreeDigitsYearBC"]);
@@ -620,7 +625,19 @@ if (typeof arrayOfYears["ThreeDigitsDashThreeDigitsBC"] != 'undefined') {
     }
 }
 
-
+if (typeof arrayOfYears["ThreeDigitsAndS"] != 'undefined') {
+    for(var i = 0; i < arrayOfYears["ThreeDigitsAndS"].length; i++) {
+        heYear = arrayOfYears["ThreeDigitsAndS"][i] + 10000;
+        // console.log(heYear);
+        var regexString = arrayOfYears["ThreeDigitsAndS"][i] + 's(?!//sBC)';
+        var regex = new RegExp(regexString, "");
+        var replaceString = arrayOfYears["ThreeDigitsAndS"][i] + 's' + ' [' + heYear + 's' + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
+        //var replaceString = heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>';
+        //var replaceString = heYear;
+        //console.log(replaceString);
+        $("*").replaceText(regex, replaceString);
+    }
+}
 
 // #### BC/BCE
 if (typeof arrayOfYears["ThreeDigitsYearBC"] != 'undefined') {
