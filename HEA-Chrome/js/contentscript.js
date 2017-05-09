@@ -68,6 +68,8 @@ function cleanArray(arrayToBeCleaned) {
     // the function cleans the array of empty strings and strings containing only whitespace
     var firstCleanArray = new Array();
     var secondCleanArray = new Array();
+    var thirdCleanArray = new Array();
+
     for (var i = 0; i < arrayToBeCleaned.length; i++) {
         if (/\b\d+\b/.test(arrayToBeCleaned[i]) && /\S/.test(arrayToBeCleaned[i]) && !/\d+]/.test(arrayToBeCleaned[i]) && !/p+\.\s\d+/.test(arrayToBeCleaned[i])) {
             firstCleanArray.push(arrayToBeCleaned[i-1]);
@@ -75,12 +77,28 @@ function cleanArray(arrayToBeCleaned) {
             firstCleanArray.push(arrayToBeCleaned[i+1]);
         }
     }
-    for (var i = 0; i < firstCleanArray.length; i++) {
-        if (firstCleanArray[i] !== firstCleanArray[i+1] && firstCleanArray[i] !== firstCleanArray[i+2] && /\S/.test(firstCleanArray[i])) {
-            secondCleanArray.push(firstCleanArray[i]);
+
+    for (var j = 0; j < firstCleanArray.length; j++) {
+        if (firstCleanArray[j] !== firstCleanArray[j+1]
+            && firstCleanArray[j] !== firstCleanArray[j+2]
+            && /\S/.test(firstCleanArray[j])
+            && !/\^/.test(firstCleanArray[j])
+            && !/p+./.test(firstCleanArray[j])
+            && !/\d{1}\.\d{1}/.test(firstCleanArray[j])
+            && !/(\d+-\d+-\d+-\d+)/.test(firstCleanArray[j])) {
+            secondCleanArray.push(firstCleanArray[j]);
         }
     }
-    return secondCleanArray;
+
+    for (var k = 0; k < secondCleanArray.length; k++) {
+        if(/\b\d{1,5}s?\b/.test(secondCleanArray[k])
+            || /(\bin\b)|(\blate\b)|(\bAD\b)|(\bB?CE?\b)/i.test(secondCleanArray[k])
+            && !/(\bISBN\b)|(\bISSN\b)/.test(secondCleanArray[k])) {
+            thirdCleanArray.push(secondCleanArray[k]);
+        }
+    }
+
+    return thirdCleanArray;
 }
 
 var cleanedArray = cleanArray(bodyTextArray);
@@ -112,6 +130,10 @@ function makeArrays(arrayToBeChecked) {
     arrayOfYears["ThreeDigitsDashOneTwoDigits"] = [];
     arrayOfYears["ThreeDigitsYearBCE"] = [];
     arrayOfYears["ThreeDigitsYearBC"] = [];
+    arrayOfYears["ThreeDigitsDashThreeDigitsBCE"] = [];
+    arrayOfYears["ThreeDigitsDashThreeDigitsBC"] = [];
+    arrayOfYears["ThreeDigitsDashOneTwoDigitsBCE"] = [];
+    arrayOfYears["ThreeDigitsDashOneTwoDigitsBC"] = [];
 
     arrayOfYears["TwoDigitsYearAD"] = [];
     arrayOfYears["TwoDigitsYearCE"] = [];
@@ -134,6 +156,12 @@ function makeArrays(arrayToBeChecked) {
             arrayOfYears["FourDigitsYearBCE"].push(parseInt(/\b\d{4}\b/.exec(arrayToBeChecked[i])[0]));
         } else if (/\b\d{4}\b/.test(arrayToBeChecked[i]) && /BC/.test(arrayToBeChecked[i+1])) {
             arrayOfYears["FourDigitsYearBC"].push(parseInt(/\b\d{4}\b/.exec(arrayToBeChecked[i])[0]));
+        } else if (/\b\d{3}(–|-)\d{3}\b/.test(arrayToBeChecked[i]) && /BC\b/.test(arrayToBeChecked[i+1])) {
+            var dashThreeDigitsArrayBC = [];
+            var matchDashThreeDigitsBC = /\b(\d{3})(–|-)(\d{3})\b/.exec(arrayToBeChecked[i]);
+            dashThreeDigitsArrayBC[0] = parseInt(RegExp.$1);
+            dashThreeDigitsArrayBC[1] = parseInt(RegExp.$3);
+            arrayOfYears["ThreeDigitsDashThreeDigitsBC"].push(dashThreeDigitsArrayBC);
         } else if (/\b\d{3}\b/.test(arrayToBeChecked[i]) && /BCE/.test(arrayToBeChecked[i+1])) {
             arrayOfYears["ThreeDigitsYearBCE"].push(parseInt(/\b\d{3}\b/.exec(arrayToBeChecked[i])[0]));
         } else if (/\b\d{3}\b/.test(arrayToBeChecked[i]) && /BC/.test(arrayToBeChecked[i+1])) {
@@ -172,7 +200,7 @@ function makeArrays(arrayToBeChecked) {
             arrayOfYears["TwoDigitsYearAD"].push(parseInt(/\b\d{2}\b/.exec(arrayToBeChecked[i])[0]));
         } else if (/\b\d{2}\b/.test(arrayToBeChecked[i]) && /CE/.test(arrayToBeChecked[i+1])) {
             arrayOfYears["TwoDigitsYearCE"].push(parseInt(/\b\d{2}\b/.exec(arrayToBeChecked[i])[0]));
-        } else  if (/\b\d{3}\b/.test(arrayToBeChecked[i]) && /AD/.test(arrayToBeChecked[i+1])) {
+        } else if (/\b\d{3}\b/.test(arrayToBeChecked[i]) && /AD/.test(arrayToBeChecked[i+1])) {
             arrayOfYears["ThreeDigitsYearAD"].push(parseInt(/\b\d{3}\b/.exec(arrayToBeChecked[i])[0]));
         } else if (/\b\d{3}\b/.test(arrayToBeChecked[i]) && /CE/.test(arrayToBeChecked[i+1])) {
             arrayOfYears["ThreeDigitsYearCE"].push(parseInt(/\b\d{3}\b/.exec(arrayToBeChecked[i])[0]));
@@ -180,14 +208,6 @@ function makeArrays(arrayToBeChecked) {
             arrayOfYears["FourDigitsYearAD"].push(parseInt(/\b\d{4}\b/.exec(arrayToBeChecked[i])[0]));
         } else if (/\b\d{4}\b/.test(arrayToBeChecked[i]) && /CE/.test(arrayToBeChecked[i+1])) {
             arrayOfYears["FourDigitsYearCE"].push(parseInt(/\b\d{4}\b/.exec(arrayToBeChecked[i])[0]));
-        } else if (/\b\d{3}\b(?!])(?!:)/.test(arrayToBeChecked[i])
-                    && !/(–|-)/i.test(arrayToBeChecked[i])
-                    && !/p+\.\s\d{3}/.test(arrayToBeChecked[i])
-                    && !/p+\.\s/.test(arrayToBeChecked[i-1])
-                    && /(in|by|during|year|ca\.|c\.|late|january|february|march|april|may|june|july|august|september|october|november|december)/i.test(arrayToBeChecked[i-1])
-                    && !/AD/.test(arrayToBeChecked[i+1])
-                    && !/BC/.test(arrayToBeChecked[i+1])) {
-            arrayOfYears["ThreeDigitsYear"].push(parseInt(/\b\d{3}\b/.exec(arrayToBeChecked[i])[0]));
         } else if (/\b\d{3}(–|-)\d{3}\b/.test(arrayToBeChecked[i])
                     && !/p+\.\s\d{3}/.test(arrayToBeChecked[i])
                     && !/p+\.\s/.test(arrayToBeChecked[i-1])) {
@@ -196,7 +216,7 @@ function makeArrays(arrayToBeChecked) {
             dashThreeDigitsArray[0] = parseInt(RegExp.$1);
             dashThreeDigitsArray[1] = parseInt(RegExp.$3);
             arrayOfYears["ThreeDigitsDashThreeDigits"].push(dashThreeDigitsArray);
-        } else if (/\b\d{3}(–|-)\d{1,2}\b/.test(arrayToBeChecked[i])
+        } else  if (/\b\d{3}(–|-)\d{1,2}\b/.test(arrayToBeChecked[i])
                     && !/p+\.\s\d{1,2}/.test(arrayToBeChecked[i])
                     && !/p+\.\s/.test(arrayToBeChecked[i-1])) {
             var threeDashOneTwoDigitsArray = [];
@@ -204,6 +224,16 @@ function makeArrays(arrayToBeChecked) {
             threeDashOneTwoDigitsArray[0] = parseInt(RegExp.$1);
             threeDashOneTwoDigitsArray[1] = parseInt(RegExp.$3);
             arrayOfYears["ThreeDigitsDashOneTwoDigits"].push(threeDashOneTwoDigitsArray);
+        } else if (/\b\d{3}\b(?!])(?!:)/.test(arrayToBeChecked[i])
+                    && !/(–|-)/i.test(arrayToBeChecked[i])
+                    && !/p+\.\s\d{3}/.test(arrayToBeChecked[i])
+                    && !/p+\.\s/.test(arrayToBeChecked[i-1])
+                    && /(in|by|during|year|ca\.|c\.|late|january|february|march|april|may|june|july|august|september|october|november|december)/i.test(arrayToBeChecked[i-1])
+                    && !/AD/.test(arrayToBeChecked[i+1])
+                    && !/BC/.test(arrayToBeChecked[i+1])) {
+            if (parseInt(/\b\d{3}\b/.exec(arrayToBeChecked[i])[0]) >= 100) {
+                arrayOfYears["ThreeDigitsYear"].push(parseInt(/\b\d{3}\b/.exec(arrayToBeChecked[i])[0]));
+            }
         } else if (/\b\d{4}s/.test(arrayToBeChecked[i])) {
             var fourDigitsAndSValue = /\b\d{4}s/.exec(arrayToBeChecked[i]);
             arrayOfYears["FourDigitsAndS"].push(parseInt(fourDigitsAndSValue[0].slice(0,4)));
@@ -230,15 +260,17 @@ function makeArrays(arrayToBeChecked) {
 
     // #### for testing
     // for (var i = 0; i < arrayToBeChecked.length; i++) {
-    //     if (/\b\d{3}\b/.test(arrayToBeChecked[i])
-    //                && !/(–|-)/i.test(arrayToBeChecked[i])
-    //                && !/p+.\s\d{3}/.test(arrayToBeChecked[i])
-    //                && !/p+.\s\d{3}/.test(arrayToBeChecked[i-1])
-    //                && /(in|by|during|year|ca\.|c\.|late|january|february|march|april|may|june|july|august|september|october|november|december)/i.test(arrayToBeChecked[i-1])
-    //                && !/AD/.test(arrayToBeChecked[i+1])
-    //                && !/BC/.test(arrayToBeChecked[i+1])) {
-    //        arrayOfYears["ThreeDigitsYear"].push(parseInt(/\b\d{3}\b/.exec(arrayToBeChecked[i])[0]));
-    //    }
+    //     if (/\b\d{3}\b(?!])(?!:)/.test(arrayToBeChecked[i])
+    //                 && !/(–|-)/i.test(arrayToBeChecked[i])
+    //                 && !/p+\.\s\d{3}/.test(arrayToBeChecked[i])
+    //                 && !/p+\.\s/.test(arrayToBeChecked[i-1])
+    //                 && /(in|by|during|year|ca\.|c\.|late|january|february|march|april|may|june|july|august|september|october|november|december)/i.test(arrayToBeChecked[i-1])
+    //                 && !/AD/.test(arrayToBeChecked[i+1])
+    //                 && !/BC/.test(arrayToBeChecked[i+1])) {
+    //         if (parseInt(/\b\d{3}\b/.exec(arrayToBeChecked[i])[0]) >= 100) {
+    //             arrayOfYears["ThreeDigitsYear"].push(parseInt(/\b\d{3}\b/.exec(arrayToBeChecked[i])[0]));
+    //         }
+    //     }
     // }
 
     return arrayOfYears;
@@ -283,6 +315,8 @@ arrayOfYears["ThreeDigitsDashThreeDigits"] = unique(arrayOfYears["ThreeDigitsDas
 arrayOfYears["ThreeDigitsDashOneTwoDigits"] = unique(arrayOfYears["ThreeDigitsDashOneTwoDigits"]);
 arrayOfYears["ThreeDigitsYearBC"] = unique(arrayOfYears["ThreeDigitsYearBC"]);
 arrayOfYears["ThreeDigitsYearBCE"] = unique(arrayOfYears["ThreeDigitsYearBCE"]);
+arrayOfYears["ThreeDigitsDashThreeDigitsBC"] = unique(arrayOfYears["ThreeDigitsDashThreeDigitsBC"]);
+arrayOfYears["ThreeDigitsDashThreeDigitsBCE"] = unique(arrayOfYears["ThreeDigitsDashThreeDigitsBCE"]);
 
 arrayOfYears["TwoDigitsYearAD"] = unique(arrayOfYears["TwoDigitsYearAD"]);
 arrayOfYears["TwoDigitsYearCE"] = unique(arrayOfYears["TwoDigitsYearCE"]);
@@ -543,7 +577,7 @@ if (typeof arrayOfYears["ThreeDigitsDashThreeDigits"] != 'undefined') {
         heYearOne = arrayOfYears["ThreeDigitsDashThreeDigits"][i][0] + 10000;
         heYearTwo = arrayOfYears["ThreeDigitsDashThreeDigits"][i][1] + 10000;
         //console.log(heYearOne, heYearTwo);
-        var regexString = '((?!([–|-|:])).|^)\\b(' + arrayOfYears["ThreeDigitsDashThreeDigits"][i][0] + '(–|-)' + arrayOfYears["ThreeDigitsDashThreeDigits"][i][1] + ')\\b(?!\\sBC)(?!\\sBCE)(?!-\\d+-\\d+)';
+        var regexString = '((?!([–|-|\\s:])).|^)\\b(' + arrayOfYears["ThreeDigitsDashThreeDigits"][i][0] + '(–|-)' + arrayOfYears["ThreeDigitsDashThreeDigits"][i][1] + ')\\b(?!\\sBC)(?!\\sBCE)(?!-\\d+-\\d+)';
         //console.log(regexString);
         var regex = new RegExp(regexString, "");
         var replaceString = '$3' + ' [' + heYearOne + '–' + heYearTwo + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
@@ -569,6 +603,24 @@ if (typeof arrayOfYears["ThreeDigitsDashOneTwoDigits"] != 'undefined') {
         $("*").replaceText(regex, replaceString);
     }
 }
+
+if (typeof arrayOfYears["ThreeDigitsDashThreeDigitsBC"] != 'undefined') {
+    for(var i = 0; i < arrayOfYears["ThreeDigitsDashThreeDigitsBC"].length; i++) {
+        heYearOne = 10001 - arrayOfYears["ThreeDigitsDashThreeDigitsBC"][i][0];
+        heYearTwo = 10001 - arrayOfYears["ThreeDigitsDashThreeDigitsBC"][i][1];
+        //console.log(heYearOne, heYearTwo);
+        var regexString = '((?!([–|-|\\s:|p+.\\s])).|^)\\b(' + arrayOfYears["ThreeDigitsDashThreeDigitsBC"][i][0] + '(–|-)' + arrayOfYears["ThreeDigitsDashThreeDigitsBC"][i][1] + '\\sBC)\\b(?!\\sBCE)';
+        //console.log(regexString);
+        var regex = new RegExp(regexString, "");
+        var replaceString = '$3' + ' [' + heYearOne + '–' + heYearTwo + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
+        //var replaceString = heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>';
+        //var replaceString = heYear;
+        //console.log(replaceString);
+        $("*").replaceText(regex, replaceString);
+    }
+}
+
+
 
 // #### BC/BCE
 if (typeof arrayOfYears["ThreeDigitsYearBC"] != 'undefined') {
@@ -703,10 +755,10 @@ if (typeof arrayOfYears["OneDigitYearAD"] != 'undefined') {
     for(var i = 0; i < arrayOfYears["OneDigitYearAD"].length; i++) {
         heYear = arrayOfYears["OneDigitYearAD"][i] + 10000;
         // console.log(heYear);
-        var regexString = '((?!([–])).|^)\\b(' + arrayOfYears["OneDigitYearAD"][i] + '\\sAD)\\b(?!–)(?!s)(?!\\sBC)'; // combination of lookbehind and lookahead for en-dash, and lookahead for s
+        var regexString = '\\b(' + arrayOfYears["OneDigitYearAD"][i] + '\\sAD)\\b(?!–)(?!s)(?!\\sBC)'; // combination of lookbehind and lookahead for en-dash, and lookahead for s
         //console.log(regexString);
         var regex = new RegExp(regexString, "i");
-        var replaceString = ' $3' + ' [' + heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
+        var replaceString = ' $1' + ' [' + heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
         //var replaceString = heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>';
         //var replaceString = heYear;
         //console.log(replaceString);
