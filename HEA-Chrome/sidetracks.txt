@@ -34,3 +34,6 @@ How the years beteen 1000-2017 might appear on wikipedia
 
 
 FourDigitsYear and ThreeDigitsYear break google. No why apparently
+
+
+((?!([–|-|\\s:|p+.\\s])).|^)
