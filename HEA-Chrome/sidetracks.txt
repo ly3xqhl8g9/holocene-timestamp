@@ -2,7 +2,6 @@ Capture a string delimited by spaces
 
 Form an array of all the strings from the page
 
-
 Questions to ask:
 Does the string has numbers?
     Yes: Does it have three numbers?
@@ -20,11 +19,6 @@ Does the string has numbers?
 
 
 
-Failings:
-(1950) - the ( is replaced with space from lookbehind fail -- hard
-fix BC centuries replacement
-
-
 How the years beteen 1000-2017 might appear on wikipedia
 4 digits between spaces     - e.g. 1755
 4 digits with a sign after  - e.g. 1819)  or  1783.  or  1783[
@@ -32,8 +26,6 @@ How the years beteen 1000-2017 might appear on wikipedia
 4 digits dash 4 digits      - e.g. 1790-1801
 4 digits dash 2 digits      - e.g. 1783-90
 
-
-FourDigitsYear and ThreeDigitsYear break google. No why apparently
 
 
 ((?!([–|-|\\s:|p+.\\s])).|^) - fake-lookbehind, working but also takes the \s into the match
