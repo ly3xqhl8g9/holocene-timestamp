@@ -157,196 +157,238 @@ function makeArrays(arrayToBeChecked) {
     arrayOfYears["OneDigitYearBCE"] = [];
 
     for (var i = 0; i < arrayToBeChecked.length; i++) {
-        if (/\b\d{5}\b/.test(arrayToBeChecked[i]) && /BCE/.test(arrayToBeChecked[i+1])) {
-            arrayOfYears["FiveDigitsYearBCE"].push(parseInt(/\b\d{5}\b/.exec(arrayToBeChecked[i])[0]));
-        } else if (/\b\d{5}\b/.test(arrayToBeChecked[i]) && /BC/.test(arrayToBeChecked[i+1])) {
-            arrayOfYears["FiveDigitsYearBC"].push(parseInt(/\b\d{5}\b/.exec(arrayToBeChecked[i])[0]));
-        } else if (/\b\d{4}\b/.test(arrayToBeChecked[i]) && /BCE/.test(arrayToBeChecked[i+1])) {
-            arrayOfYears["FourDigitsYearBCE"].push(parseInt(/\b\d{4}\b/.exec(arrayToBeChecked[i])[0]));
-        } else if (/\b\d{4}\b/.test(arrayToBeChecked[i]) && /BC/.test(arrayToBeChecked[i+1])) {
-            arrayOfYears["FourDigitsYearBC"].push(parseInt(/\b\d{4}\b/.exec(arrayToBeChecked[i])[0]));
-        } else if (/\b\d{4}s/.test(arrayToBeChecked[i]) && /BCE/.test(arrayToBeChecked[i+1])) {
-            var fourDigitsAndSValueBCE = /\b\d{4}s/.exec(arrayToBeChecked[i]);
-            arrayOfYears["FourDigitsAndSBCE"].push(parseInt(fourDigitsAndSValueBCE[0].slice(0,4)));
-        } else if (/\b\d{4}s/.test(arrayToBeChecked[i]) && /BC/.test(arrayToBeChecked[i+1])) {
-            var fourDigitsAndSValueBC = /\b\d{4}s/.exec(arrayToBeChecked[i]);
-            arrayOfYears["FourDigitsAndSBC"].push(parseInt(fourDigitsAndSValueBC[0].slice(0,4)));
-        } else if (/\b\d{3}s/.test(arrayToBeChecked[i]) && /BCE/.test(arrayToBeChecked[i+1])) {
-            var threeDigitsAndSBCEValue = /\b\d{3}s/.exec(arrayToBeChecked[i]);
-            arrayOfYears["ThreeDigitsAndSBCE"].push(parseInt(threeDigitsAndSBCEValue[0].slice(0,3)));
-        } else if (/\b\d{3}s/.test(arrayToBeChecked[i]) && /BC/.test(arrayToBeChecked[i+1])) {
-            var threeDigitsAndSBCValue = /\b\d{3}s/.exec(arrayToBeChecked[i]);
-            arrayOfYears["ThreeDigitsAndSBC"].push(parseInt(threeDigitsAndSBCValue[0].slice(0,3)));
-        } else if (/\b\d{3}s/.test(arrayToBeChecked[i]) && !/BCE?/.test(arrayToBeChecked[i+1])) {
-            var threeDigitsAndSValue = /\b\d{3}s/.exec(arrayToBeChecked[i]);
-            arrayOfYears["ThreeDigitsAndS"].push(parseInt(threeDigitsAndSValue[0].slice(0,3)));
-        } else if (/\b\d{3}(–|-)\d{3}\b/.test(arrayToBeChecked[i]) && /BCE\b/.test(arrayToBeChecked[i+1])) {
-            var dashThreeDigitsArrayBCE = [];
-            var matchDashThreeDigitsBCE = /\b(\d{3})(–|-)(\d{3})\b/.exec(arrayToBeChecked[i]);
-            dashThreeDigitsArrayBCE[0] = parseInt(RegExp.$1);
-            dashThreeDigitsArrayBCE[1] = parseInt(RegExp.$3);
-            arrayOfYears["ThreeDigitsDashThreeDigitsBCE"].push(dashThreeDigitsArrayBCE);
-        } else if (/\b\d{3}(–|-)\d{3}\b/.test(arrayToBeChecked[i]) && /BC\b/.test(arrayToBeChecked[i+1])) {
-            var dashThreeDigitsArrayBC = [];
-            var matchDashThreeDigitsBC = /\b(\d{3})(–|-)(\d{3})\b/.exec(arrayToBeChecked[i]);
-            dashThreeDigitsArrayBC[0] = parseInt(RegExp.$1);
-            dashThreeDigitsArrayBC[1] = parseInt(RegExp.$3);
-            arrayOfYears["ThreeDigitsDashThreeDigitsBC"].push(dashThreeDigitsArrayBC);
-        } else if (/\b\d{3}\b/.test(arrayToBeChecked[i]) && /BCE/.test(arrayToBeChecked[i+1])) {
-            arrayOfYears["ThreeDigitsYearBCE"].push(parseInt(/\b\d{3}\b/.exec(arrayToBeChecked[i])[0]));
-        } else if (/\b\d{3}\b/.test(arrayToBeChecked[i]) && /BC/.test(arrayToBeChecked[i+1])) {
-            arrayOfYears["ThreeDigitsYearBC"].push(parseInt(/\b\d{3}\b/.exec(arrayToBeChecked[i])[0]));
-        } else if (/\b\d{2}\b/.test(arrayToBeChecked[i]) && /BCE/.test(arrayToBeChecked[i+1])) {
-            arrayOfYears["TwoDigitsYearBCE"].push(parseInt(/\b\d{2}\b/.exec(arrayToBeChecked[i])[0]));
-        } else if (/\b\d{2}\b/.test(arrayToBeChecked[i]) && /BC/.test(arrayToBeChecked[i+1])) {
-            arrayOfYears["TwoDigitsYearBC"].push(parseInt(/\b\d{2}\b/.exec(arrayToBeChecked[i])[0]));
-        } else if (/\b\d{1}\b/.test(arrayToBeChecked[i]) && /BCE/.test(arrayToBeChecked[i+1])) {
-            arrayOfYears["OneDigitYearBCE"].push(parseInt(/\b\d{1}\b/.exec(arrayToBeChecked[i])[0]));
-        } else if (/\b\d{1}\b/.test(arrayToBeChecked[i]) && /BC/.test(arrayToBeChecked[i+1])) {
-            arrayOfYears["OneDigitYearBC"].push(parseInt(/\b\d{1}\b/.exec(arrayToBeChecked[i])[0]));
-        } else if (/\b\d{1}\b/.test(arrayToBeChecked[i]) && /AD/.test(arrayToBeChecked[i-1])) {
-            arrayOfYears["ADOneDigitYear"].push(parseInt(/\b\d{1}\b/.exec(arrayToBeChecked[i])[0]));
-        } else if (/\b\d{1}\b/.test(arrayToBeChecked[i])
-                    && /AD/.test(arrayToBeChecked[i+1])
-                    && !/–|-/.test(arrayToBeChecked[i])
-                    && !/–|-/.test(arrayToBeChecked[i-1])) {
-            arrayOfYears["OneDigitYearAD"].push(parseInt(/\b\d{1}\b/.exec(arrayToBeChecked[i])[0]));
-        } else if (/\b\d{1}\b/.test(arrayToBeChecked[i])
-                    && /CE/.test(arrayToBeChecked[i+1])
-                    && !/–|-/.test(arrayToBeChecked[i])
-                    && !/–|-/.test(arrayToBeChecked[i-1])) {
-            arrayOfYears["OneDigitYearCE"].push(parseInt(/\b\d{1}\b/.exec(arrayToBeChecked[i])[0]));
-        } else
-
-        // if (/\b\d{2}(–|-)\d{1,2}\b/.test(arrayToBeChecked[i])
-        //             && !/p+\.\s\d{2}/.test(arrayToBeChecked[i])
-        //             && !/p+\.\s/.test(arrayToBeChecked[i-1])
-        //             && /AD/.test(arrayToBeChecked[i+1])) {
-        //     var twoDashOneTwoDigitsArrayAD = [];
-        //     var matchTwoDashOneTwoDigitsAD = /\b(\d{2})(–|-)(\d{1,2})\b/.exec(arrayToBeChecked[i]);
-        //     twoDashOneTwoDigitsArrayAD[0] = parseInt(RegExp.$1);
-        //     twoDashOneTwoDigitsArrayAD[1] = parseInt(RegExp.$3);
-        //     arrayOfYears["TwoDigitsDashOneTwoDigitsAD"].push(twoDashOneTwoDigitsArrayAD);
-        // } else if (/\b\d{2}(–|-)\d{1,2}\b/.test(arrayToBeChecked[i])
-        //             && !/p+\.\s\d{2}/.test(arrayToBeChecked[i])
-        //             && !/p+\.\s/.test(arrayToBeChecked[i-1])
-        //             && /CE/.test(arrayToBeChecked[i+1])) {
-        //     var twoDashOneTwoDigitsArrayCE = [];
-        //     var matchTwoDashOneTwoDigitsCE = /\b(\d{2})(–|-)(\d{1,2})\b/.exec(arrayToBeChecked[i]);
-        //     twoDashOneTwoDigitsArrayCE[0] = parseInt(RegExp.$1);
-        //     twoDashOneTwoDigitsArrayCE[1] = parseInt(RegExp.$3);
-        //     arrayOfYears["TwoDigitsDashOneTwoDigitsCE"].push(twoDashOneTwoDigitsArrayCE);
-        // } else
-
-        if (/\b\d{2}\b/.test(arrayToBeChecked[i]) && /AD/.test(arrayToBeChecked[i-1])) {
-            arrayOfYears["ADTwoDigitsYear"].push(parseInt(/\b\d{2}\b/.exec(arrayToBeChecked[i])[0]));
-        } else if (/\b\d{2}\b/.test(arrayToBeChecked[i]) && /AD/.test(arrayToBeChecked[i+1])) {
-            arrayOfYears["TwoDigitsYearAD"].push(parseInt(/\b\d{2}\b/.exec(arrayToBeChecked[i])[0]));
-        } else if (/\b\d{2}\b/.test(arrayToBeChecked[i]) && /CE/.test(arrayToBeChecked[i+1])) {
-            arrayOfYears["TwoDigitsYearCE"].push(parseInt(/\b\d{2}\b/.exec(arrayToBeChecked[i])[0]));
-        } else if (/\b\d{3}\b/.test(arrayToBeChecked[i]) && /CE/.test(arrayToBeChecked[i+1])) {
-            arrayOfYears["ThreeDigitsYearCE"].push(parseInt(/\b\d{3}\b/.exec(arrayToBeChecked[i])[0]));
-        } else if (/\b\d{3}\b/.test(arrayToBeChecked[i]) && /AD/.test(arrayToBeChecked[i+1])) {
-            arrayOfYears["ThreeDigitsYearAD"].push(parseInt(/\b\d{3}\b/.exec(arrayToBeChecked[i])[0]));
-        } else if (/\b\d{4}\b/.test(arrayToBeChecked[i]) && /AD/.test(arrayToBeChecked[i+1])) {
-            arrayOfYears["FourDigitsYearAD"].push(parseInt(/\b\d{4}\b/.exec(arrayToBeChecked[i])[0]));
-        } else if (/\b\d{4}\b/.test(arrayToBeChecked[i]) && /CE/.test(arrayToBeChecked[i+1])) {
-            arrayOfYears["FourDigitsYearCE"].push(parseInt(/\b\d{4}\b/.exec(arrayToBeChecked[i])[0]));
-        } else if (/\b\d{3}(–|-)\d{3}\b/.test(arrayToBeChecked[i])
-                    && !/p+\.\s\d{3}/.test(arrayToBeChecked[i])
-                    && !/p+\.\s/.test(arrayToBeChecked[i-1])) {
-            var dashThreeDigitsArray = [];
-            var matchDashThreeDigits = /\b(\d{3})(–|-)(\d{3})\b/.exec(arrayToBeChecked[i]);
-            dashThreeDigitsArray[0] = parseInt(RegExp.$1);
-            dashThreeDigitsArray[1] = parseInt(RegExp.$3);
-            arrayOfYears["ThreeDigitsDashThreeDigits"].push(dashThreeDigitsArray);
-        } else  if (/\b\d{3}(–|-)\d{1,2}\b/.test(arrayToBeChecked[i])
-                    && !/p+\.\s\d{1,2}/.test(arrayToBeChecked[i])
-                    && !/p+\.\s/.test(arrayToBeChecked[i-1])) {
-            var threeDashOneTwoDigitsArray = [];
-            var matchThreeDashTwoDigits = /\b(\d{3})(–|-)(\d{1,2})\b/.exec(arrayToBeChecked[i]);
-            threeDashOneTwoDigitsArray[0] = parseInt(RegExp.$1);
-            threeDashOneTwoDigitsArray[1] = parseInt(RegExp.$3);
-            arrayOfYears["ThreeDigitsDashOneTwoDigits"].push(threeDashOneTwoDigitsArray);
-        } else if (/\b\d{3}\b(?!])(?!:)/.test(arrayToBeChecked[i])
-                    && !/(–|-)/i.test(arrayToBeChecked[i])
-                    && !/p+\.\s\d{3}/.test(arrayToBeChecked[i])
-                    && !/p+\.\s/.test(arrayToBeChecked[i-1])
-                    && /(in|by|during|year|ca\.|c\.|late|january|february|march|april|may|june|july|august|september|october|november|december)/i.test(arrayToBeChecked[i-1])
-                    && !/AD/.test(arrayToBeChecked[i+1])
-                    && !/BC/.test(arrayToBeChecked[i+1])) {
-            if (parseInt(/\b\d{3}\b/.exec(arrayToBeChecked[i])[0]) >= 100) {
-                arrayOfYears["ThreeDigitsYear"].push(parseInt(/\b\d{3}\b/.exec(arrayToBeChecked[i])[0]));
+        // 5 digits
+        if (/\b\d{5}\b/.test(arrayToBeChecked[i])) {
+            if (/\b\d{5}\b/.test(arrayToBeChecked[i]) && /BCE/.test(arrayToBeChecked[i+1])) {
+                arrayOfYears["FiveDigitsYearBCE"].push(parseInt(/\b\d{5}\b/.exec(arrayToBeChecked[i])[0]));
             }
-        } else if (/\b\d{4}s/.test(arrayToBeChecked[i]) && !/BCE?/.test(arrayToBeChecked[i+1])) {
-            var fourDigitsAndSValue = /\b\d{4}s/.exec(arrayToBeChecked[i]);
-            arrayOfYears["FourDigitsAndS"].push(parseInt(fourDigitsAndSValue[0].slice(0,4)));
-        } else if (/\b\d{4}(–|-)\d{4}\b/.test(arrayToBeChecked[i])) {
-            var dashFourDigitsArray = [];
-            var matchDashFourDigits = /\b(\d{4})(–|-)(\d{4})\b/.exec(arrayToBeChecked[i]);
-            dashFourDigitsArray[0] = parseInt(RegExp.$1);
-            dashFourDigitsArray[1] = parseInt(RegExp.$3);
-            arrayOfYears["FourDigitsDashFourDigits"].push(dashFourDigitsArray);
-        } else if (/\b\d{4}(-|–)\d{1,2}\b/.test(arrayToBeChecked[i])) {
-            var fourDashOneTwoDigitsArray = [];
-            var matchFourDashTwoDigits = /\b(\d{4})(–|-)(\d{1,2})\b/.exec(arrayToBeChecked[i]);
-            fourDashOneTwoDigitsArray[0] = parseInt(RegExp.$1);
-            fourDashOneTwoDigitsArray[1] = parseInt(RegExp.$3);
-            arrayOfYears["FourDigitsDashOneTwoDigits"].push(fourDashOneTwoDigitsArray);
-        } else if (/\b\d{4}\b/.test(arrayToBeChecked[i]) && !/[a-zA-Z]/.test(arrayToBeChecked[i])
-                    && !/BC/.test(arrayToBeChecked[i+1])
-                    && !/AD/.test(arrayToBeChecked[i+1])) {
-            if (parseInt(/\b\d{4}\b/.exec(arrayToBeChecked[i])[0]) <= 2200 && parseInt(/\b\d{4}\b/.exec(arrayToBeChecked[i])[0]) >= 1000) {
-                arrayOfYears["FourDigitsYear"].push(parseInt(/\b\d{4}\b/.exec(arrayToBeChecked[i])[0]));
+        }
+
+        // 4 digits
+        if (/\b\d{4}s?\b/.test(arrayToBeChecked[i])) {
+            // 4 digits AD
+            if (/\b\d{4}\b/.test(arrayToBeChecked[i]) && !/[a-zA-Z]/.test(arrayToBeChecked[i])
+                        && !/BC/.test(arrayToBeChecked[i+1])
+                        && !/AD/.test(arrayToBeChecked[i+1])) {
+                if (parseInt(/\b\d{4}\b/.exec(arrayToBeChecked[i])[0]) <= 2200 && parseInt(/\b\d{4}\b/.exec(arrayToBeChecked[i])[0]) >= 1000) {
+                    arrayOfYears["FourDigitsYear"].push(parseInt(/\b\d{4}\b/.exec(arrayToBeChecked[i])[0]));
+                }
+            }
+
+            if (/\b\d{4}\b/.test(arrayToBeChecked[i]) && /AD/.test(arrayToBeChecked[i+1])) {
+                arrayOfYears["FourDigitsYearAD"].push(parseInt(/\b\d{4}\b/.exec(arrayToBeChecked[i])[0]));
+            }
+
+            if (/\b\d{4}\b/.test(arrayToBeChecked[i]) && /CE/.test(arrayToBeChecked[i+1])) {
+                arrayOfYears["FourDigitsYearCE"].push(parseInt(/\b\d{4}\b/.exec(arrayToBeChecked[i])[0]));
+            }
+
+            if (/\b\d{4}s/.test(arrayToBeChecked[i]) && !/BCE?/.test(arrayToBeChecked[i+1])) {
+                var fourDigitsAndSValue = /\b\d{4}s/.exec(arrayToBeChecked[i]);
+                arrayOfYears["FourDigitsAndS"].push(parseInt(fourDigitsAndSValue[0].slice(0,4)));
+            }
+
+            if (/\b\d{4}(–|-)\d{4}\b/.test(arrayToBeChecked[i])) {
+                var dashFourDigitsArray = [];
+                var matchDashFourDigits = /\b(\d{4})(–|-)(\d{4})\b/.exec(arrayToBeChecked[i]);
+                dashFourDigitsArray[0] = parseInt(RegExp.$1);
+                dashFourDigitsArray[1] = parseInt(RegExp.$3);
+                arrayOfYears["FourDigitsDashFourDigits"].push(dashFourDigitsArray);
+            }
+
+            if (/\b\d{4}(-|–)\d{1,2}\b/.test(arrayToBeChecked[i])) {
+                var fourDashOneTwoDigitsArray = [];
+                var matchFourDashTwoDigits = /\b(\d{4})(–|-)(\d{1,2})\b/.exec(arrayToBeChecked[i]);
+                fourDashOneTwoDigitsArray[0] = parseInt(RegExp.$1);
+                fourDashOneTwoDigitsArray[1] = parseInt(RegExp.$3);
+                arrayOfYears["FourDigitsDashOneTwoDigits"].push(fourDashOneTwoDigitsArray);
+            }
+
+
+            // 4 digits BC
+            if (/\b\d{4}s/.test(arrayToBeChecked[i]) && /BC/.test(arrayToBeChecked[i+1])) {
+                var fourDigitsAndSValueBC = /\b\d{4}s/.exec(arrayToBeChecked[i]);
+                arrayOfYears["FourDigitsAndSBC"].push(parseInt(fourDigitsAndSValueBC[0].slice(0,4)));
+            }
+
+            if (/\b\d{4}s/.test(arrayToBeChecked[i]) && /BCE/.test(arrayToBeChecked[i+1])) {
+                var fourDigitsAndSValueBCE = /\b\d{4}s/.exec(arrayToBeChecked[i]);
+                arrayOfYears["FourDigitsAndSBCE"].push(parseInt(fourDigitsAndSValueBCE[0].slice(0,4)));
+            }
+
+            if (/\b\d{4}\b/.test(arrayToBeChecked[i]) && /BC/.test(arrayToBeChecked[i+1])) {
+                arrayOfYears["FourDigitsYearBC"].push(parseInt(/\b\d{4}\b/.exec(arrayToBeChecked[i])[0]));
+            }
+
+            if (/\b\d{4}\b/.test(arrayToBeChecked[i]) && /BCE/.test(arrayToBeChecked[i+1])) {
+                arrayOfYears["FourDigitsYearBCE"].push(parseInt(/\b\d{4}\b/.exec(arrayToBeChecked[i])[0]));
+            }
+        }
+
+        // 3 digits
+        if (/\b\d{3}s?\b/.test(arrayToBeChecked[i])) {
+            // 3 digits AD
+            if (/\b\d{3}\b(?!])(?!:)/.test(arrayToBeChecked[i])
+                        && !/(–|-)/i.test(arrayToBeChecked[i])
+                        && !/p+\.\s\d{3}/.test(arrayToBeChecked[i])
+                        && !/p+\.\s/.test(arrayToBeChecked[i-1])
+                        && /(in|by|during|year|ca\.|c\.|late|january|february|march|april|may|june|july|august|september|october|november|december)/i.test(arrayToBeChecked[i-1])
+                        && !/AD/.test(arrayToBeChecked[i+1])
+                        && !/BC/.test(arrayToBeChecked[i+1])) {
+                if (parseInt(/\b\d{3}\b/.exec(arrayToBeChecked[i])[0]) >= 100) {
+                    arrayOfYears["ThreeDigitsYear"].push(parseInt(/\b\d{3}\b/.exec(arrayToBeChecked[i])[0]));
+                }
+            }
+
+            if (/\b\d{3}\b/.test(arrayToBeChecked[i]) && /AD/.test(arrayToBeChecked[i+1])) {
+                arrayOfYears["ThreeDigitsYearAD"].push(parseInt(/\b\d{3}\b/.exec(arrayToBeChecked[i])[0]));
+            }
+
+            if (/\b\d{3}\b/.test(arrayToBeChecked[i]) && /AD/.test(arrayToBeChecked[i-1])) {
+                arrayOfYears["ADThreeDigitsYear"].push(parseInt(/\b\d{3}\b/.exec(arrayToBeChecked[i])[0]));
+            }
+
+            if (/\b\d{3}\b/.test(arrayToBeChecked[i]) && /CE/.test(arrayToBeChecked[i+1])) {
+                arrayOfYears["ThreeDigitsYearCE"].push(parseInt(/\b\d{3}\b/.exec(arrayToBeChecked[i])[0]));
+            }
+
+            if (/\b\d{3}s/.test(arrayToBeChecked[i]) && !/BCE?/.test(arrayToBeChecked[i+1])) {
+                var threeDigitsAndSValue = /\b\d{3}s/.exec(arrayToBeChecked[i]);
+                arrayOfYears["ThreeDigitsAndS"].push(parseInt(threeDigitsAndSValue[0].slice(0,3)));
+            }
+
+            if (/\b\d{3}(–|-)\d{3}\b/.test(arrayToBeChecked[i])
+                        && !/p+\.\s\d{3}/.test(arrayToBeChecked[i])
+                        && !/p+\.\s/.test(arrayToBeChecked[i-1])) {
+                var dashThreeDigitsArray = [];
+                var matchDashThreeDigits = /\b(\d{3})(–|-)(\d{3})\b/.exec(arrayToBeChecked[i]);
+                dashThreeDigitsArray[0] = parseInt(RegExp.$1);
+                dashThreeDigitsArray[1] = parseInt(RegExp.$3);
+                arrayOfYears["ThreeDigitsDashThreeDigits"].push(dashThreeDigitsArray);
+            }
+
+            if (/\b\d{3}(–|-)\d{1,2}\b/.test(arrayToBeChecked[i])
+                        && !/p+\.\s\d{1,2}/.test(arrayToBeChecked[i])
+                        && !/p+\.\s/.test(arrayToBeChecked[i-1])) {
+                var threeDashOneTwoDigitsArray = [];
+                var matchThreeDashTwoDigits = /\b(\d{3})(–|-)(\d{1,2})\b/.exec(arrayToBeChecked[i]);
+                threeDashOneTwoDigitsArray[0] = parseInt(RegExp.$1);
+                threeDashOneTwoDigitsArray[1] = parseInt(RegExp.$3);
+                arrayOfYears["ThreeDigitsDashOneTwoDigits"].push(threeDashOneTwoDigitsArray);
+            }
+
+
+            // 3 digits BC
+            if (/\b\d{3}\b/.test(arrayToBeChecked[i]) && /BC/.test(arrayToBeChecked[i+1])) {
+                arrayOfYears["ThreeDigitsYearBC"].push(parseInt(/\b\d{3}\b/.exec(arrayToBeChecked[i])[0]));
+            }
+
+            if (/\b\d{3}\b/.test(arrayToBeChecked[i]) && /BCE/.test(arrayToBeChecked[i+1])) {
+                arrayOfYears["ThreeDigitsYearBCE"].push(parseInt(/\b\d{3}\b/.exec(arrayToBeChecked[i])[0]));
+            }
+
+            if (/\b\d{3}s/.test(arrayToBeChecked[i]) && /BC/.test(arrayToBeChecked[i+1])) {
+                var threeDigitsAndSBCValue = /\b\d{3}s/.exec(arrayToBeChecked[i]);
+                arrayOfYears["ThreeDigitsAndSBC"].push(parseInt(threeDigitsAndSBCValue[0].slice(0,3)));
+            }
+
+            if (/\b\d{3}s/.test(arrayToBeChecked[i]) && /BCE/.test(arrayToBeChecked[i+1])) {
+                var threeDigitsAndSBCEValue = /\b\d{3}s/.exec(arrayToBeChecked[i]);
+                arrayOfYears["ThreeDigitsAndSBCE"].push(parseInt(threeDigitsAndSBCEValue[0].slice(0,3)));
+            }
+
+            if (/\b\d{3}(–|-)\d{3}\b/.test(arrayToBeChecked[i]) && /BC\b/.test(arrayToBeChecked[i+1])) {
+                var dashThreeDigitsArrayBC = [];
+                var matchDashThreeDigitsBC = /\b(\d{3})(–|-)(\d{3})\b/.exec(arrayToBeChecked[i]);
+                dashThreeDigitsArrayBC[0] = parseInt(RegExp.$1);
+                dashThreeDigitsArrayBC[1] = parseInt(RegExp.$3);
+                arrayOfYears["ThreeDigitsDashThreeDigitsBC"].push(dashThreeDigitsArrayBC);
+            }
+
+            if (/\b\d{3}(–|-)\d{3}\b/.test(arrayToBeChecked[i]) && /BCE\b/.test(arrayToBeChecked[i+1])) {
+                var dashThreeDigitsArrayBCE = [];
+                var matchDashThreeDigitsBCE = /\b(\d{3})(–|-)(\d{3})\b/.exec(arrayToBeChecked[i]);
+                dashThreeDigitsArrayBCE[0] = parseInt(RegExp.$1);
+                dashThreeDigitsArrayBCE[1] = parseInt(RegExp.$3);
+                arrayOfYears["ThreeDigitsDashThreeDigitsBCE"].push(dashThreeDigitsArrayBCE);
+            }
+        }
+
+        // 2 digits
+        if (/\b\d{2}\b/.test(arrayToBeChecked[i])) {
+            // 2 digits AD
+            if (/\b\d{2}\b/.test(arrayToBeChecked[i]) && /AD/.test(arrayToBeChecked[i+1])) {
+                arrayOfYears["TwoDigitsYearAD"].push(parseInt(/\b\d{2}\b/.exec(arrayToBeChecked[i])[0]));
+            }
+            if (/\b\d{2}\b/.test(arrayToBeChecked[i]) && /CE/.test(arrayToBeChecked[i+1])) {
+                arrayOfYears["TwoDigitsYearCE"].push(parseInt(/\b\d{2}\b/.exec(arrayToBeChecked[i])[0]));
+            }
+            if (/\b\d{2}\b/.test(arrayToBeChecked[i]) && /AD/.test(arrayToBeChecked[i-1])) {
+                arrayOfYears["ADTwoDigitsYear"].push(parseInt(/\b\d{2}\b/.exec(arrayToBeChecked[i])[0]));
+            }
+            if (/\b\d{2}(–|-)\d{1,2}\b/.test(arrayToBeChecked[i])
+                        && !/p+\.\s\d{2}/.test(arrayToBeChecked[i])
+                        && !/p+\.\s/.test(arrayToBeChecked[i-1])
+                        && /AD/.test(arrayToBeChecked[i+1])) {
+                var twoDashOneTwoDigitsArrayAD = [];
+                var matchTwoDashOneTwoDigitsAD = /\b(\d{2})(–|-)(\d{1,2})\b/.exec(arrayToBeChecked[i]);
+                twoDashOneTwoDigitsArrayAD[0] = parseInt(RegExp.$1);
+                twoDashOneTwoDigitsArrayAD[1] = parseInt(RegExp.$3);
+                arrayOfYears["TwoDigitsDashOneTwoDigitsAD"].push(twoDashOneTwoDigitsArrayAD);
+            }
+            if (/\b\d{2}(–|-)\d{1,2}\b/.test(arrayToBeChecked[i])
+                        && !/p+\.\s\d{2}/.test(arrayToBeChecked[i])
+                        && !/p+\.\s/.test(arrayToBeChecked[i-1])
+                        && /CE/.test(arrayToBeChecked[i+1])) {
+                var twoDashOneTwoDigitsArrayCE = [];
+                var matchTwoDashOneTwoDigitsCE = /\b(\d{2})(–|-)(\d{1,2})\b/.exec(arrayToBeChecked[i]);
+                twoDashOneTwoDigitsArrayCE[0] = parseInt(RegExp.$1);
+                twoDashOneTwoDigitsArrayCE[1] = parseInt(RegExp.$3);
+                arrayOfYears["TwoDigitsDashOneTwoDigitsCE"].push(twoDashOneTwoDigitsArrayCE);
+            }
+
+            // 2 digits BC
+            if (/\b\d{2}\b/.test(arrayToBeChecked[i]) && /BCE/.test(arrayToBeChecked[i+1])) {
+                arrayOfYears["TwoDigitsYearBCE"].push(parseInt(/\b\d{2}\b/.exec(arrayToBeChecked[i])[0]));
+            }
+            if (/\b\d{2}\b/.test(arrayToBeChecked[i]) && /BC/.test(arrayToBeChecked[i+1])) {
+                arrayOfYears["TwoDigitsYearBC"].push(parseInt(/\b\d{2}\b/.exec(arrayToBeChecked[i])[0]));
+            }
+        }
+
+        // 1 digits
+        if (/\b\d{1}\b/.test(arrayToBeChecked[i])) {
+            // 1 digit AD
+            if (/\b\d{1}\b/.test(arrayToBeChecked[i]) && /AD/.test(arrayToBeChecked[i-1])) {
+                arrayOfYears["ADOneDigitYear"].push(parseInt(/\b\d{1}\b/.exec(arrayToBeChecked[i])[0]));
+            }
+            if (/\b\d{1}\b/.test(arrayToBeChecked[i])
+                        && /AD/.test(arrayToBeChecked[i+1])
+                        && !/–|-/.test(arrayToBeChecked[i])
+                        && !/–|-/.test(arrayToBeChecked[i-1])) {
+                arrayOfYears["OneDigitYearAD"].push(parseInt(/\b\d{1}\b/.exec(arrayToBeChecked[i])[0]));
+            }
+            if (/\b\d{1}\b/.test(arrayToBeChecked[i])
+                        && /CE/.test(arrayToBeChecked[i+1])
+                        && !/–|-/.test(arrayToBeChecked[i])
+                        && !/–|-/.test(arrayToBeChecked[i-1])) {
+                arrayOfYears["OneDigitYearCE"].push(parseInt(/\b\d{1}\b/.exec(arrayToBeChecked[i])[0]));
+            }
+
+            // 1 digit BC
+            if (/\b\d{1}\b/.test(arrayToBeChecked[i]) && /BCE/.test(arrayToBeChecked[i+1])) {
+                arrayOfYears["OneDigitYearBCE"].push(parseInt(/\b\d{1}\b/.exec(arrayToBeChecked[i])[0]));
+            }
+            if (/\b\d{1}\b/.test(arrayToBeChecked[i]) && /BC/.test(arrayToBeChecked[i+1])) {
+                arrayOfYears["OneDigitYearBC"].push(parseInt(/\b\d{1}\b/.exec(arrayToBeChecked[i])[0]));
             }
         }
     }
-
-    // some issues appeared with ThreeDigitsYearAD / CE
-    for (var i = 0; i < arrayToBeChecked.length; i++) {
-        if (/\b\d{3}\b/.test(arrayToBeChecked[i]) && /AD/.test(arrayToBeChecked[i-1])) {
-            arrayOfYears["ADThreeDigitsYear"].push(parseInt(/\b\d{3}\b/.exec(arrayToBeChecked[i])[0]));
-        }
-        if (/\b\d{2}(–|-)\d{1,2}\b/.test(arrayToBeChecked[i])
-                    && !/p+\.\s\d{2}/.test(arrayToBeChecked[i])
-                    && !/p+\.\s/.test(arrayToBeChecked[i-1])
-                    && /CE/.test(arrayToBeChecked[i+1])) {
-            var twoDashOneTwoDigitsArrayCE = [];
-            var matchTwoDashOneTwoDigitsCE = /\b(\d{2})(–|-)(\d{1,2})\b/.exec(arrayToBeChecked[i]);
-            twoDashOneTwoDigitsArrayCE[0] = parseInt(RegExp.$1);
-            twoDashOneTwoDigitsArrayCE[1] = parseInt(RegExp.$3);
-            arrayOfYears["TwoDigitsDashOneTwoDigitsCE"].push(twoDashOneTwoDigitsArrayCE);
-        }
-        if (/\b\d{2}(–|-)\d{1,2}\b/.test(arrayToBeChecked[i])
-                    && !/p+\.\s\d{2}/.test(arrayToBeChecked[i])
-                    && !/p+\.\s/.test(arrayToBeChecked[i-1])
-                    && /AD/.test(arrayToBeChecked[i+1])) {
-            var twoDashOneTwoDigitsArrayAD = [];
-            var matchTwoDashOneTwoDigitsAD = /\b(\d{2})(–|-)(\d{1,2})\b/.exec(arrayToBeChecked[i]);
-            twoDashOneTwoDigitsArrayAD[0] = parseInt(RegExp.$1);
-            twoDashOneTwoDigitsArrayAD[1] = parseInt(RegExp.$3);
-            arrayOfYears["TwoDigitsDashOneTwoDigitsAD"].push(twoDashOneTwoDigitsArrayAD);
-        }
-        if (/\b\d{1}\b/.test(arrayToBeChecked[i])
-                    && /AD/.test(arrayToBeChecked[i+1])
-                    && !/–|-/.test(arrayToBeChecked[i])
-                    && !/–|-/.test(arrayToBeChecked[i-1])) {
-            arrayOfYears["OneDigitYearAD"].push(parseInt(/\b\d{1}\b/.exec(arrayToBeChecked[i])[0]));
-        }
-        if (/\b\d{1}\b/.test(arrayToBeChecked[i])
-                    && /CE/.test(arrayToBeChecked[i+1])
-                    && !/–|-/.test(arrayToBeChecked[i])
-                    && !/–|-/.test(arrayToBeChecked[i-1])) {
-            arrayOfYears["OneDigitYearCE"].push(parseInt(/\b\d{1}\b/.exec(arrayToBeChecked[i])[0]));
-        }
-    }
-
 
     // #### for testing
     // for (var i = 0; i < arrayToBeChecked.length; i++) {
     //
     // }
-
 
     return arrayOfYears;
 }
@@ -377,6 +419,7 @@ arrayOfYears["FiveDigitsYearBCE"] = unique(arrayOfYears["FiveDigitsYearBCE"]);
 
 arrayOfYears["FourDigitsYear"] = unique(arrayOfYears["FourDigitsYear"]);
 arrayOfYears["FourDigitsYearAD"] = unique(arrayOfYears["FourDigitsYearAD"]);
+arrayOfYears["FourDigitsYearCE"] = unique(arrayOfYears["FourDigitsYearCE"]);
 arrayOfYears["FourDigitsAndS"] = unique(arrayOfYears["FourDigitsAndS"]);
 arrayOfYears["FourDigitsDashFourDigits"] = unique(arrayOfYears["FourDigitsDashFourDigits"]);
 arrayOfYears["FourDigitsDashOneTwoDigits"] = unique(arrayOfYears["FourDigitsDashOneTwoDigits"]);
