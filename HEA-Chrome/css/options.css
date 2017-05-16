@@ -8,6 +8,10 @@ html, body {
     padding: 5px;
 }
 
+hr {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
 .container {
     width: 100%;
 }
@@ -29,17 +33,13 @@ h1 {
     padding-left: 5px;
 }
 
-.TopTextField {
-    padding-bottom: 10px;
-}
-
 .TopTextField p {
     margin-top: 0px;
     text-align: justify;
 }
 
 .BottomTextField {
-    padding-top: 10px;
+    padding-top: 5px;
 }
 
 .spanDefault {
@@ -73,7 +73,7 @@ a:hover {
 
 #btn-reset {
     margin-top: 5px;
-    margin-bottom: 15px;
+    margin-bottom: 5px;
     border: none;
     width: 100%;
     padding: 7px;
