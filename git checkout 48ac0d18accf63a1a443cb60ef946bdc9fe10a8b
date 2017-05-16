@@ -1,0 +1,218 @@
+[33mcommit a93d5a4a5ff86469d8eab74951652bda4210cba0[m
+Author: Jan Cavel <caveljan@gmail.com>
+Date:   Tue May 16 12:32:03 2017 +0300
+
+    delete in control for
+
+[33mcommit 48ac0d18accf63a1a443cb60ef946bdc9fe10a8b[m
+Author: Jan Cavel <caveljan@gmail.com>
+Date:   Tue May 16 12:21:59 2017 +0300
+
+    pre-delete in control for
+
+[33mcommit e4fb4a315afc8f291b2555e08cc9b80e2a32ced6[m
+Author: Jan Cavel <caveljan@gmail.com>
+Date:   Tue May 16 11:35:20 2017 +0300
+
+    pre-else clear
+
+[33mcommit f099ae45f62378de83a41a2f3d0ee69feef11717[m
+Author: Jan Cavel <caveljan@gmail.com>
+Date:   Mon May 15 17:23:51 2017 +0300
+
+    Minor bugs. AD Digits Year
+
+[33mcommit dacb245d9c6079aca6491463ea35962ac907bf7b[m
+Author: Jan Cavel <caveljan@gmail.com>
+Date:   Wed May 10 19:42:25 2017 +0300
+
+    Minor fiex
+
+[33mcommit 27a8e425d5b8661f0add47608124ef3b95992a29[m
+Author: Jan Cavel <caveljan@gmail.com>
+Date:   Wed May 10 18:04:41 2017 +0300
+
+    Some fixes.  FourDigitsAndSBC
+
+[33mcommit e946310c2271c6d5f15bbc3f5b3af93bcb472839[m
+Author: Jan Cavel <caveljan@gmail.com>
+Date:   Tue May 9 17:09:14 2017 +0300
+
+    ThreeDigitAndS
+
+[33mcommit 6d2df40284061995525bacaca5827c55c4e89402[m
+Author: Jan Cavel <caveljan@gmail.com>
+Date:   Tue May 9 13:47:43 2017 +0300
+
+    some optimization to cleanArray();
+
+[33mcommit e387b32467cde29e690f41d240262886ab702574[m
+Author: Jan Cavel <caveljan@gmail.com>
+Date:   Mon May 8 18:44:13 2017 +0300
+
+    optimization cleanArray();
+
+[33mcommit aea5783cf22b746cfc6a9b2bcf7948afe0660758[m
+Author: Jan Cavel <caveljan@gmail.com>
+Date:   Mon May 8 18:34:30 2017 +0300
+
+    Bug fix at FourDigitsDashOneTwoDigits Array
+
+[33mcommit b0145a1ee80e7e09e2010a1cdb1c6c5ca1e3fe9c[m
+Author: Jan Cavel <caveljan@gmail.com>
+Date:   Mon May 8 18:30:23 2017 +0300
+
+    modified cleanArray();
+
+[33mcommit ea86d1c87d3a95bb691065f5c62a4a79a0933963[m
+Author: Jan Cavel <caveljan@gmail.com>
+Date:   Mon May 8 17:43:58 2017 +0300
+
+    Minor bugs fix
+
+[33mcommit 4eba0f30c96641466683b355cd82d65adabff9ef[m
+Author: Jan Cavel <caveljan@gmail.com>
+Date:   Mon May 8 17:26:33 2017 +0300
+
+    Some performance optimization
+
+[33mcommit e478940d963d9016e07ec23fe5162f003c3e3b17[m
+Author: Jan Cavel <caveljan@gmail.com>
+Date:   Mon May 8 16:52:11 2017 +0300
+
+    Code arrangement
+
+[33mcommit 53bbdd8db21f81b2c58373fabc68841dd854c873[m
+Author: Jan Cavel <caveljan@gmail.com>
+Date:   Mon May 8 12:53:40 2017 +0300
+
+    Fixed issues with wrong ISBN tracking
+
+[33mcommit f18f39585979e00af52c6ef9933968fd0ecece54[m
+Author: Jan Cavel <caveljan@gmail.com>
+Date:   Sun May 7 19:40:30 2017 +0300
+
+    Messy 3 digits. Century replacement BC
+
+[33mcommit 115bd5e6b9bc95b2195a2e021ea254a8443ca121[m
+Author: Jan Cavel <caveljan@gmail.com>
+Date:   Sat May 6 18:39:37 2017 +0300
+
+    Work on Three Digits. Testing File
+
+[33mcommit 2b796d24d4b31b771be40baa20776a6bbf1e7a0a[m
+Author: Jan Cavel <caveljan@gmail.com>
+Date:   Fri May 5 14:20:37 2017 +0300
+
+    Semiworking up to 5 digits year BC
+
+[33mcommit a0c69d679b88096bd51313612f52eda7da4e41a0[m
+Author: Jan Cavel <caveljan@gmail.com>
+Date:   Thu May 4 18:26:06 2017 +0300
+
+    Issues with lookbehind
+
+[33mcommit e0d652a3ec6050c932a8d72926dac99b47e9f9ae[m
+Author: Jan Cavel <caveljan@gmail.com>
+Date:   Wed May 3 12:49:41 2017 +0300
+
+    Three digits year after 1AD semi working
+
+[33mcommit 2c9188318eacef22829e38ebca6419f92aaf1bdc[m
+Author: Jan Cavel <caveljan@gmail.com>
+Date:   Wed May 3 11:22:08 2017 +0300
+
+    Working 4 digits year
+
+[33mcommit ac64641c1d97f62639619b3655d8c2eaedf905f3[m
+Author: Jan Cavel <caveljan@gmail.com>
+Date:   Tue May 2 22:36:41 2017 +0300
+
+    Removed duplicates from arrays
+
+[33mcommit 078992db7e16cdcdf6148e595b5dbaa6b16aa2a1[m
+Author: Jan Cavel <caveljan@gmail.com>
+Date:   Tue May 2 19:00:48 2017 +0300
+
+    Work on arrays and regexp
+
+[33mcommit 54b4ca95897df36cdc6380950b05a4fc52d517f1[m
+Author: Jan Cavel <caveljan@gmail.com>
+Date:   Tue May 2 16:08:54 2017 +0300
+
+    Made different arrays, testing with regex. In progress
+
+[33mcommit 79e5650a76fc65a28695d5f7a171f8db0f1a1fa2[m
+Author: Jan Cavel <caveljan@gmail.com>
+Date:   Tue May 2 11:49:10 2017 +0300
+
+    Issues with 3 digit numbers
+
+[33mcommit 6169808d98a892611d68858d3209d6f4a281985c[m
+Author: Jan Cavel <caveljan@gmail.com>
+Date:   Tue May 2 11:18:19 2017 +0300
+
+    Working version for years between 1000-2100
+
+[33mcommit c78447e19952be24e97f4dd4a494a306947f67e9[m
+Author: Jan Cavel <caveljan@gmail.com>
+Date:   Sun Apr 30 15:21:35 2017 +0300
+
+    Century replacement rules
+
+[33mcommit 2513497f517205ebde35ec41d0cedb38fbeefa95[m
+Author: Jan Cavel <caveljan@gmail.com>
+Date:   Sun Apr 30 11:40:49 2017 +0300
+
+    Works goodish for the time interval 1000-2100 AD
+    
+    Some issues with 1960s and so on [Doesn't see the number]. And with "x
+    printed 1025 copies of" [Thinks 1025 is a year and replaces it].
+
+[33mcommit 3c29661654bfedfbcaddbd8ed4f3d14bca4a96b8[m
+Author: Jan Cavel <caveljan@gmail.com>
+Date:   Sun Apr 30 10:43:11 2017 +0300
+
+    A bit better working with 4 digits. Still issues
+
+[33mcommit 8ceea2929850bbb3d51ef8a21bfdfaa1d4d0f04f[m
+Author: Jan Cavel <caveljan@gmail.com>
+Date:   Thu Apr 20 21:25:04 2017 +0300
+
+    Semi-working for 4 digits year number
+
+[33mcommit 48a0f057f8561bec67c4225e74a62183f3357c38[m
+Author: Jan Cavel <caveljan@gmail.com>
+Date:   Thu Apr 20 20:51:37 2017 +0300
+
+    Messy
+
+[33mcommit 73ad8b5a7910c3950c9d15e64f035da702689d4b[m
+Author: Jan Cavel <caveljan@gmail.com>
+Date:   Sun Apr 16 12:07:10 2017 +0300
+
+    Some mess. Achieved: get html text into array and clean it down to numbers.
+
+[33mcommit 55bf0bd11f71ed899cb4c408c7c2c8522d63f572[m
+Author: Jan Cavel <caveljan@gmail.com>
+Date:   Mon Feb 20 16:11:09 2017 +0200
+
+    HTML form setup, reset button, manifest permissions/contentscript
+
+[33mcommit f43570e3e099d2aedc75be7a71190cd875e5dda0[m
+Author: Jan Cavel <caveljan@gmail.com>
+Date:   Sun Feb 19 05:48:37 2017 +0200
+
+    Edit
+
+[33mcommit ddfcb7795abe11a6712e96735ba7bb6d7fd76e36[m
+Author: Jan Cavel <caveljan@gmail.com>
+Date:   Sun Feb 19 05:45:08 2017 +0200
+
+    Create README.md
+
+[33mcommit 8a95a355bd5c06e922b5cc0cd8a2a6dd106f9066[m
+Author: Jan Cavel <caveljan@gmail.com>
+Date:   Sun Feb 19 05:40:33 2017 +0200
+
+    Initial commit: basic look and features (HTML/CSS)
