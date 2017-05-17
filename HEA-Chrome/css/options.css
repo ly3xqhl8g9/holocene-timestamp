@@ -71,11 +71,16 @@ a:hover {
     text-decoration: underline;
 }
 
-#btn-reset {
+.button {
     margin-top: 5px;
     margin-bottom: 5px;
     border: none;
     width: 100%;
     padding: 7px;
     font-size: 12px;
+}
+
+#status-save,
+#status-default {
+    text-align: center;
 }
