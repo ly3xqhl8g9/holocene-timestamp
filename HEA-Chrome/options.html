@@ -22,7 +22,7 @@
                 <div class="OptionsField">
                     <fieldset id="activeOptionsForm">
                         <h1>Active</h1>
-                        <input type="radio" name="activeOptionsForm" value="onWiki" id="onWiki" checked><label for="onWiki">only on Wikipedia/Wikiwand <span class="spanDefault">[default]</span></label><br>
+                        <input type="radio" name="activeOptionsForm" value="onWiki" id="onWiki"><label for="onWiki">only on Wikipedia/Wikiwand <span class="spanDefault">[default]</span></label><br>
                         <input type="radio" name="activeOptionsForm" value="onSite" id="onSite"><label for="onSite">on every site</label><br>
                         <input type="radio" name="activeOptionsForm" value="off" id="off"><label for="off">off</label><br>
                     </fieldset>
@@ -70,7 +70,10 @@
                     </fieldset>
                 </div>
             </form>
-            <button type="reset" id="btn-reset" form="OptionsForm">Reset to default</button>
+            <div id="status-save"></div>
+            <button type="reset" class="button" id="btn-save" form="OptionsForm">Save Options</button>
+            <button type="reset" class="button" id="btn-reset" form="OptionsForm">Reset to Default</button>
+            <div id="status-default"></div>
 
             <hr>
 
@@ -95,10 +98,11 @@
                 <h1>Support</h1>
                 <p>If you can spare it, your <a href="https://www.paypal.me/caveljan">support</a> will be appreciated.</p>
             </div>
+
         </div>
 
         <script src="js/jquery-3.1.1.min.js"></script>
-        <script src="js/popup_script.js"></script>
+        <script src="js/options.js"></script>
 
     </body>
 </html>
