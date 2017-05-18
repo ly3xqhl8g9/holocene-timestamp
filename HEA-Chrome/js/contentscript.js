@@ -1,5 +1,5 @@
 chrome.storage.sync.get(['activeOptions', 'insertBefore', 'insertBetween', 'holoceneStyle', 'holoceneAnchor', 'holoceneReplace'], function(element) {
-    var options = {}
+    var options = {};
 
     var activeOptions = element['activeOptions'];
     var insertBefore = element['insertBefore'];
@@ -8,20 +8,18 @@ chrome.storage.sync.get(['activeOptions', 'insertBefore', 'insertBetween', 'holo
     var holoceneAnchor = element['holoceneAnchor'];
     var holoceneReplace = element['holoceneReplace'];
 
-    var options["activeOptions"] = activeOptions;
-    var options["insertBefore"] = insertBefore;
-    var options["insertBetween"] = insertBetween;
-    var options["holoceneStyle"] = holoceneStyle;
-    var options["holoceneAnchor"] = holoceneAnchor;
-    var options["holoceneReplace"] = holoceneReplace;
+    options['activeOptions'] = activeOptions;
+    options['insertBefore'] = insertBefore;
+    options['insertBetween'] = insertBetween;
+    options['holoceneStyle'] = holoceneStyle;
+    options['holoceneAnchor'] = holoceneAnchor;
+    options['holoceneReplace'] = holoceneReplace;
 
+    _main_(options);
 });
 
 
-
-
-
-function _main_ () {
+function _main_ (options) {
     // ##########################################################################
     // ### Ben Alman's replaceText plugin
     // ### http://www.benalman.com/projects/jquery-replacetext-plugin/
@@ -51,11 +49,8 @@ function _main_ () {
         });
     };
 
-    _main_replacementRules(_main_unique(_main_makeArrays(_main_clearArray(_main_extractText()))));
-    _main_centuryReplacement();
+    _main_replacementRules(_main_unique(_main_makeArrays(_main_clearArray(_main_extractText()))), options);
 }
-
-_main_();
 
 
 // ##########################################################################
@@ -525,7 +520,59 @@ function _main_unique (arrayOfYears) {
 
 // ##########################################################################
 // #### replacement rules based on the years that are in the arrays of arrays
-function _main_replacementRules (arrayOfYears) {
+// #### and century replacement rules
+function _main_replacementRules (arrayOfYears, options) {
+    // #### Options setup
+    if (options['insertBefore'] == 'before') {
+        var insertBefore = true;
+    } else if (options['insertBefore'] == 'after') {
+        var insertBefore = false;
+    }
+
+    if (options['insertBetween'] == 'brackets') {
+        var startInsertBetween = '[';
+        var endInsertBetween = ']';
+    } else if (options['insertBetween'] == 'accolades') {
+        var startInsertBetween = '{';
+        var endInsertBetween = '}';
+    } else if (options['insertBetween'] == 'slashes') {
+        var startInsertBetween = '/';
+        var endInsertBetween = '/';
+    } else if (options['insertBetween'] == 'nothing') {
+        var startInsertBetween = '';
+        var endInsertBetween = '';
+    }
+
+    if (options['holoceneStyle'] == 'regular') {
+        var startHoloceneStyle = '';
+        var endHoloceneStyle = '';
+    } else if (options['holoceneStyle'] == 'italic') {
+        var startHoloceneStyle = '<i>';
+        var endHoloceneStyle = '</i>';
+    }
+
+    if (options['holoceneAnchor'] == 'yesAnchor') {
+        var startHoloceneAnchor = ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE';
+        var endHoloceneAnchor = '</a>';
+    } else if (options['holoceneAnchor'] == 'noAnchor') {
+        var startHoloceneAnchor = ' HE';
+        var endHoloceneAnchor = '';
+    }
+
+    if (options['holoceneReplace'] == 'yesReplace') {
+        var holoceneReplace = true;
+    } else if (options['holoceneReplace'] == 'noReplace') {
+        var holoceneReplace = false;
+    }
+
+    // console.log("insertBefore:", insertBefore);
+    // console.log("startInsertBetween:", startInsertBetween);
+    // console.log("endInsertBetween:", endInsertBetween);
+    // console.log("holoceneStyle:", holoceneStyle);
+    // console.log("holoceneAnchor:", holoceneAnchor);
+    // console.log("holoceneReplace:", holoceneReplace);
+
+
     // #### 5 Digits
     if (typeof arrayOfYears["FiveDigitsYearBC"] != 'undefined') {
         for(var i = 0; i < arrayOfYears["FiveDigitsYearBC"].length; i++) {
@@ -535,10 +582,24 @@ function _main_replacementRules (arrayOfYears) {
                 var regexString = '((?!([–])).|^)\\b(' + arrayOfYears["FiveDigitsYearBC"][i] + '\\sBC)\\b(?!–)(?!s)(?!E)'; // combination of lookbehind and lookahead for en-dash, and lookahead for s
                 //console.log(regexString);
                 var regex = new RegExp(regexString, "i");
-                var replaceString = ' $3' + ' [' + heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
+
+                var replaceStringPageStamp = " $3";
+                var replaceStringHE = startHoloceneStyle + startInsertBetween + heYear + startHoloceneAnchor + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
+
+                if (!holoceneReplace) {
+                    if (!insertBefore) {
+                        var replaceString = replaceStringPageStamp + ' ' + replaceStringHE;
+                    } else {
+                        var replaceString = replaceStringHE + ' ' + replaceStringPageStamp;
+                    }
+                } else {
+                    var replaceString = replaceStringHE;
+                }
+
+                //var replaceString = ' $3' + ' [' + heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
                 //var replaceString = heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>';
                 //var replaceString = heYear;
-                //console.log(replaceString);
+                console.log(replaceString);
                 $("*").replaceText(regex, replaceString);
             } else  {
                 heYear = arrayOfYears["FiveDigitsYearBC"][i] - 10000;
@@ -546,7 +607,21 @@ function _main_replacementRules (arrayOfYears) {
                 var regexString = '((?!([–])).|^)\\b(' + arrayOfYears["FiveDigitsYearBC"][i] + '\\sBC)\\b(?!–)(?!s)(?!E)'; // combination of lookbehind and lookahead for en-dash, and lookahead for s
                 //console.log(regexString);
                 var regex = new RegExp(regexString, "i");
-                var replaceString = ' $3' + ' [' + heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">BHE</a>]';
+
+                var replaceStringPageStamp = " $3";
+                var replaceStringHE = startHoloceneStyle + startInsertBetween + heYear + startHoloceneAnchor.slice(0, -2) + 'BHE' + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
+
+                if (!holoceneReplace) {
+                    if (!insertBefore) {
+                        var replaceString = replaceStringPageStamp + ' ' + replaceStringHE;
+                    } else {
+                        var replaceString = replaceStringHE + ' ' + replaceStringPageStamp;
+                    }
+                } else {
+                    var replaceString = replaceStringHE;
+                }
+
+                //var replaceString = ' $3' + ' [' + heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">BHE</a>]';
                 //var replaceString = heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>';
                 //var replaceString = heYear;
                 //console.log(replaceString);
@@ -563,7 +638,21 @@ function _main_replacementRules (arrayOfYears) {
                 var regexString = '((?!([–])).|^)\\b(' + arrayOfYears["FiveDigitsYearBCE"][i] + '\\sBCE)\\b(?!–)(?!s)'; // combination of lookbehind and lookahead for en-dash, and lookahead for s
                 //console.log(regexString);
                 var regex = new RegExp(regexString, "i");
-                var replaceString = ' $3' + ' [' + heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
+
+                var replaceStringPageStamp = " $3";
+                var replaceStringHE = startHoloceneStyle + startInsertBetween + heYear + startHoloceneAnchor + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
+
+                if (!holoceneReplace) {
+                    if (!insertBefore) {
+                        var replaceString = replaceStringPageStamp + ' ' + replaceStringHE;
+                    } else {
+                        var replaceString = replaceStringHE + ' ' + replaceStringPageStamp;
+                    }
+                } else {
+                    var replaceString = replaceStringHE;
+                }
+
+                //var replaceString = ' $3' + ' [' + heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
                 //var replaceString = heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>';
                 //var replaceString = heYear;
                 //console.log(replaceString);
@@ -574,6 +663,20 @@ function _main_replacementRules (arrayOfYears) {
                 var regexString = '((?!([–])).|^)\\b(' + arrayOfYears["FiveDigitsYearBCE"][i] + '\\sBCE)\\b(?!–)(?!s)'; // combination of lookbehind and lookahead for en-dash, and lookahead for s
                 //console.log(regexString);
                 var regex = new RegExp(regexString, "i");
+
+                var replaceStringPageStamp = " $3";
+                var replaceStringHE = startHoloceneStyle + startInsertBetween + heYear + startHoloceneAnchor.slice(0, -2) + 'BHE' + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
+
+                if (!holoceneReplace) {
+                    if (!insertBefore) {
+                        var replaceString = replaceStringPageStamp + ' ' + replaceStringHE;
+                    } else {
+                        var replaceString = replaceStringHE + ' ' + replaceStringPageStamp;
+                    }
+                } else {
+                    var replaceString = replaceStringHE;
+                }
+
                 var replaceString = ' $3' + ' [' + heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">BHE</a>]';
                 //var replaceString = heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>';
                 //var replaceString = heYear;
@@ -594,7 +697,21 @@ function _main_replacementRules (arrayOfYears) {
             //console.log(regexString);
             var regex = new RegExp(regexString, "i");
             //console.log(regex);
-            var replaceString = '$1' + ' [' + heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
+
+            var replaceStringPageStamp = "$1";
+            var replaceStringHE = startHoloceneStyle + startInsertBetween + heYear + startHoloceneAnchor + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
+
+            if (!holoceneReplace) {
+                if (!insertBefore) {
+                    var replaceString = replaceStringPageStamp + ' ' + replaceStringHE;
+                } else {
+                    var replaceString = replaceStringHE + ' ' + replaceStringPageStamp;
+                }
+            } else {
+                var replaceString = replaceStringHE;
+            }
+
+            //var replaceString = '$1' + ' [' + heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
             //var replaceString = heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>';
             //var replaceString = heYear;
             //console.log(replaceString);
@@ -609,7 +726,21 @@ function _main_replacementRules (arrayOfYears) {
             var regexString = '((?!([–])).|^)\\b(' + arrayOfYears["FourDigitsYearAD"][i] + '\\sAD)\\b(?!–)(?!s)(?!\\sBC)'; // combination of lookbehind and lookahead for en-dash, and lookahead for s
             //console.log(regexString);
             var regex = new RegExp(regexString, "i");
-            var replaceString = ' $3' + ' [' + heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
+
+            var replaceStringPageStamp = " $3";
+            var replaceStringHE = startHoloceneStyle + startInsertBetween + heYear + startHoloceneAnchor + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
+
+            if (!holoceneReplace) {
+                if (!insertBefore) {
+                    var replaceString = replaceStringPageStamp + ' ' + replaceStringHE;
+                } else {
+                    var replaceString = replaceStringHE + ' ' + replaceStringPageStamp;
+                }
+            } else {
+                var replaceString = replaceStringHE;
+            }
+
+            //var replaceString = ' $3' + ' [' + heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
             //var replaceString = heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>';
             //var replaceString = heYear;
             //console.log(replaceString);
@@ -624,6 +755,20 @@ function _main_replacementRules (arrayOfYears) {
             var regexString = '((?!([–])).|^)\\b(' + arrayOfYears["FourDigitsYearCE"][i] + '\\sCE)\\b(?!–)(?!s)(?!\\sBC)'; // combination of lookbehind and lookahead for en-dash, and lookahead for s
             //console.log(regexString);
             var regex = new RegExp(regexString, "i");
+
+            var replaceStringPageStamp = " $3";
+            var replaceStringHE = startHoloceneStyle + startInsertBetween + heYear + startHoloceneAnchor + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
+
+            if (!holoceneReplace) {
+                if (!insertBefore) {
+                    var replaceString = replaceStringPageStamp + ' ' + replaceStringHE;
+                } else {
+                    var replaceString = replaceStringHE + ' ' + replaceStringPageStamp;
+                }
+            } else {
+                var replaceString = replaceStringHE;
+            }
+
             var replaceString = ' $3' + ' [' + heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
             //var replaceString = heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>';
             //var replaceString = heYear;
@@ -638,7 +783,21 @@ function _main_replacementRules (arrayOfYears) {
             // console.log(heYear);
             var regexString = arrayOfYears["FourDigitsAndS"][i] + 's(?!\\sBCE?)';
             var regex = new RegExp(regexString, "");
-            var replaceString = arrayOfYears["FourDigitsAndS"][i] + 's' + ' [' + heYear + 's' + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
+
+            var replaceStringPageStamp = arrayOfYears["FourDigitsAndS"][i] + 's';
+            var replaceStringHE = startHoloceneStyle + startInsertBetween + heYear + 's' + startHoloceneAnchor + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
+
+            if (!holoceneReplace) {
+                if (!insertBefore) {
+                    var replaceString = replaceStringPageStamp + ' ' + replaceStringHE;
+                } else {
+                    var replaceString = replaceStringHE + ' ' + replaceStringPageStamp;
+                }
+            } else {
+                var replaceString = replaceStringHE;
+            }
+
+            //var replaceString = arrayOfYears["FourDigitsAndS"][i] + 's' + ' [' + heYear + 's' + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
             //var replaceString = heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>';
             //var replaceString = heYear;
             //console.log(replaceString);
@@ -655,7 +814,21 @@ function _main_replacementRules (arrayOfYears) {
                 var regexString = '\\b(' + arrayOfYears["FourDigitsDashFourDigits"][i][0] + '(–|-)' + arrayOfYears["FourDigitsDashFourDigits"][i][1] + ')\\b(?!\\sBC)(?!\\sBCE)(?!-\\d+-\\d+-\\d+)';
                 //console.log(regexString);
                 var regex = new RegExp(regexString, "");
-                var replaceString = '$1' + ' [' + heYearOne + '–' + heYearTwo + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
+
+                var replaceStringPageStamp = "$1";
+                var replaceStringHE = startHoloceneStyle + startInsertBetween + heYearOne + '–' + heYearTwo + startHoloceneAnchor + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
+
+                if (!holoceneReplace) {
+                    if (!insertBefore) {
+                        var replaceString = replaceStringPageStamp + ' ' + replaceStringHE;
+                    } else {
+                        var replaceString = replaceStringHE + ' ' + replaceStringPageStamp;
+                    }
+                } else {
+                    var replaceString = replaceStringHE;
+                }
+
+                //var replaceString = '$1' + ' [' + heYearOne + '–' + heYearTwo + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
                 //var replaceString = heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>';
                 //var replaceString = heYear;
                 //console.log(replaceString);
@@ -673,7 +846,21 @@ function _main_replacementRules (arrayOfYears) {
                 var regexString = '\\b(' + arrayOfYears["FourDigitsDashOneTwoDigits"][i][0] + '(–|-)' + arrayOfYears["FourDigitsDashOneTwoDigits"][i][1] + ')\\b(?!\\sBC)(?!\\sBCE)(?!-\\d+-\\d+-\\d+)';
                 //console.log(regexString);
                 var regex = new RegExp(regexString, "");
-                var replaceString = '$1' + ' [' + heYearOne + '–' + heYearTwo + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
+
+                var replaceStringPageStamp = "$1";
+                var replaceStringHE = startHoloceneStyle + startInsertBetween + heYearOne + '–' + heYearTwo + startHoloceneAnchor + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
+
+                if (!holoceneReplace) {
+                    if (!insertBefore) {
+                        var replaceString = replaceStringPageStamp + ' ' + replaceStringHE;
+                    } else {
+                        var replaceString = replaceStringHE + ' ' + replaceStringPageStamp;
+                    }
+                } else {
+                    var replaceString = replaceStringHE;
+                }
+
+                //var replaceString = '$1' + ' [' + heYearOne + '–' + heYearTwo + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
                 //var replaceString = heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>';
                 //var replaceString = heYear;
                 //console.log(replaceString);
@@ -690,7 +877,21 @@ function _main_replacementRules (arrayOfYears) {
             var regexString = '((?!([–])).|^)\\b(' + arrayOfYears["FourDigitsYearBC"][i] + '\\sBC)\\b(?!–)(?!s)'; // combination of lookbehind and lookahead for en-dash, and lookahead for s
             //console.log(regexString);
             var regex = new RegExp(regexString, "i");
-            var replaceString = ' $3' + ' [' + heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
+
+            var replaceStringPageStamp = " $3";
+            var replaceStringHE = startHoloceneStyle + startInsertBetween + heYear + startHoloceneAnchor + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
+
+            if (!holoceneReplace) {
+                if (!insertBefore) {
+                    var replaceString = replaceStringPageStamp + ' ' + replaceStringHE;
+                } else {
+                    var replaceString = replaceStringHE + ' ' + replaceStringPageStamp;
+                }
+            } else {
+                var replaceString = replaceStringHE;
+            }
+
+            //var replaceString = ' $3' + ' [' + heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
             //var replaceString = heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>';
             //var replaceString = heYear;
             //console.log(replaceString);
@@ -705,7 +906,21 @@ function _main_replacementRules (arrayOfYears) {
             var regexString = '((?!([–])).|^)\\b(' + arrayOfYears["FourDigitsYearBCE"][i] + '\\sBCE)\\b(?!–)(?!s)'; // combination of lookbehind and lookahead for en-dash, and lookahead for s
             //console.log(regexString);
             var regex = new RegExp(regexString, "i");
-            var replaceString = ' $3' + ' [' + heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
+
+            var replaceStringPageStamp = " $3";
+            var replaceStringHE = startHoloceneStyle + startInsertBetween + heYear + startHoloceneAnchor + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
+
+            if (!holoceneReplace) {
+                if (!insertBefore) {
+                    var replaceString = replaceStringPageStamp + ' ' + replaceStringHE;
+                } else {
+                    var replaceString = replaceStringHE + ' ' + replaceStringPageStamp;
+                }
+            } else {
+                var replaceString = replaceStringHE;
+            }
+
+            // var replaceString = ' $3' + ' [' + heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
             //var replaceString = heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>';
             //var replaceString = heYear;
             //console.log(replaceString);
@@ -719,7 +934,21 @@ function _main_replacementRules (arrayOfYears) {
             // console.log(heYear);
             var regexString = arrayOfYears["FourDigitsAndSBC"][i] + 's\\sBC(?!E)';
             var regex = new RegExp(regexString, "");
-            var replaceString = arrayOfYears["FourDigitsAndSBC"][i] + 's BC' + ' [' + heYear + 's' + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
+
+            var replaceStringPageStamp = arrayOfYears["FourDigitsAndSBC"][i] + 's BC';
+            var replaceStringHE = startHoloceneStyle + startInsertBetween + heYear + 's' + startHoloceneAnchor + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
+
+            if (!holoceneReplace) {
+                if (!insertBefore) {
+                    var replaceString = replaceStringPageStamp + ' ' + replaceStringHE;
+                } else {
+                    var replaceString = replaceStringHE + ' ' + replaceStringPageStamp;
+                }
+            } else {
+                var replaceString = replaceStringHE;
+            }
+
+            // var replaceString = arrayOfYears["FourDigitsAndSBC"][i] + 's BC' + ' [' + heYear + 's' + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
             //var replaceString = heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>';
             //var replaceString = heYear;
             //console.log(replaceString);
@@ -733,7 +962,21 @@ function _main_replacementRules (arrayOfYears) {
             // console.log(heYear);
             var regexString = arrayOfYears["FourDigitsAndSBCE"][i] + 's\\sBCE';
             var regex = new RegExp(regexString, "");
-            var replaceString = arrayOfYears["FourDigitsAndSBCE"][i] + 's BCE' + ' [' + heYear + 's' + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
+
+            var replaceStringPageStamp = arrayOfYears["FourDigitsAndSBCE"][i] + 's BCE';
+            var replaceStringHE = startHoloceneStyle + startInsertBetween + heYear + 's' + startHoloceneAnchor + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
+
+            if (!holoceneReplace) {
+                if (!insertBefore) {
+                    var replaceString = replaceStringPageStamp + ' ' + replaceStringHE;
+                } else {
+                    var replaceString = replaceStringHE + ' ' + replaceStringPageStamp;
+                }
+            } else {
+                var replaceString = replaceStringHE;
+            }
+
+            //var replaceString = arrayOfYears["FourDigitsAndSBCE"][i] + 's BCE' + ' [' + heYear + 's' + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
             //var replaceString = heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>';
             //var replaceString = heYear;
             //console.log(replaceString);
@@ -751,7 +994,21 @@ function _main_replacementRules (arrayOfYears) {
             var regexString = '((?!([–|-])).|^)\\b(' + arrayOfYears["ThreeDigitsYear"][i] + ')\\b(?!–)(?!])(?!s)(?!\\sBC?E?)(?!\\sAD)(?!\/)'; // combination of lookbehind and lookahead for en-dash, and lookahead for s
             //console.log(regexString);
             var regex = new RegExp(regexString, "i");
-            var replaceString = ' $3' + ' [' + heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
+
+            var replaceStringPageStamp = " $3";
+            var replaceStringHE = startHoloceneStyle + startInsertBetween + heYear + startHoloceneAnchor + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
+
+            if (!holoceneReplace) {
+                if (!insertBefore) {
+                    var replaceString = replaceStringPageStamp + ' ' + replaceStringHE;
+                } else {
+                    var replaceString = replaceStringHE + ' ' + replaceStringPageStamp;
+                }
+            } else {
+                var replaceString = replaceStringHE;
+            }
+
+            //var replaceString = ' $3' + ' [' + heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
             //var replaceString = heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>';
             //var replaceString = heYear;
             //console.log(replaceString);
@@ -766,7 +1023,21 @@ function _main_replacementRules (arrayOfYears) {
             var regexString = '\\b(' + arrayOfYears["ThreeDigitsYearAD"][i] + '\\sAD)\\b'; // combination of lookbehind and lookahead for en-dash, and lookahead for s
             //console.log(regexString);
             var regex = new RegExp(regexString, "i");
-            var replaceString = '$1' + ' [' + heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
+
+            var replaceStringPageStamp = "$1";
+            var replaceStringHE = startHoloceneStyle + startInsertBetween + heYear + startHoloceneAnchor + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
+
+            if (!holoceneReplace) {
+                if (!insertBefore) {
+                    var replaceString = replaceStringPageStamp + ' ' + replaceStringHE;
+                } else {
+                    var replaceString = replaceStringHE + ' ' + replaceStringPageStamp;
+                }
+            } else {
+                var replaceString = replaceStringHE;
+            }
+
+            // var replaceString = '$1' + ' [' + heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
             //var replaceString = heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>';
             //var replaceString = heYear;
             //console.log(replaceString);
@@ -781,7 +1052,21 @@ function _main_replacementRules (arrayOfYears) {
             var regexString = '\\b(AD\\s' + arrayOfYears["ADThreeDigitsYear"][i] + ')\\b';
             //console.log(regexString);
             var regex = new RegExp(regexString, "");
-            var replaceString = '$1' + ' [' + heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
+
+            var replaceStringPageStamp = "$1";
+            var replaceStringHE = startHoloceneStyle + startInsertBetween + heYear + startHoloceneAnchor + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
+
+            if (!holoceneReplace) {
+                if (!insertBefore) {
+                    var replaceString = replaceStringPageStamp + ' ' + replaceStringHE;
+                } else {
+                    var replaceString = replaceStringHE + ' ' + replaceStringPageStamp;
+                }
+            } else {
+                var replaceString = replaceStringHE;
+            }
+
+            // var replaceString = '$1' + ' [' + heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
             //var replaceString = heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>';
             //var replaceString = heYear;
             //console.log(replaceString);
@@ -796,7 +1081,21 @@ function _main_replacementRules (arrayOfYears) {
             var regexString = '((?!([–])).|^)\\b(' + arrayOfYears["ThreeDigitsYearCE"][i] + '\\sCE)\\b(?!–)(?!s)(?!\\sBC)(?!\\sAD)'; // combination of lookbehind and lookahead for en-dash, and lookahead for s
             //console.log(regexString);
             var regex = new RegExp(regexString, "i");
-            var replaceString = ' $3' + ' [' + heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
+
+            var replaceStringPageStamp = " $3";
+            var replaceStringHE = startHoloceneStyle + startInsertBetween + heYear + startHoloceneAnchor + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
+
+            if (!holoceneReplace) {
+                if (!insertBefore) {
+                    var replaceString = replaceStringPageStamp + ' ' + replaceStringHE;
+                } else {
+                    var replaceString = replaceStringHE + ' ' + replaceStringPageStamp;
+                }
+            } else {
+                var replaceString = replaceStringHE;
+            }
+
+            // var replaceString = ' $3' + ' [' + heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
             //var replaceString = heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>';
             //var replaceString = heYear;
             //console.log(replaceString);
@@ -812,7 +1111,21 @@ function _main_replacementRules (arrayOfYears) {
             var regexString = '\\b(' + arrayOfYears["ThreeDigitsDashThreeDigits"][i][0] + '(–|-)' + arrayOfYears["ThreeDigitsDashThreeDigits"][i][1] + ')\\b(?!\\sBCE?)(?!-\\d+-\\d+)';
             //console.log(regexString);
             var regex = new RegExp(regexString, "");
-            var replaceString = '$1' + ' [' + heYearOne + '–' + heYearTwo + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
+
+            var replaceStringPageStamp = "$1";
+            var replaceStringHE = startHoloceneStyle + startInsertBetween + heYearOne + '–' + heYearTwo + startHoloceneAnchor + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
+
+            if (!holoceneReplace) {
+                if (!insertBefore) {
+                    var replaceString = replaceStringPageStamp + ' ' + replaceStringHE;
+                } else {
+                    var replaceString = replaceStringHE + ' ' + replaceStringPageStamp;
+                }
+            } else {
+                var replaceString = replaceStringHE;
+            }
+
+            //var replaceString = '$1' + ' [' + heYearOne + '–' + heYearTwo + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
             //var replaceString = heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>';
             //var replaceString = heYear;
             //console.log(replaceString);
@@ -828,7 +1141,21 @@ function _main_replacementRules (arrayOfYears) {
             var regexString = '\\b(' + arrayOfYears["ThreeDigitsDashOneTwoDigits"][i][0] + '(–|-)' + arrayOfYears["ThreeDigitsDashOneTwoDigits"][i][1] + ')\\b(?!\\sBCE?)(?!-\\d+-\\d+-\\d+)';
             //console.log(regexString);
             var regex = new RegExp(regexString, "");
-            var replaceString = '$1' + ' [' + heYearOne + '–' + heYearTwo + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
+
+            var replaceStringPageStamp = "$1";
+            var replaceStringHE = startHoloceneStyle + startInsertBetween + heYearOne + '–' + heYearTwo + startHoloceneAnchor + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
+
+            if (!holoceneReplace) {
+                if (!insertBefore) {
+                    var replaceString = replaceStringPageStamp + ' ' + replaceStringHE;
+                } else {
+                    var replaceString = replaceStringHE + ' ' + replaceStringPageStamp;
+                }
+            } else {
+                var replaceString = replaceStringHE;
+            }
+
+            // var replaceString = '$1' + ' [' + heYearOne + '–' + heYearTwo + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
             //var replaceString = heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>';
             //var replaceString = heYear;
             //console.log(replaceString);
@@ -842,7 +1169,21 @@ function _main_replacementRules (arrayOfYears) {
             // console.log(heYear);
             var regexString = arrayOfYears["ThreeDigitsAndS"][i] + 's(?!\\sBCE?)';
             var regex = new RegExp(regexString, "");
-            var replaceString = arrayOfYears["ThreeDigitsAndS"][i] + 's' + ' [' + heYear + 's' + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
+
+            var replaceStringPageStamp = arrayOfYears["ThreeDigitsAndS"][i] + 's';
+            var replaceStringHE = startHoloceneStyle + startInsertBetween + heYear + 's' + startHoloceneAnchor + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
+
+            if (!holoceneReplace) {
+                if (!insertBefore) {
+                    var replaceString = replaceStringPageStamp + ' ' + replaceStringHE;
+                } else {
+                    var replaceString = replaceStringHE + ' ' + replaceStringPageStamp;
+                }
+            } else {
+                var replaceString = replaceStringHE;
+            }
+
+            //var replaceString = arrayOfYears["ThreeDigitsAndS"][i] + 's' + ' [' + heYear + 's' + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
             //var replaceString = heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>';
             //var replaceString = heYear;
             //console.log(replaceString);
@@ -858,7 +1199,21 @@ function _main_replacementRules (arrayOfYears) {
             var regexString = '((?!([–|\/])).|^)\\b(' + arrayOfYears["ThreeDigitsYearBC"][i] + '\\sBC)\\b(?!–)(?!s)'; // combination of lookbehind and lookahead for en-dash, and lookahead for s
             //console.log(regexString);
             var regex = new RegExp(regexString, "i");
-            var replaceString = ' $3' + ' [' + heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
+
+            var replaceStringPageStamp = " $3";
+            var replaceStringHE = startHoloceneStyle + startInsertBetween + heYear + startHoloceneAnchor + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
+
+            if (!holoceneReplace) {
+                if (!insertBefore) {
+                    var replaceString = replaceStringPageStamp + ' ' + replaceStringHE;
+                } else {
+                    var replaceString = replaceStringHE + ' ' + replaceStringPageStamp;
+                }
+            } else {
+                var replaceString = replaceStringHE;
+            }
+
+            //var replaceString = ' $3' + ' [' + heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
             //var replaceString = heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>';
             //var replaceString = heYear;
             //console.log(replaceString);
@@ -873,7 +1228,21 @@ function _main_replacementRules (arrayOfYears) {
             var regexString = '((?!([–])).|^)\\b(' + arrayOfYears["ThreeDigitsYearBCE"][i] + '\\sBCE)\\b(?!–)(?!s)'; // combination of lookbehind and lookahead for en-dash, and lookahead for s
             //console.log(regexString);
             var regex = new RegExp(regexString, "i");
-            var replaceString = ' $3' + ' [' + heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
+
+            var replaceStringPageStamp = " $3";
+            var replaceStringHE = startHoloceneStyle + startInsertBetween + heYear + startHoloceneAnchor + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
+
+            if (!holoceneReplace) {
+                if (!insertBefore) {
+                    var replaceString = replaceStringPageStamp + ' ' + replaceStringHE;
+                } else {
+                    var replaceString = replaceStringHE + ' ' + replaceStringPageStamp;
+                }
+            } else {
+                var replaceString = replaceStringHE;
+            }
+
+            // var replaceString = ' $3' + ' [' + heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
             //var replaceString = heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>';
             //var replaceString = heYear;
             //console.log(replaceString);
@@ -887,6 +1256,20 @@ function _main_replacementRules (arrayOfYears) {
             // console.log(heYear);
             var regexString = arrayOfYears["ThreeDigitsAndSBC"][i] + 's\\sBC(?!E)';
             var regex = new RegExp(regexString, "");
+
+            var replaceStringPageStamp = arrayOfYears["ThreeDigitsAndSBC"][i] + 's BC';
+            var replaceStringHE = startHoloceneStyle + startInsertBetween + heYear + 's' + startHoloceneAnchor + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
+
+            if (!holoceneReplace) {
+                if (!insertBefore) {
+                    var replaceString = replaceStringPageStamp + ' ' + replaceStringHE;
+                } else {
+                    var replaceString = replaceStringHE + ' ' + replaceStringPageStamp;
+                }
+            } else {
+                var replaceString = replaceStringHE;
+            }
+
             var replaceString = arrayOfYears["ThreeDigitsAndSBC"][i] + 's BC' + ' [' + heYear + 's' + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
             //var replaceString = heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>';
             //var replaceString = heYear;
@@ -903,7 +1286,21 @@ function _main_replacementRules (arrayOfYears) {
             //console.log(regexString);
             var regex = new RegExp(regexString, "");
             //console.log(regex);
-            var replaceString = arrayOfYears["ThreeDigitsAndSBCE"][i] + 's BCE' + ' [' + heYear + 's' + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
+
+            var replaceStringPageStamp = arrayOfYears["ThreeDigitsAndSBCE"][i] + 's BCE';
+            var replaceStringHE = startHoloceneStyle + startInsertBetween + heYear + 's' + startHoloceneAnchor + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
+
+            if (!holoceneReplace) {
+                if (!insertBefore) {
+                    var replaceString = replaceStringPageStamp + ' ' + replaceStringHE;
+                } else {
+                    var replaceString = replaceStringHE + ' ' + replaceStringPageStamp;
+                }
+            } else {
+                var replaceString = replaceStringHE;
+            }
+
+            // var replaceString = arrayOfYears["ThreeDigitsAndSBCE"][i] + 's BCE' + ' [' + heYear + 's' + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
             //var replaceString = heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>';
             //var replaceString = heYear;
             //console.log(replaceString);
@@ -919,7 +1316,21 @@ function _main_replacementRules (arrayOfYears) {
             var regexString = '\\b(' + arrayOfYears["ThreeDigitsDashThreeDigitsBC"][i][0] + '(–|-)' + arrayOfYears["ThreeDigitsDashThreeDigitsBC"][i][1] + '\\sBC)\\b(?!\\sBCE)';
             //console.log(regexString);
             var regex = new RegExp(regexString, "");
-            var replaceString = '$1' + ' [' + heYearOne + '–' + heYearTwo + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
+
+            var replaceStringPageStamp = "$1";
+            var replaceStringHE = startHoloceneStyle + startInsertBetween + heYearOne + '–' + heYearTwo + startHoloceneAnchor + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
+
+            if (!holoceneReplace) {
+                if (!insertBefore) {
+                    var replaceString = replaceStringPageStamp + ' ' + replaceStringHE;
+                } else {
+                    var replaceString = replaceStringHE + ' ' + replaceStringPageStamp;
+                }
+            } else {
+                var replaceString = replaceStringHE;
+            }
+
+            // var replaceString = '$1' + ' [' + heYearOne + '–' + heYearTwo + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
             //var replaceString = heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>';
             //var replaceString = heYear;
             //console.log(replaceString);
@@ -935,7 +1346,21 @@ function _main_replacementRules (arrayOfYears) {
             var regexString = '\\b(' + arrayOfYears["ThreeDigitsDashThreeDigitsBCE"][i][0] + '(–|-)' + arrayOfYears["ThreeDigitsDashThreeDigitsBCE"][i][1] + '\\sBCE)\\b(?!\\sBC)';
             //console.log(regexString);
             var regex = new RegExp(regexString, "");
-            var replaceString = '$1' + ' [' + heYearOne + '–' + heYearTwo + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
+
+            var replaceStringPageStamp = "$1";
+            var replaceStringHE = startHoloceneStyle + startInsertBetween + heYearOne + '–' + heYearTwo + startHoloceneAnchor + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
+
+            if (!holoceneReplace) {
+                if (!insertBefore) {
+                    var replaceString = replaceStringPageStamp + ' ' + replaceStringHE;
+                } else {
+                    var replaceString = replaceStringHE + ' ' + replaceStringPageStamp;
+                }
+            } else {
+                var replaceString = replaceStringHE;
+            }
+
+            // var replaceString = '$1' + ' [' + heYearOne + '–' + heYearTwo + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
             //var replaceString = heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>';
             //var replaceString = heYear;
             //console.log(replaceString);
@@ -974,7 +1399,21 @@ function _main_replacementRules (arrayOfYears) {
             var regexString = '\\b(' + arrayOfYears["ThreeDigitsDashOneTwoDigitsBC"][i][0] + '(–|-)' + arrayOfYears["ThreeDigitsDashOneTwoDigitsBC"][i][1] + '\\sBC)\\b(?!\\sBCE)';
             //console.log(regexString);
             var regex = new RegExp(regexString, "");
-            var replaceString = '$1' + ' [' + heYearOne + '–' + heYearTwo + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
+
+            var replaceStringPageStamp = "$1";
+            var replaceStringHE = startHoloceneStyle + startInsertBetween + heYearOne + '–' + heYearTwo + startHoloceneAnchor + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
+
+            if (!holoceneReplace) {
+                if (!insertBefore) {
+                    var replaceString = replaceStringPageStamp + ' ' + replaceStringHE;
+                } else {
+                    var replaceString = replaceStringHE + ' ' + replaceStringPageStamp;
+                }
+            } else {
+                var replaceString = replaceStringHE;
+            }
+
+            //var replaceString = '$1' + ' [' + heYearOne + '–' + heYearTwo + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
             //var replaceString = heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>';
             //var replaceString = heYear;
             //console.log(replaceString);
@@ -1013,7 +1452,21 @@ function _main_replacementRules (arrayOfYears) {
             var regexString = '\\b(' + arrayOfYears["ThreeDigitsDashOneTwoDigitsBCE"][i][0] + '(–|-)' + arrayOfYears["ThreeDigitsDashOneTwoDigitsBCE"][i][1] + '\\sBCE)\\b(?!\\sBC)';
             //console.log(regexString);
             var regex = new RegExp(regexString, "");
-            var replaceString = '$1' + ' [' + heYearOne + '–' + heYearTwo + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
+
+            var replaceStringPageStamp = "$1";
+            var replaceStringHE = startHoloceneStyle + startInsertBetween + heYearOne + '–' + heYearTwo + startHoloceneAnchor + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
+
+            if (!holoceneReplace) {
+                if (!insertBefore) {
+                    var replaceString = replaceStringPageStamp + ' ' + replaceStringHE;
+                } else {
+                    var replaceString = replaceStringHE + ' ' + replaceStringPageStamp;
+                }
+            } else {
+                var replaceString = replaceStringHE;
+            }
+
+            //var replaceString = '$1' + ' [' + heYearOne + '–' + heYearTwo + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
             //var replaceString = heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>';
             //var replaceString = heYear;
             //console.log(replaceString);
@@ -1031,7 +1484,21 @@ function _main_replacementRules (arrayOfYears) {
             var regexString = '((?!([–])).|^)\\b(' + arrayOfYears["TwoDigitsYearAD"][i] + '\\sAD)\\b(?!–)(?!s)(?!\\sBC)'; // combination of lookbehind and lookahead for en-dash, and lookahead for s
             //console.log(regexString);
             var regex = new RegExp(regexString, "i");
-            var replaceString = ' $3' + ' [' + heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
+
+            var replaceStringPageStamp = " $3";
+            var replaceStringHE = startHoloceneStyle + startInsertBetween + heYear + startHoloceneAnchor + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
+
+            if (!holoceneReplace) {
+                if (!insertBefore) {
+                    var replaceString = replaceStringPageStamp + ' ' + replaceStringHE;
+                } else {
+                    var replaceString = replaceStringHE + ' ' + replaceStringPageStamp;
+                }
+            } else {
+                var replaceString = replaceStringHE;
+            }
+
+            //var replaceString = ' $3' + ' [' + heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
             //var replaceString = heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>';
             //var replaceString = heYear;
             //console.log(replaceString);
@@ -1046,7 +1513,21 @@ function _main_replacementRules (arrayOfYears) {
             var regexString = '(AD\\s' + arrayOfYears["ADTwoDigitsYear"][i] + ')'; // combination of lookbehind and lookahead for en-dash, and lookahead for s
             //console.log(regexString);
             var regex = new RegExp(regexString, "i");
-            var replaceString = '$1' + ' [' + heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
+
+            var replaceStringPageStamp = "$1";
+            var replaceStringHE = startHoloceneStyle + startInsertBetween + heYear + startHoloceneAnchor + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
+
+            if (!holoceneReplace) {
+                if (!insertBefore) {
+                    var replaceString = replaceStringPageStamp + ' ' + replaceStringHE;
+                } else {
+                    var replaceString = replaceStringHE + ' ' + replaceStringPageStamp;
+                }
+            } else {
+                var replaceString = replaceStringHE;
+            }
+
+            // var replaceString = '$1' + ' [' + heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
             //var replaceString = heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>';
             //var replaceString = heYear;
             //console.log(replaceString);
@@ -1061,7 +1542,21 @@ function _main_replacementRules (arrayOfYears) {
             var regexString = '((?!([–])).|^)\\b(' + arrayOfYears["TwoDigitsYearCE"][i] + '\\sCE)\\b(?!–)(?!s)(?!\\sBC)'; // combination of lookbehind and lookahead for en-dash, and lookahead for s
             //console.log(regexString);
             var regex = new RegExp(regexString, "i");
-            var replaceString = ' $3' + ' [' + heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
+
+            var replaceStringPageStamp = " $3";
+            var replaceStringHE = startHoloceneStyle + startInsertBetween + heYear + startHoloceneAnchor + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
+
+            if (!holoceneReplace) {
+                if (!insertBefore) {
+                    var replaceString = replaceStringPageStamp + ' ' + replaceStringHE;
+                } else {
+                    var replaceString = replaceStringHE + ' ' + replaceStringPageStamp;
+                }
+            } else {
+                var replaceString = replaceStringHE;
+            }
+
+            // var replaceString = ' $3' + ' [' + heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
             //var replaceString = heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>';
             //var replaceString = heYear;
             //console.log(replaceString);
@@ -1077,7 +1572,21 @@ function _main_replacementRules (arrayOfYears) {
             var regexString = '\\b(' + arrayOfYears["TwoDigitsDashOneTwoDigitsAD"][i][0] + '(–|-)' + arrayOfYears["TwoDigitsDashOneTwoDigitsAD"][i][1] + '\\sAD)\\b(?!\\sBC)(?!\\sBCE)(?!\\sCE)';
             //console.log(regexString);
             var regex = new RegExp(regexString, "");
-            var replaceString = '$1' + ' [' + heYearOne + '–' + heYearTwo + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
+
+            var replaceStringPageStamp = "$1";
+            var replaceStringHE = startHoloceneStyle + startInsertBetween + heYearOne + '–' + heYearTwo + startHoloceneAnchor + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
+
+            if (!holoceneReplace) {
+                if (!insertBefore) {
+                    var replaceString = replaceStringPageStamp + ' ' + replaceStringHE;
+                } else {
+                    var replaceString = replaceStringHE + ' ' + replaceStringPageStamp;
+                }
+            } else {
+                var replaceString = replaceStringHE;
+            }
+
+            // var replaceString = '$1' + ' [' + heYearOne + '–' + heYearTwo + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
             //var replaceString = heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>';
             //var replaceString = heYear;
             //console.log(replaceString);
@@ -1093,7 +1602,21 @@ function _main_replacementRules (arrayOfYears) {
             var regexString = '\\b(' + arrayOfYears["TwoDigitsDashOneTwoDigitsCE"][i][0] + '(–|-)' + arrayOfYears["TwoDigitsDashOneTwoDigitsCE"][i][1] + '\\sCE)\\b(?!\\sBC)(?!\\sBCE)(?!\\sAD)';
             //console.log(regexString);
             var regex = new RegExp(regexString, "");
-            var replaceString = '$1' + ' [' + heYearOne + '–' + heYearTwo + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
+
+            var replaceStringPageStamp = "$1";
+            var replaceStringHE = startHoloceneStyle + startInsertBetween + heYearOne + '–' + heYearTwo + startHoloceneAnchor + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
+
+            if (!holoceneReplace) {
+                if (!insertBefore) {
+                    var replaceString = replaceStringPageStamp + ' ' + replaceStringHE;
+                } else {
+                    var replaceString = replaceStringHE + ' ' + replaceStringPageStamp;
+                }
+            } else {
+                var replaceString = replaceStringHE;
+            }
+
+            // var replaceString = '$1' + ' [' + heYearOne + '–' + heYearTwo + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
             //var replaceString = heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>';
             //var replaceString = heYear;
             //console.log(replaceString);
@@ -1109,7 +1632,21 @@ function _main_replacementRules (arrayOfYears) {
             var regexString = '((?!([–|-])).|^)\\b(' + arrayOfYears["TwoDigitsYearBC"][i] + '\\sBC)\\b(?!–)(?!s)'; // combination of lookbehind and lookahead for en-dash, and lookahead for s
             //console.log(regexString);
             var regex = new RegExp(regexString, "i");
-            var replaceString = ' $3' + ' [' + heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
+
+            var replaceStringPageStamp = " $3";
+            var replaceStringHE = startHoloceneStyle + startInsertBetween + heYear + startHoloceneAnchor + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
+
+            if (!holoceneReplace) {
+                if (!insertBefore) {
+                    var replaceString = replaceStringPageStamp + ' ' + replaceStringHE;
+                } else {
+                    var replaceString = replaceStringHE + ' ' + replaceStringPageStamp;
+                }
+            } else {
+                var replaceString = replaceStringHE;
+            }
+
+            // var replaceString = ' $3' + ' [' + heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
             //var replaceString = heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>';
             //var replaceString = heYear;
             //console.log(replaceString);
@@ -1124,7 +1661,21 @@ function _main_replacementRules (arrayOfYears) {
             var regexString = '((?!([–|-])).|^)\\b(' + arrayOfYears["TwoDigitsYearBCE"][i] + '\\sBCE)\\b(?!–)(?!s)'; // combination of lookbehind and lookahead for en-dash, and lookahead for s
             //console.log(regexString);
             var regex = new RegExp(regexString, "i");
-            var replaceString = ' $3' + ' [' + heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
+
+            var replaceStringPageStamp = " $3";
+            var replaceStringHE = startHoloceneStyle + startInsertBetween + heYear + startHoloceneAnchor + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
+
+            if (!holoceneReplace) {
+                if (!insertBefore) {
+                    var replaceString = replaceStringPageStamp + ' ' + replaceStringHE;
+                } else {
+                    var replaceString = replaceStringHE + ' ' + replaceStringPageStamp;
+                }
+            } else {
+                var replaceString = replaceStringHE;
+            }
+
+            // var replaceString = ' $3' + ' [' + heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
             //var replaceString = heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>';
             //var replaceString = heYear;
             //console.log(replaceString);
@@ -1162,7 +1713,21 @@ function _main_replacementRules (arrayOfYears) {
             var regexString = '\\b(' + arrayOfYears["TwoDigitsDashOneTwoDigitsBC"][i][0] + '(–|-)' + arrayOfYears["TwoDigitsDashOneTwoDigitsBC"][i][1] + '\\sBC)\\b';
             //console.log(regexString);
             var regex = new RegExp(regexString, "");
-            var replaceString = '$1' + ' [' + heYearOne + '–' + heYearTwo + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
+
+            var replaceStringPageStamp = "$1";
+            var replaceStringHE = startHoloceneStyle + startInsertBetween + heYearOne + '–' + heYearTwo + startHoloceneAnchor + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
+
+            if (!holoceneReplace) {
+                if (!insertBefore) {
+                    var replaceString = replaceStringPageStamp + ' ' + replaceStringHE;
+                } else {
+                    var replaceString = replaceStringHE + ' ' + replaceStringPageStamp;
+                }
+            } else {
+                var replaceString = replaceStringHE;
+            }
+
+            // var replaceString = '$1' + ' [' + heYearOne + '–' + heYearTwo + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
             //var replaceString = heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>';
             //var replaceString = heYear;
             //console.log(replaceString);
@@ -1199,7 +1764,21 @@ function _main_replacementRules (arrayOfYears) {
             var regexString = '\\b(' + arrayOfYears["TwoDigitsDashOneTwoDigitsBCE"][i][0] + '(–|-)' + arrayOfYears["TwoDigitsDashOneTwoDigitsBCE"][i][1] + '\\sBCE)\\b';
             //console.log(regexString);
             var regex = new RegExp(regexString, "");
-            var replaceString = '$1' + ' [' + heYearOne + '–' + heYearTwo + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
+
+            var replaceStringPageStamp = "$1";
+            var replaceStringHE = startHoloceneStyle + startInsertBetween + heYearOne + '–' + heYearTwo + startHoloceneAnchor + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
+
+            if (!holoceneReplace) {
+                if (!insertBefore) {
+                    var replaceString = replaceStringPageStamp + ' ' + replaceStringHE;
+                } else {
+                    var replaceString = replaceStringHE + ' ' + replaceStringPageStamp;
+                }
+            } else {
+                var replaceString = replaceStringHE;
+            }
+
+            // var replaceString = '$1' + ' [' + heYearOne + '–' + heYearTwo + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
             //var replaceString = heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>';
             //var replaceString = heYear;
             //console.log(replaceString);
@@ -1217,6 +1796,20 @@ function _main_replacementRules (arrayOfYears) {
             var regexString = '\\b(' + arrayOfYears["OneDigitYearAD"][i] + '\\sAD)\\b(?!–)(?!s)(?!\\sBC)'; // combination of lookbehind and lookahead for en-dash, and lookahead for s
             //console.log(regexString);
             var regex = new RegExp(regexString, "i");
+
+            var replaceStringPageStamp = " $1";
+            var replaceStringHE = startHoloceneStyle + startInsertBetween + heYear + startHoloceneAnchor + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
+
+            if (!holoceneReplace) {
+                if (!insertBefore) {
+                    var replaceString = replaceStringPageStamp + ' ' + replaceStringHE;
+                } else {
+                    var replaceString = replaceStringHE + ' ' + replaceStringPageStamp;
+                }
+            } else {
+                var replaceString = replaceStringHE;
+            }
+
             var replaceString = ' $1' + ' [' + heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
             //var replaceString = heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>';
             //var replaceString = heYear;
@@ -1232,7 +1825,21 @@ function _main_replacementRules (arrayOfYears) {
             var regexString = '\\b(AD\\s' + arrayOfYears["ADOneDigitYear"][i] + ')\\b(?!–)(?!s)(?!\\sBC)'; // combination of lookbehind and lookahead for en-dash, and lookahead for s
             //console.log(regexString);
             var regex = new RegExp(regexString, "i");
-            var replaceString = ' $1' + ' [' + heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
+
+            var replaceStringPageStamp = " $1";
+            var replaceStringHE = startHoloceneStyle + startInsertBetween + heYear + startHoloceneAnchor + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
+
+            if (!holoceneReplace) {
+                if (!insertBefore) {
+                    var replaceString = replaceStringPageStamp + ' ' + replaceStringHE;
+                } else {
+                    var replaceString = replaceStringHE + ' ' + replaceStringPageStamp;
+                }
+            } else {
+                var replaceString = replaceStringHE;
+            }
+
+            // var replaceString = ' $1' + ' [' + heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
             //var replaceString = heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>';
             //var replaceString = heYear;
             //console.log(replaceString);
@@ -1247,7 +1854,21 @@ function _main_replacementRules (arrayOfYears) {
             var regexString = '((?!([–|-])).|^)\\b(' + arrayOfYears["OneDigitYearCE"][i] + '\\sCE)\\b(?!–)(?!s)(?!\\sBC)'; // combination of lookbehind and lookahead for en-dash, and lookahead for s
             //console.log(regexString);
             var regex = new RegExp(regexString, "i");
-            var replaceString = ' $3' + ' [' + heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
+
+            var replaceStringPageStamp = " $3";
+            var replaceStringHE = startHoloceneStyle + startInsertBetween + heYear + startHoloceneAnchor + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
+
+            if (!holoceneReplace) {
+                if (!insertBefore) {
+                    var replaceString = replaceStringPageStamp + ' ' + replaceStringHE;
+                } else {
+                    var replaceString = replaceStringHE + ' ' + replaceStringPageStamp;
+                }
+            } else {
+                var replaceString = replaceStringHE;
+            }
+
+            // var replaceString = ' $3' + ' [' + heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
             //var replaceString = heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>';
             //var replaceString = heYear;
             //console.log(replaceString);
@@ -1263,7 +1884,21 @@ function _main_replacementRules (arrayOfYears) {
             var regexString = '((?!([–|-|\/])).|^)\\b(' + arrayOfYears["OneDigitYearBC"][i] + '\\sBC)\\b(?!–)(?!s)'; // combination of lookbehind and lookahead for en-dash, and lookahead for s
             //console.log(regexString);
             var regex = new RegExp(regexString, "i");
-            var replaceString = ' $3' + ' [' + heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
+
+            var replaceStringPageStamp = " $3";
+            var replaceStringHE = startHoloceneStyle + startInsertBetween + heYear + startHoloceneAnchor + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
+
+            if (!holoceneReplace) {
+                if (!insertBefore) {
+                    var replaceString = replaceStringPageStamp + ' ' + replaceStringHE;
+                } else {
+                    var replaceString = replaceStringHE + ' ' + replaceStringPageStamp;
+                }
+            } else {
+                var replaceString = replaceStringHE;
+            }
+
+            // var replaceString = ' $3' + ' [' + heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
             //var replaceString = heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>';
             //var replaceString = heYear;
             //console.log(replaceString);
@@ -1278,19 +1913,31 @@ function _main_replacementRules (arrayOfYears) {
             var regexString = '((?!([–|-|\/])).|^)\\b(' + arrayOfYears["OneDigitYearBCE"][i] + '\\sBCE)\\b(?!–)(?!s)'; // combination of lookbehind and lookahead for en-dash, and lookahead for s
             //console.log(regexString);
             var regex = new RegExp(regexString, "i");
-            var replaceString = ' $3' + ' [' + heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
+
+            var replaceStringPageStamp = " $3";
+            var replaceStringHE = startHoloceneStyle + startInsertBetween + heYear + startHoloceneAnchor + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
+
+            if (!holoceneReplace) {
+                if (!insertBefore) {
+                    var replaceString = replaceStringPageStamp + ' ' + replaceStringHE;
+                } else {
+                    var replaceString = replaceStringHE + ' ' + replaceStringPageStamp;
+                }
+            } else {
+                var replaceString = replaceStringHE;
+            }
+
+            // var replaceString = ' $3' + ' [' + heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
             //var replaceString = heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>';
             //var replaceString = heYear;
             //console.log(replaceString);
             $("*").replaceText(regex, replaceString);
         }
     }
-}
 
 
-// ##########################################################################
-// #### Century replacement rules
-function _main_centuryReplacement () {
+    // ##########################################################################
+    // #### Century replacement rules
     for(var i = 1; i < 25; i++) {
         if (i < 10) {
             if (i == 1) {
@@ -1442,4 +2089,5 @@ function _main_centuryReplacement () {
             }
         }
     }
+
 }
