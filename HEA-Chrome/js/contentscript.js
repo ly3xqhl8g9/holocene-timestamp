@@ -1,4 +1,6 @@
-chrome.storage.sync.get(['activeOptions', 'insertBefore', 'insertBetween', 'holoceneStyle', 'holoceneAnchor', 'holoceneReplace'], function(element) {
+// ##########################################################################
+// #### Get the options from chrome.storage and call main with options as parameter
+chrome.storage.sync.get(['activeOptions', 'insertBefore', 'insertBetween', 'holoceneStyle', 'holoceneAnchor', 'holoceneHeRemove','holoceneReplace'], function(element) {
     var options = {};
 
     var activeOptions = element['activeOptions'];
@@ -6,6 +8,7 @@ chrome.storage.sync.get(['activeOptions', 'insertBefore', 'insertBetween', 'holo
     var insertBetween = element['insertBetween'];
     var holoceneStyle = element['holoceneStyle'];
     var holoceneAnchor = element['holoceneAnchor'];
+    var holoceneHeRemove = element['holoceneHeRemove'];
     var holoceneReplace = element['holoceneReplace'];
 
     options['activeOptions'] = activeOptions;
@@ -13,12 +16,15 @@ chrome.storage.sync.get(['activeOptions', 'insertBefore', 'insertBetween', 'holo
     options['insertBetween'] = insertBetween;
     options['holoceneStyle'] = holoceneStyle;
     options['holoceneAnchor'] = holoceneAnchor;
+    options['holoceneHeRemove'] = holoceneHeRemove;
     options['holoceneReplace'] = holoceneReplace;
 
     _main_(options);
 });
 
 
+// ##########################################################################
+// #### main function calling replacementrules with chained function-parameter
 function _main_ (options) {
     // ##########################################################################
     // ### Ben Alman's replaceText plugin
@@ -68,10 +74,9 @@ function _main_extractText () {
 
 
 // ##########################################################################
-// #### keep in array i, i+1, i-1 if i has one or more numbers
+// #### keep in array i, i+1, i-1 if i has one or more numbers and do some filtering
 function _main_clearArray (bodyTextArray) {
     function cleanArray(arrayToBeCleaned) {
-        // the function cleans the array of empty strings and strings containing only whitespace
         var firstCleanArray = new Array();
         var secondCleanArray = new Array();
         var thirdCleanArray = new Array();
@@ -552,11 +557,17 @@ function _main_replacementRules (arrayOfYears, options) {
     }
 
     if (options['holoceneAnchor'] == 'yesAnchor') {
-        var startHoloceneAnchor = ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE';
+        var startHoloceneAnchor = ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">';
         var endHoloceneAnchor = '</a>';
     } else if (options['holoceneAnchor'] == 'noAnchor') {
-        var startHoloceneAnchor = ' HE';
+        var startHoloceneAnchor = '';
         var endHoloceneAnchor = '';
+    }
+
+    if (options['holoceneHeRemove'] == 'yesRemove') {
+        var holoceneHeMark = '';
+    } else if (options['holoceneHeRemove'] == 'noRemove') {
+        var holoceneHeMark = 'HE';
     }
 
     if (options['holoceneReplace'] == 'yesReplace') {
@@ -571,8 +582,11 @@ function _main_replacementRules (arrayOfYears, options) {
     // console.log("holoceneStyle:", holoceneStyle);
     // console.log("holoceneAnchor:", holoceneAnchor);
     // console.log("holoceneReplace:", holoceneReplace);
+    // console.log(holoceneHeMark);
 
 
+    // ##########################################################################
+    // #### replacement rules
     // #### 5 Digits
     if (typeof arrayOfYears["FiveDigitsYearBC"] != 'undefined') {
         for(var i = 0; i < arrayOfYears["FiveDigitsYearBC"].length; i++) {
@@ -699,7 +713,7 @@ function _main_replacementRules (arrayOfYears, options) {
             //console.log(regex);
 
             var replaceStringPageStamp = "$1";
-            var replaceStringHE = startHoloceneStyle + startInsertBetween + heYear + startHoloceneAnchor + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
+            var replaceStringHE = startHoloceneStyle + startInsertBetween + heYear + startHoloceneAnchor + holoceneHeMark + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
 
             if (!holoceneReplace) {
                 if (!insertBefore) {
