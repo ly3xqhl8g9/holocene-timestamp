@@ -1,3 +1,26 @@
+chrome.storage.sync.get(['activeOptions', 'insertBefore', 'insertBetween', 'holoceneStyle', 'holoceneAnchor', 'holoceneReplace'], function(element) {
+    var options = {}
+
+    var activeOptions = element['activeOptions'];
+    var insertBefore = element['insertBefore'];
+    var insertBetween = element['insertBetween'];
+    var holoceneStyle = element['holoceneStyle'];
+    var holoceneAnchor = element['holoceneAnchor'];
+    var holoceneReplace = element['holoceneReplace'];
+
+    var options["activeOptions"] = activeOptions;
+    var options["insertBefore"] = insertBefore;
+    var options["insertBetween"] = insertBetween;
+    var options["holoceneStyle"] = holoceneStyle;
+    var options["holoceneAnchor"] = holoceneAnchor;
+    var options["holoceneReplace"] = holoceneReplace;
+
+});
+
+
+
+
+
 function _main_ () {
     // ##########################################################################
     // ### Ben Alman's replaceText plugin
@@ -27,9 +50,6 @@ function _main_ () {
             remove.length && $(remove).remove();
         });
     };
-
-    // ### test the replaceText function
-    //$("*").replaceText( /1755/g, "1755 [11755 <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]");
 
     _main_replacementRules(_main_unique(_main_makeArrays(_main_clearArray(_main_extractText()))));
     _main_centuryReplacement();

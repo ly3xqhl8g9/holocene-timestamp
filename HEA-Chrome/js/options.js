@@ -1,6 +1,6 @@
-// chrome.storage.sync.get(null, function(element) {
-//     console.log(element);
-// });
+chrome.storage.sync.get(null, function(element) {
+    console.log(element);
+});
 //
 // chrome.storage.sync.clear();
 
@@ -15,7 +15,7 @@ chrome.storage.sync.get(['activeOptions', 'insertBefore', 'insertBetween', 'holo
         || element['holoceneReplace'] == null) {
         default_options();
     }
-    console.log(element)
+    //console.log(element)
 });
 
 // set checked item while window opened
