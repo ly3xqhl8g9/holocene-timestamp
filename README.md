@@ -5,19 +5,21 @@ The Holocene Epoch sets the first year of the "recent" epoch 10,000 years before
 
 e.g.
 - "1 Aug. 2017" can become "1 Aug. 2017 [12017 [HE](https://en.wikipedia.org/wiki/Holocene_calendar)]";
-- "399 BC" can become "<i>/9602 HE/</i> 399 BC";
+- "399 BC" can become "*/9602 HE/* 399 BC";
 - "10 Sep. 259 BC" can become "10 Sep. 9742 HE".
 
 ___
 
 ### HEA on wikipedia
 
+<div style="text-align:center">
 ![Caesar](https://github.com/caveljan/Holocene-Epoch-Addverter/blob/master/readme-source/caesar.JPG)
-##### Julius Caesar's Wikipedia page with *default* settings on HEA.
+##### [Julius Caesar's Wikipedia page](https://en.wikipedia.org/wiki/Julius_Caesar) with *default* settings on HEA.
 
 
 ![Newton](https://github.com/caveljan/Holocene-Epoch-Addverter/blob/master/readme-source/newton.JPG)
-##### Isaac Newton's Early Life Wikipedia page with Holocene Epoch timestamp inserted between *nothing*, HE mark *removed*, and webpage timestamps *replaced* by the HE timestamp.
+##### [Isaac Newton's Early Life Wikipedia page](https://en.wikipedia.org/wiki/Early_life_of_Isaac_Newton) with the Holocene Epoch timestamp inserted between *nothing*, HE mark *removed*, and webpage timestamps *replaced* by the HE timestamp.
+</div>
 
 ___
 
