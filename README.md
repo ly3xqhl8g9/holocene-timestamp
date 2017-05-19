@@ -21,6 +21,12 @@ ___
 
 ___
 
+### HEA Options
+
+![Options](https://github.com/caveljan/Holocene-Epoch-Addverter/blob/master/readme-source/hea-options.gif)
+
+___
+
 ### What is the Holocene Epoch?
 ###### [Holocene Epoch Wiki](https://en.wikipedia.org/wiki/Holocene)
 ###### [Holocene Calendar Wiki](https://en.wikipedia.org/wiki/Holocene_calendar)
