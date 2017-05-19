@@ -29,3 +29,5 @@ How the years beteen 1000-2017 might appear on wikipedia
 
 
 ((?!([–|-|\\s:|p+.\\s])).|^) - fake-lookbehind, working but also takes the \s into the match
+((?!([–|\/])).|^) - false-lookbehind for / for 355/367 BC mostly - issues here
+[^\/|–|-] - false lookbehind - takes the /s and /n
