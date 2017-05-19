@@ -3,9 +3,10 @@
 body {
     padding:0px;
     margin:0px;
-    width:220px;
-    height:80px;
+    width:230px;
+    height:170px;
     color:white;
+    text-align: center;
     background: linear-gradient(to right, rgb(29, 78, 144) 50%, rgb(12, 57, 87) 50%);
 }
 
@@ -26,12 +27,40 @@ h1 {
 
 }
 
-#on {
-    margin-bottom: 10px;
-}
-
 fieldset {
     border: none;
     margin: 0;
     padding: 0;
+}
+
+#extensionOn {
+    margin-bottom: 10px;
+}
+
+#underForm {
+    color: hsl(0, 0%, 85%);
+    line-height: 1;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+#underForm a {
+    color: hsl(0, 0%, 85%);
+    text-decoration: none;
+}
+
+#underForm a:hover {
+    color: hsl(0, 0%, 65%);
+}
+
+#adjustOptions {
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+#adjustOptions:hover {
+    cursor: pointer;
+    color: hsl(0, 0%, 65%);
 }
