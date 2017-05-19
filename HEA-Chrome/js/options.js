@@ -1,10 +1,3 @@
-// chrome.storage.sync.get(null, function(element) {
-//     console.log(element);
-// });
-//
-// chrome.storage.sync.clear();
-
-
 // set default options at the start
 chrome.storage.sync.get(['activeOptions', 'insertBefore', 'insertBetween', 'holoceneStyle', 'holoceneAnchor', 'holoceneHeRemove', 'holoceneReplace'], function(element) {
     if(element['activeOptions'] == null
@@ -46,8 +39,24 @@ chrome.storage.sync.get(['activeOptions', 'insertBefore', 'insertBetween', 'holo
         document.getElementById('yesAnchor').setAttribute("disabled", "disabled");
         document.getElementById('noAnchor').setAttribute("disabled", "disabled");
     }
-});
 
+    if(document.getElementById('off').hasAttribute("checked")) {
+        document.getElementById('after').setAttribute("disabled", "disabled");
+        document.getElementById('before').setAttribute("disabled", "disabled");
+        document.getElementById('brackets').setAttribute("disabled", "disabled");
+        document.getElementById('accolades').setAttribute("disabled", "disabled");
+        document.getElementById('slashes').setAttribute("disabled", "disabled");
+        document.getElementById('nothing').setAttribute("disabled", "disabled");
+        document.getElementById('regular').setAttribute("disabled", "disabled");
+        document.getElementById('italic').setAttribute("disabled", "disabled");
+        document.getElementById('yesAnchor').setAttribute("disabled", "disabled");
+        document.getElementById('noAnchor').setAttribute("disabled", "disabled");
+        document.getElementById('noRemove').setAttribute("disabled", "disabled");
+        document.getElementById('yesRemove').setAttribute("disabled", "disabled");
+        document.getElementById('noReplace').setAttribute("disabled", "disabled");
+        document.getElementById('yesReplace').setAttribute("disabled", "disabled");
+    }
+});
 
 
 function save_options () {
@@ -94,7 +103,13 @@ function save_options () {
     });
 
 }
-document.getElementById('btn-save').addEventListener('click', save_options);
+document.getElementById('btn-save').addEventListener('click', function(ev) {
+    save_options();
+    setTimeout(function() {
+        location.reload();
+    }, 750);
+});
+
 
 
 function default_options () {
@@ -132,32 +147,95 @@ function default_options () {
         document.getElementById(holoceneReplace).setAttribute("checked", "checked");
     });
 }
-document.getElementById('btn-reset').addEventListener('click', default_options);
-
-
-
-// disable insertBeforeAfterForm when click yesReplace
-document.getElementById('yesReplace').addEventListener('click', function () {
-    document.getElementById('after').setAttribute("disabled", "disabled");
-    document.getElementById('before').setAttribute("disabled", "disabled");
-});
-
-// enable insertBeforeAfterForm when click noReplace
-document.getElementById('noReplace').addEventListener('click', function () {
-    document.getElementById('after').removeAttribute("disabled", "disabled");
-    document.getElementById('before').removeAttribute("disabled", "disabled");
+document.getElementById('btn-reset').addEventListener('click', function(ev) {
+    default_options();
+    setTimeout(function() {
+        location.reload();
+    }, 750);
 });
 
 
 
-// disable holoceneAnchorTag when click yesRemove
-document.getElementById('yesRemove').addEventListener('click', function () {
-    document.getElementById('yesAnchor').setAttribute("disabled", "disabled");
-    document.getElementById('noAnchor').setAttribute("disabled", "disabled");
-});
+function enableDisableOptions () {
+    // disable insertBeforeAfterForm when click yesReplace
+    document.getElementById('yesReplace').addEventListener('click', function () {
+        document.getElementById('after').setAttribute("disabled", "disabled");
+        document.getElementById('before').setAttribute("disabled", "disabled");
+    });
+    // enable insertBeforeAfterForm when click noReplace
+    document.getElementById('noReplace').addEventListener('click', function () {
+        document.getElementById('after').removeAttribute("disabled", "disabled");
+        document.getElementById('before').removeAttribute("disabled", "disabled");
+    });
 
-// enable holoceneAnchorTag when click noRemove
-document.getElementById('noRemove').addEventListener('click', function () {
-    document.getElementById('yesAnchor').removeAttribute("disabled", "disabled");
-    document.getElementById('noAnchor').removeAttribute("disabled", "disabled");
-});
+
+    // disable holoceneAnchorTag when click yesRemove
+    document.getElementById('yesRemove').addEventListener('click', function () {
+        document.getElementById('yesAnchor').setAttribute("disabled", "disabled");
+        document.getElementById('noAnchor').setAttribute("disabled", "disabled");
+    });
+    // enable holoceneAnchorTag when click noRemove
+    document.getElementById('noRemove').addEventListener('click', function () {
+        document.getElementById('yesAnchor').removeAttribute("disabled", "disabled");
+        document.getElementById('noAnchor').removeAttribute("disabled", "disabled");
+    });
+
+
+    // disable options when click off
+    document.getElementById('off').addEventListener('click', function () {
+        document.getElementById('after').setAttribute("disabled", "disabled");
+        document.getElementById('before').setAttribute("disabled", "disabled");
+        document.getElementById('brackets').setAttribute("disabled", "disabled");
+        document.getElementById('accolades').setAttribute("disabled", "disabled");
+        document.getElementById('slashes').setAttribute("disabled", "disabled");
+        document.getElementById('nothing').setAttribute("disabled", "disabled");
+        document.getElementById('regular').setAttribute("disabled", "disabled");
+        document.getElementById('italic').setAttribute("disabled", "disabled");
+        document.getElementById('yesAnchor').setAttribute("disabled", "disabled");
+        document.getElementById('noAnchor').setAttribute("disabled", "disabled");
+        document.getElementById('noRemove').setAttribute("disabled", "disabled");
+        document.getElementById('yesRemove').setAttribute("disabled", "disabled");
+        document.getElementById('noReplace').setAttribute("disabled", "disabled");
+        document.getElementById('yesReplace').setAttribute("disabled", "disabled");
+    });
+    // enable options when click onWiki/onSite
+    document.getElementById('onWiki').addEventListener('click', function () {
+        document.getElementById('after').removeAttribute("disabled", "disabled");
+        document.getElementById('before').removeAttribute("disabled", "disabled");
+        document.getElementById('brackets').removeAttribute("disabled", "disabled");
+        document.getElementById('accolades').removeAttribute("disabled", "disabled");
+        document.getElementById('slashes').removeAttribute("disabled", "disabled");
+        document.getElementById('nothing').removeAttribute("disabled", "disabled");
+        document.getElementById('regular').removeAttribute("disabled", "disabled");
+        document.getElementById('italic').removeAttribute("disabled", "disabled");
+        document.getElementById('yesAnchor').removeAttribute("disabled", "disabled");
+        document.getElementById('noAnchor').removeAttribute("disabled", "disabled");
+        document.getElementById('noRemove').removeAttribute("disabled", "disabled");
+        document.getElementById('yesRemove').removeAttribute("disabled", "disabled");
+        document.getElementById('noReplace').removeAttribute("disabled", "disabled");
+        document.getElementById('yesReplace').removeAttribute("disabled", "disabled");
+    });
+    document.getElementById('onSite').addEventListener('click', function () {
+        document.getElementById('after').removeAttribute("disabled", "disabled");
+        document.getElementById('before').removeAttribute("disabled", "disabled");
+        document.getElementById('brackets').removeAttribute("disabled", "disabled");
+        document.getElementById('accolades').removeAttribute("disabled", "disabled");
+        document.getElementById('slashes').removeAttribute("disabled", "disabled");
+        document.getElementById('nothing').removeAttribute("disabled", "disabled");
+        document.getElementById('regular').removeAttribute("disabled", "disabled");
+        document.getElementById('italic').removeAttribute("disabled", "disabled");
+        document.getElementById('yesAnchor').removeAttribute("disabled", "disabled");
+        document.getElementById('noAnchor').removeAttribute("disabled", "disabled");
+        document.getElementById('noRemove').removeAttribute("disabled", "disabled");
+        document.getElementById('yesRemove').removeAttribute("disabled", "disabled");
+        document.getElementById('noReplace').removeAttribute("disabled", "disabled");
+        document.getElementById('yesReplace').removeAttribute("disabled", "disabled");
+    });
+}
+enableDisableOptions();
+
+// chrome.storage.sync.get(null, function(element) {
+//     console.log(element);
+// });
+//
+// chrome.storage.sync.clear();
