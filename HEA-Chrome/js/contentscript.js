@@ -1032,7 +1032,7 @@ function _main_replacementRules (arrayOfYears, options) {
         for(var i = 0; i < arrayOfYears["ThreeDigitsYear"].length; i++) {
             heYear = arrayOfYears["ThreeDigitsYear"][i] + 10000;
             // console.log(heYear);
-            var regexString = '\\b(' + arrayOfYears["ThreeDigitsYear"][i] + ')\\b(?!-|–|\/)(?!])(?!s)(?!\\sBC?E?)(?!\\sAD)'; // combination of lookbehind and lookahead for en-dash, and lookahead for s
+            var regexString = '\\b(' + arrayOfYears["ThreeDigitsYear"][i] + ')\\b(?!-|–|\/|,)(?!])(?!s)(?!\\sBC?E?)(?!\\sAD)'; // combination of lookbehind and lookahead for en-dash, and lookahead for s
             // console.log(regexString);
             var regex = new RegExp(regexString, "i");
 
