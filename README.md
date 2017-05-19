@@ -12,14 +12,12 @@ ___
 
 ### HEA on wikipedia
 
-<div style="text-align:center">
 ![Caesar](https://github.com/caveljan/Holocene-Epoch-Addverter/blob/master/readme-source/caesar.JPG)
-##### [Julius Caesar's Wikipedia page](https://en.wikipedia.org/wiki/Julius_Caesar) with *default* settings on HEA.
+#### [Julius Caesar's Wikipedia page](https://en.wikipedia.org/wiki/Julius_Caesar) with *default* settings on HEA.
 
 
 ![Newton](https://github.com/caveljan/Holocene-Epoch-Addverter/blob/master/readme-source/newton.JPG)
-##### [Isaac Newton's Early Life Wikipedia page](https://en.wikipedia.org/wiki/Early_life_of_Isaac_Newton) with the Holocene Epoch timestamp inserted between *nothing*, HE mark *removed*, and webpage timestamps *replaced* by the HE timestamp.
-</div>
+#### [Isaac Newton's Early Life Wikipedia page](https://en.wikipedia.org/wiki/Early_life_of_Isaac_Newton) with the Holocene Epoch timestamp inserted between *nothing*, HE mark *removed*, and webpage timestamps *replaced* by the HE timestamp.
 
 ___
 
