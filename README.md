@@ -12,11 +12,11 @@ e.g.
 
 ### HEA on wikipedia
 
-![Caesar](/readme-source/caesar.jpg)
+![Caesar](https://github.com/caveljan/Holocene-Epoch-Addverter/blob/master/readme-source/caesar.JPG)
 ##### Julius Caesar's Wikipedia page with Default settings on HEA.
 
 
-![Newton](/readme-source/newton.jpg)
+![Newton](https://github.com/caveljan/Holocene-Epoch-Addverter/blob/master/readme-source/newton.JPG)
 ##### Isaac Newton's Early Life Wikipedia page with Holocene Epoch timestamp inserted between *nothing*, HE mark *removed*, and webpage timestamps *replaced* by the HE timestamp.
 
 ---
@@ -24,7 +24,7 @@ e.g.
 ### What is the Holocene Epoch?
 ###### [Holocene Epoch Wiki](https://en.wikipedia.org/wiki/Holocene)
 ###### [Holocene Calendar Wiki](https://en.wikipedia.org/wiki/Holocene_calendar)
-###### [Emiliani’s Proposal](HEA-Chrome/emiliani/emilianisproposal.pdf)
+###### [Emiliani’s Proposal](https://github.com/caveljan/Holocene-Epoch-Addverter/blob/master/HEA-Chrome/emiliani/emilianisproposal.pdf)
 ###### [Kurzgesagt’s Summary](https://www.youtube.com/watch?v=czgOWmtGVGs)
 
 ---
