@@ -8,18 +8,18 @@ e.g.
 - "399 BC" can become "<i>/9602 HE/</i> 399 BC";
 - "10 Sep. 259 BC" can become "10 Sep. 9742 HE".
 
----
+___
 
 ### HEA on wikipedia
 
 ![Caesar](https://github.com/caveljan/Holocene-Epoch-Addverter/blob/master/readme-source/caesar.JPG)
-##### Julius Caesar's Wikipedia page with Default settings on HEA.
+##### Julius Caesar's Wikipedia page with *default* settings on HEA.
 
 
 ![Newton](https://github.com/caveljan/Holocene-Epoch-Addverter/blob/master/readme-source/newton.JPG)
 ##### Isaac Newton's Early Life Wikipedia page with Holocene Epoch timestamp inserted between *nothing*, HE mark *removed*, and webpage timestamps *replaced* by the HE timestamp.
 
----
+___
 
 ### What is the Holocene Epoch?
 ###### [Holocene Epoch Wiki](https://en.wikipedia.org/wiki/Holocene)
@@ -27,12 +27,12 @@ e.g.
 ###### [Emiliani’s Proposal](https://github.com/caveljan/Holocene-Epoch-Addverter/blob/master/HEA-Chrome/emiliani/emilianisproposal.pdf)
 ###### [Kurzgesagt’s Summary](https://www.youtube.com/watch?v=czgOWmtGVGs)
 
----
+___
 
 ### Why "addverter"?
 Becase it adds the timestamp but also advertises the Holocene Epoch calendar.
 
----
+___
 
 ### Support
 If you can spare it, your [support](https://www.paypal.me/caveljan) will be appreciated.
