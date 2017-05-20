@@ -11,20 +11,16 @@ chrome.storage.sync.get(['activeOptions', 'insertBefore', 'insertBetween', 'holo
                   element['holoceneHeRemove'],
                   element['holoceneReplace']);
     }
-    // console.log(element['activeOptions']);
-
-
-
-
 });
 
 
-function extensionIsOn () {
+function extensionIsOn (userActive) {
     chrome.storage.sync.set({activeOptions: 'onWiki'});
 
     document.getElementById('extensionOn').setAttribute("checked", "checked");
 
     chrome.storage.sync.get(['activeOptions', 'insertBefore', 'insertBetween', 'holoceneStyle', 'holoceneAnchor', 'holoceneHeRemove','holoceneReplace'], function(element) {
+
         addHeText(element['insertBefore'],
                   element['insertBetween'],
                   element['holoceneStyle'],
