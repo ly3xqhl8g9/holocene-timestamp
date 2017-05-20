@@ -24,6 +24,10 @@ ___
 ### HEA Options
 
 ![Options](https://github.com/caveljan/Holocene-Epoch-Addverter/blob/master/readme-source/hea-options.gif)
+#### Options Menu
+
+![Popup](https://github.com/caveljan/Holocene-Epoch-Addverter/blob/master/readme-source/popup.png)
+#### Pop-up Menu
 
 ___
 
