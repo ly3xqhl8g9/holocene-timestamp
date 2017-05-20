@@ -1,6 +1,7 @@
 chrome.storage.sync.get(['activeOptions', 'insertBefore', 'insertBetween', 'holoceneStyle', 'holoceneAnchor', 'holoceneHeRemove','holoceneReplace'], function(element) {
     if (element['activeOptions'] == 'off') {
         document.getElementById('extensionOff').setAttribute("checked", "checked");
+        document.getElementById('popupTitle').textContent = "The Holocene Epoch Addverter is";
         document.getElementById('radioButtonOff').style.background = "rgb(12, 57, 87)";
         document.getElementById('radioButtonOnWiki').style.background = "linear-gradient(to right, rgb(29, 78, 144) 50%, rgb(12, 57, 87) 50%)";
         document.getElementById('radioButtonOnSite').style.background = "linear-gradient(to right, rgb(29, 78, 144) 50%, rgb(12, 57, 87) 50%)";
@@ -8,11 +9,13 @@ chrome.storage.sync.get(['activeOptions', 'insertBefore', 'insertBetween', 'holo
     } else {
         if (element['activeOptions'] == 'onWiki') {
             document.getElementById('extensionOnWiki').setAttribute("checked", "checked");
+            document.getElementById('popupTitle').textContent = "The Holocene Epoch Addverter is active";
             document.getElementById('radioButtonOnWiki').style.background = "rgb(12, 57, 87)";
             document.getElementById('radioButtonOnSite').style.background = "linear-gradient(to right, rgb(29, 78, 144) 50%, rgb(12, 57, 87) 50%)";
             document.getElementById('radioButtonOff').style.background = "linear-gradient(to right, rgb(29, 78, 144) 50%, rgb(12, 57, 87) 50%)";
         } else if (element['activeOptions'] == 'onSite') {
             document.getElementById('extensionOnSite').setAttribute("checked", "checked");
+            document.getElementById('popupTitle').textContent = "The Holocene Epoch Addverter is active";
             document.getElementById('radioButtonOnSite').style.background = "rgb(12, 57, 87)";
             document.getElementById('radioButtonOnWiki').style.background = "linear-gradient(to right, rgb(29, 78, 144) 50%, rgb(12, 57, 87) 50%)";
             document.getElementById('radioButtonOff').style.background = "linear-gradient(to right, rgb(29, 78, 144) 50%, rgb(12, 57, 87) 50%)";
@@ -30,6 +33,7 @@ chrome.storage.sync.get(['activeOptions', 'insertBefore', 'insertBetween', 'holo
 function extensionIsOnWiki () {
     chrome.storage.sync.set({activeOptions: 'onWiki'});
     document.getElementById('extensionOnWiki').setAttribute("checked", "checked");
+    document.getElementById('popupTitle').textContent = "The Holocene Epoch Addverter is active";
     document.getElementById('radioButtonOnWiki').style.background = "rgb(12, 57, 87)";
     document.getElementById('radioButtonOnSite').style.background = "linear-gradient(to right, rgb(29, 78, 144) 50%, rgb(12, 57, 87) 50%)";
     document.getElementById('radioButtonOff').style.background = "linear-gradient(to right, rgb(29, 78, 144) 50%, rgb(12, 57, 87) 50%)";
@@ -51,6 +55,7 @@ document.getElementById('extensionOnWiki').addEventListener('click', function(ev
 function extensionIsOnSite () {
     chrome.storage.sync.set({activeOptions: 'onSite'});
     document.getElementById('extensionOnWiki').setAttribute("checked", "checked");
+    document.getElementById('popupTitle').textContent = "The Holocene Epoch Addverter is active";
     document.getElementById('radioButtonOnSite').style.background = "rgb(12, 57, 87)";
     document.getElementById('radioButtonOnWiki').style.background = "linear-gradient(to right, rgb(29, 78, 144) 50%, rgb(12, 57, 87) 50%)";
     document.getElementById('radioButtonOff').style.background = "linear-gradient(to right, rgb(29, 78, 144) 50%, rgb(12, 57, 87) 50%)";
@@ -72,6 +77,7 @@ document.getElementById('extensionOnSite').addEventListener('click', function(ev
 function extensionIsOff () {
     chrome.storage.sync.set({activeOptions: 'off'});
     document.getElementById('extensionOff').setAttribute("checked", "checked");
+    document.getElementById('popupTitle').textContent = "The Holocene Epoch Addverter is";
     document.getElementById('radioButtonOff').style.background = "rgb(12, 57, 87)";
     document.getElementById('radioButtonOnWiki').style.background = "linear-gradient(to right, rgb(29, 78, 144) 50%, rgb(12, 57, 87) 50%)";
     document.getElementById('radioButtonOnSite').style.background = "linear-gradient(to right, rgb(29, 78, 144) 50%, rgb(12, 57, 87) 50%)";
