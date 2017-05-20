@@ -1,9 +1,22 @@
 chrome.storage.sync.get(['activeOptions', 'insertBefore', 'insertBetween', 'holoceneStyle', 'holoceneAnchor', 'holoceneHeRemove','holoceneReplace'], function(element) {
     if (element['activeOptions'] == 'off') {
         document.getElementById('extensionOff').setAttribute("checked", "checked");
+        document.getElementById('radioButtonOff').style.background = "rgb(12, 57, 87)";
+        document.getElementById('radioButtonOnWiki').style.background = "linear-gradient(to right, rgb(29, 78, 144) 50%, rgb(12, 57, 87) 50%)";
+        document.getElementById('radioButtonOnSite').style.background = "linear-gradient(to right, rgb(29, 78, 144) 50%, rgb(12, 57, 87) 50%)";
         document.getElementById('underForm').style.display = 'none';
     } else {
-        document.getElementById('extensionOn').setAttribute("checked", "checked");
+        if (element['activeOptions'] == 'onWiki') {
+            document.getElementById('extensionOnWiki').setAttribute("checked", "checked");
+            document.getElementById('radioButtonOnWiki').style.background = "rgb(12, 57, 87)";
+            document.getElementById('radioButtonOnSite').style.background = "linear-gradient(to right, rgb(29, 78, 144) 50%, rgb(12, 57, 87) 50%)";
+            document.getElementById('radioButtonOff').style.background = "linear-gradient(to right, rgb(29, 78, 144) 50%, rgb(12, 57, 87) 50%)";
+        } else if (element['activeOptions'] == 'onSite') {
+            document.getElementById('extensionOnSite').setAttribute("checked", "checked");
+            document.getElementById('radioButtonOnSite').style.background = "rgb(12, 57, 87)";
+            document.getElementById('radioButtonOnWiki').style.background = "linear-gradient(to right, rgb(29, 78, 144) 50%, rgb(12, 57, 87) 50%)";
+            document.getElementById('radioButtonOff').style.background = "linear-gradient(to right, rgb(29, 78, 144) 50%, rgb(12, 57, 87) 50%)";
+        }
         addHeText(element['insertBefore'],
                   element['insertBetween'],
                   element['holoceneStyle'],
@@ -14,13 +27,14 @@ chrome.storage.sync.get(['activeOptions', 'insertBefore', 'insertBetween', 'holo
 });
 
 
-function extensionIsOn (userActive) {
+function extensionIsOnWiki () {
     chrome.storage.sync.set({activeOptions: 'onWiki'});
-
-    document.getElementById('extensionOn').setAttribute("checked", "checked");
+    document.getElementById('extensionOnWiki').setAttribute("checked", "checked");
+    document.getElementById('radioButtonOnWiki').style.background = "rgb(12, 57, 87)";
+    document.getElementById('radioButtonOnSite').style.background = "linear-gradient(to right, rgb(29, 78, 144) 50%, rgb(12, 57, 87) 50%)";
+    document.getElementById('radioButtonOff').style.background = "linear-gradient(to right, rgb(29, 78, 144) 50%, rgb(12, 57, 87) 50%)";
 
     chrome.storage.sync.get(['activeOptions', 'insertBefore', 'insertBetween', 'holoceneStyle', 'holoceneAnchor', 'holoceneHeRemove','holoceneReplace'], function(element) {
-
         addHeText(element['insertBefore'],
                   element['insertBetween'],
                   element['holoceneStyle'],
@@ -29,24 +43,43 @@ function extensionIsOn (userActive) {
                   element['holoceneReplace']);
     });
 }
+document.getElementById('extensionOnWiki').addEventListener('click', function(ev) {
+    extensionIsOnWiki();
+});
 
-document.getElementById('extensionOn').addEventListener('click', function(ev) {
-    extensionIsOn();
+
+function extensionIsOnSite () {
+    chrome.storage.sync.set({activeOptions: 'onSite'});
+    document.getElementById('extensionOnWiki').setAttribute("checked", "checked");
+    document.getElementById('radioButtonOnSite').style.background = "rgb(12, 57, 87)";
+    document.getElementById('radioButtonOnWiki').style.background = "linear-gradient(to right, rgb(29, 78, 144) 50%, rgb(12, 57, 87) 50%)";
+    document.getElementById('radioButtonOff').style.background = "linear-gradient(to right, rgb(29, 78, 144) 50%, rgb(12, 57, 87) 50%)";
+
+    chrome.storage.sync.get(['activeOptions', 'insertBefore', 'insertBetween', 'holoceneStyle', 'holoceneAnchor', 'holoceneHeRemove','holoceneReplace'], function(element) {
+        addHeText(element['insertBefore'],
+                  element['insertBetween'],
+                  element['holoceneStyle'],
+                  element['holoceneAnchor'],
+                  element['holoceneHeRemove'],
+                  element['holoceneReplace']);
+    });
+}
+document.getElementById('extensionOnSite').addEventListener('click', function(ev) {
+    extensionIsOnSite();
 });
 
 
 function extensionIsOff () {
     chrome.storage.sync.set({activeOptions: 'off'});
-
     document.getElementById('extensionOff').setAttribute("checked", "checked");
-
+    document.getElementById('radioButtonOff').style.background = "rgb(12, 57, 87)";
+    document.getElementById('radioButtonOnWiki').style.background = "linear-gradient(to right, rgb(29, 78, 144) 50%, rgb(12, 57, 87) 50%)";
+    document.getElementById('radioButtonOnSite').style.background = "linear-gradient(to right, rgb(29, 78, 144) 50%, rgb(12, 57, 87) 50%)";
     document.getElementById('underForm').style.display = 'none';
 }
-
 document.getElementById('extensionOff').addEventListener('click', function(ev) {
     extensionIsOff();
 });
-
 
 
 document.getElementById('adjustOptions').addEventListener('click', function(ev) {
