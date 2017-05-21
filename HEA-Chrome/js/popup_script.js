@@ -50,6 +50,9 @@ function extensionIsOnWiki () {
 document.getElementById('extensionOnWiki').addEventListener('click', function(ev) {
     extensionIsOnWiki();
 });
+document.getElementById('radioButtonOnWiki').addEventListener('click', function(ev) {
+    extensionIsOnWiki();
+});
 
 
 function extensionIsOnSite () {
@@ -72,6 +75,9 @@ function extensionIsOnSite () {
 document.getElementById('extensionOnSite').addEventListener('click', function(ev) {
     extensionIsOnSite();
 });
+document.getElementById('radioButtonOnSite').addEventListener('click', function(ev) {
+    extensionIsOnSite();
+});
 
 
 function extensionIsOff () {
@@ -86,6 +92,9 @@ function extensionIsOff () {
 document.getElementById('extensionOff').addEventListener('click', function(ev) {
     extensionIsOff();
 });
+document.getElementById('radioButtonOff').addEventListener('click', function(ev) {
+    extensionIsOff();
+});
 
 
 document.getElementById('adjustOptions').addEventListener('click', function(ev) {
@@ -97,7 +106,7 @@ function addHeText(insertBeforeParameter,
                    insertBetweenParameter,
                    holoceneStyleParameter,
                    holoceneAnchorParameter,
-                   holoceneHeRemoveParamter,
+                   holoceneHeRemoveParameter,
                    holoceneReplaceParameter) {
     if (insertBeforeParameter == 'before') {
         var insertBefore = true;
@@ -131,7 +140,7 @@ function addHeText(insertBeforeParameter,
         var startHoloceneAnchor = ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">';
         var endHoloceneAnchor = '</a>';
     } else if (holoceneAnchorParameter == 'noAnchor') {
-        if(holoceneHeRemoveParamter == 'noRemove') {
+        if(holoceneHeRemoveParameter == 'noRemove') {
             var startHoloceneAnchor = ' ';
             var endHoloceneAnchor = '';
         } else {
@@ -140,9 +149,14 @@ function addHeText(insertBeforeParameter,
         }
     }
 
-    if (holoceneHeRemoveParamter == 'yesRemove') {
+    if (holoceneAnchorParameter == 'yesAnchor' && holoceneHeRemoveParameter == 'yesRemove') {
+        var startHoloceneAnchor = '';
+        var endHoloceneAnchor = '';
+    }
+
+    if (holoceneHeRemoveParameter == 'yesRemove') {
         var holoceneHeMark = '';
-    } else if (holoceneHeRemoveParamter == 'noRemove') {
+    } else if (holoceneHeRemoveParameter == 'noRemove') {
         var holoceneHeMark = 'HE';
     }
 
@@ -159,6 +173,7 @@ function addHeText(insertBeforeParameter,
     var replaceStringFirstPageStamp = '2017';
     var replaceStringSecondPageStamp = '399 BC';
     var replaceStringFirstHE = startHoloceneStyle + startInsertBetween + firstHeYear + startHoloceneAnchor + holoceneHeMark + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
+    console.log(replaceStringFirstHE);
     var replaceStringSecondHE = startHoloceneStyle + startInsertBetween + secondHeYear + startHoloceneAnchor + holoceneHeMark + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
 
     if (!holoceneReplace) {
