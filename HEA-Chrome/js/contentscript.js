@@ -579,6 +579,11 @@ function _main_replacementRules (arrayOfYears, options) {
         }
     }
 
+    if (options['holoceneAnchor'] == 'yesAnchor' && options['holoceneHeRemove'] == 'yesRemove') {
+        var startHoloceneAnchor = '';
+        var endHoloceneAnchor = '';
+    }
+
     if (options['holoceneHeRemove'] == 'yesRemove') {
         var holoceneHeMark = '';
     } else if (options['holoceneHeRemove'] == 'noRemove') {
