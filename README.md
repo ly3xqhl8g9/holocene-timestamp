@@ -45,4 +45,4 @@ Becase it adds the timestamp but also advertises the Holocene Epoch calendar.
 ___
 
 ### Support
-If you can spare it, your [support](https://www.paypal.me/caveljan) will be appreciated.
+If you can offer it, please, your [support](https://www.paypal.me/caveljan) will be appreciated.
