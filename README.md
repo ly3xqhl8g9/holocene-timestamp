@@ -23,7 +23,7 @@ ___
 
 ### HEA Options
 
-![Options](https://github.com/caveljan/Holocene-Epoch-Addverter/blob/master/readme-source/hea-options.gif)
+![Options](https://github.com/caveljan/Holocene-Epoch-Addverter/blob/master/readme-source/options.gif)
 #### Options Menu
 
 ![Popup](https://github.com/caveljan/Holocene-Epoch-Addverter/blob/master/readme-source/popup.PNG)
@@ -46,3 +46,9 @@ ___
 
 ### Support
 If you can offer it, please, your [support](https://www.paypal.me/caveljan) will be appreciated.
+
+___
+
+### To Be Developed
+
+The alpha/beta version is powered by regular expression matching. Future iterations will match through natural language processing.
