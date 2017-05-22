@@ -12,7 +12,7 @@ ___
 
 ### HEA on wikipedia
 
-![Caesar](https://github.com/caveljan/Holocene-Epoch-Addverter/blob/master/readme-source/caesar.JPG)
+![Caesar](https://github.com/caveljan/Holocene-Epoch-Addverter/blob/master/readme-source/caesar.PNG)
 #### [Julius Caesar's Wikipedia page](https://en.wikipedia.org/wiki/Julius_Caesar) with *default* settings on HEA.
 
 
