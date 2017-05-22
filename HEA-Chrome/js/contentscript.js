@@ -2191,10 +2191,35 @@ function _main_replacementRules (arrayOfYears, options) {
                 regexBC = new RegExp (regexStringBC, "");
                 regexBCDash = new RegExp (regexStringBCDash, "");
                 centuryBC = 100 - i;
-                replaceString = i + 'st century' + ' [10' + i + 'st century <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
-                replaceStringDash = i + 'st-century' + ' [10' + i + 'st century <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
-                replaceStringBC = i + 'st century BC' + ' [' + centuryBC + 'th century <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
-                replaceStringBCDash = i + 'st-century BC' + ' [' + centuryBC + 'th century <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
+
+                var replaceStringHE = startHoloceneStyle + startInsertBetween + '10' + i + 'st century' + startHoloceneAnchor + holoceneHeMark + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
+                var replaceStringDashHE = startHoloceneStyle + startInsertBetween + '10' + i + 'st-century' + startHoloceneAnchor + holoceneHeMark + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
+                var replaceStringBCHE = startHoloceneStyle + startInsertBetween + centuryBC + 'th century' + startHoloceneAnchor + holoceneHeMark + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
+                var replaceStringBCDashHE = startHoloceneStyle + startInsertBetween + centuryBC + 'th-century' + startHoloceneAnchor + holoceneHeMark + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
+
+                if (!holoceneReplace) {
+                    if (!insertBefore) {
+                        var replaceString = i + 'st century' + ' ' + replaceStringHE;
+                        var replaceStringDash = i + 'st-century' + ' ' + replaceStringDashHE;
+                        var replaceStringBC = i + 'st century BC' + ' ' + replaceStringBCHE;
+                        var replaceStringBCDash = i + 'st-century BC' + ' ' + replaceStringBCDashHE;
+                    } else {
+                        var replaceString = replaceStringHE + ' ' + i + 'st century';
+                        var replaceStringDash = replaceStringDashHE + ' ' + i + 'st-century';
+                        var replaceStringBC = replaceStringBCHE + ' ' + i + 'st century BC';
+                        var replaceStringBCDash = replaceStringBCDashHE + ' ' + i + 'st-century BC';
+                    }
+                } else {
+                    var replaceString = replaceStringHE;
+                    var replaceStringDash = replaceStringDashHE;
+                    var replaceStringBC = replaceStringBCHE;
+                    var replaceStringBCDash = replaceStringBCDashHE;
+                }
+
+                // replaceString = i + 'st century' + ' [10' + i + 'st century <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
+                // replaceStringDash = i + 'st-century' + ' [10' + i + 'st century <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
+                // replaceStringBC = i + 'st century BC' + ' [' + centuryBC + 'th century <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
+                // replaceStringBCDash = i + 'st-century BC' + ' [' + centuryBC + 'th century <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
                 $("*").replaceText(regex, replaceString);
                 $("*").replaceText(regexDash, replaceStringDash);
                 $("*").replaceText(regexBC, replaceStringBC);
@@ -2209,10 +2234,35 @@ function _main_replacementRules (arrayOfYears, options) {
                 regexBC = new RegExp (regexStringBC, "");
                 regexBCDash = new RegExp (regexStringBCDash, "");
                 centuryBC = 100 - i;
-                replaceString = i + 'nd century' + ' [10' + i + 'nd century <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
-                replaceStringDash = i + 'nd-century' + ' [10' + i + 'nd century <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
-                replaceStringBC = i + 'nd century BC' + ' [' + centuryBC + 'th century <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
-                replaceStringBCDash = i + 'nd-century BC' + ' [' + centuryBC + 'th century <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
+
+                var replaceStringHE = startHoloceneStyle + startInsertBetween + '10' + i + 'nd century' + startHoloceneAnchor + holoceneHeMark + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
+                var replaceStringDashHE = startHoloceneStyle + startInsertBetween + '10' + i + 'nd-century' + startHoloceneAnchor + holoceneHeMark + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
+                var replaceStringBCHE = startHoloceneStyle + startInsertBetween + centuryBC + 'th century' + startHoloceneAnchor + holoceneHeMark + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
+                var replaceStringBCDashHE = startHoloceneStyle + startInsertBetween + centuryBC + 'th-century' + startHoloceneAnchor + holoceneHeMark + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
+
+                if (!holoceneReplace) {
+                    if (!insertBefore) {
+                        var replaceString = i + 'nd century' + ' ' + replaceStringHE;
+                        var replaceStringDash = i + 'nd-century' + ' ' + replaceStringDashHE;
+                        var replaceStringBC = i + 'nd century BC' + ' ' + replaceStringBCHE;
+                        var replaceStringBCDash = i + 'nd-century BC' + ' ' + replaceStringBCDashHE;
+                    } else {
+                        var replaceString = replaceStringHE + ' ' + i + 'nd century';
+                        var replaceStringDash = replaceStringDashHE + ' ' + i + 'nd-century';
+                        var replaceStringBC = replaceStringBCHE + ' ' + i + 'nd century BC';
+                        var replaceStringBCDash = replaceStringBCDashHE + ' ' + i + 'nd-century BC';
+                    }
+                } else {
+                    var replaceString = replaceStringHE;
+                    var replaceStringDash = replaceStringDashHE;
+                    var replaceStringBC = replaceStringBCHE;
+                    var replaceStringBCDash = replaceStringBCDashHE;
+                }
+
+                // replaceString = i + 'nd century' + ' [10' + i + 'nd century <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
+                // replaceStringDash = i + 'nd-century' + ' [10' + i + 'nd century <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
+                // replaceStringBC = i + 'nd century BC' + ' [' + centuryBC + 'th century <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
+                // replaceStringBCDash = i + 'nd-century BC' + ' [' + centuryBC + 'th century <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
                 $("*").replaceText(regex, replaceString);
                 $("*").replaceText(regexDash, replaceStringDash);
                 $("*").replaceText(regexBC, replaceStringBC);
@@ -2227,10 +2277,35 @@ function _main_replacementRules (arrayOfYears, options) {
                 regexBC = new RegExp (regexStringBC, "");
                 regexBCDash = new RegExp (regexStringBCDash, "");
                 centuryBC = 100 - i;
-                replaceString = i + 'rd century' + ' [10' + i + 'rd century <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
-                replaceStringDash = i + 'rd-century' + ' [10' + i + 'rd century <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
-                replaceStringBC = i + 'rd century BC' + ' [' + + centuryBC + 'th century <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
-                replaceStringBCDash = i + 'rd-century BC' + ' [' + + centuryBC + 'th century <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
+
+                var replaceStringHE = startHoloceneStyle + startInsertBetween + '10' + i + 'rd century' + startHoloceneAnchor + holoceneHeMark + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
+                var replaceStringDashHE = startHoloceneStyle + startInsertBetween + '10' + i + 'rd-century' + startHoloceneAnchor + holoceneHeMark + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
+                var replaceStringBCHE = startHoloceneStyle + startInsertBetween + centuryBC + 'th century' + startHoloceneAnchor + holoceneHeMark + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
+                var replaceStringBCDashHE = startHoloceneStyle + startInsertBetween + centuryBC + 'th-century' + startHoloceneAnchor + holoceneHeMark + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
+
+                if (!holoceneReplace) {
+                    if (!insertBefore) {
+                        var replaceString = i + 'rd century' + ' ' + replaceStringHE;
+                        var replaceStringDash = i + 'rd-century' + ' ' + replaceStringDashHE;
+                        var replaceStringBC = i + 'rd century BC' + ' ' + replaceStringBCHE;
+                        var replaceStringBCDash = i + 'rd-century BC' + ' ' + replaceStringBCDashHE;
+                    } else {
+                        var replaceString = replaceStringHE + ' ' + i + 'rd century';
+                        var replaceStringDash = replaceStringDashHE + ' ' + i + 'rd-century';
+                        var replaceStringBC = replaceStringBCHE + ' ' + i + 'rd century BC';
+                        var replaceStringBCDash = replaceStringBCDashHE + ' ' + i + 'rd-century BC';
+                    }
+                } else {
+                    var replaceString = replaceStringHE;
+                    var replaceStringDash = replaceStringDashHE;
+                    var replaceStringBC = replaceStringBCHE;
+                    var replaceStringBCDash = replaceStringBCDashHE;
+                }
+
+                // replaceString = i + 'rd century' + ' [10' + i + 'rd century <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
+                // replaceStringDash = i + 'rd-century' + ' [10' + i + 'rd century <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
+                // replaceStringBC = i + 'rd century BC' + ' [' + + centuryBC + 'th century <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
+                // replaceStringBCDash = i + 'rd-century BC' + ' [' + + centuryBC + 'th century <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
                 $("*").replaceText(regex, replaceString);
                 $("*").replaceText(regexDash, replaceStringDash);
                 $("*").replaceText(regexBC, replaceStringBC);
@@ -2245,10 +2320,35 @@ function _main_replacementRules (arrayOfYears, options) {
                 regexBC = new RegExp (regexStringBC, "");
                 regexBCDash = new RegExp (regexStringBCDash, "");
                 centuryBC = 100 - i;
-                replaceString = i + 'th century' + ' [10' + i + 'th century <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
-                replaceStringDash = i + 'th-century' + ' [10' + i + 'th century <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
-                replaceStringBC = i + 'th century BC' + ' [' + centuryBC + 'th century <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
-                replaceStringBCDash = i + 'th-century BC' + ' [' + centuryBC + 'th century <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
+
+                var replaceStringHE = startHoloceneStyle + startInsertBetween + '10' + i + 'th century' + startHoloceneAnchor + holoceneHeMark + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
+                var replaceStringDashHE = startHoloceneStyle + startInsertBetween + '10' + i + 'th-century' + startHoloceneAnchor + holoceneHeMark + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
+                var replaceStringBCHE = startHoloceneStyle + startInsertBetween + centuryBC + 'th century' + startHoloceneAnchor + holoceneHeMark + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
+                var replaceStringBCDashHE = startHoloceneStyle + startInsertBetween + centuryBC + 'th-century' + startHoloceneAnchor + holoceneHeMark + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
+
+                if (!holoceneReplace) {
+                    if (!insertBefore) {
+                        var replaceString = i + 'th century' + ' ' + replaceStringHE;
+                        var replaceStringDash = i + 'th-century' + ' ' + replaceStringDashHE;
+                        var replaceStringBC = i + 'th century BC' + ' ' + replaceStringBCHE;
+                        var replaceStringBCDash = i + 'th-century BC' + ' ' + replaceStringBCDashHE;
+                    } else {
+                        var replaceString = replaceStringHE + ' ' + i + 'th century';
+                        var replaceStringDash = replaceStringDashHE + ' ' + i + 'th-century';
+                        var replaceStringBC = replaceStringBCHE + ' ' + i + 'th century BC';
+                        var replaceStringBCDash = replaceStringBCDashHE + ' ' + i + 'th-century BC';
+                    }
+                } else {
+                    var replaceString = replaceStringHE;
+                    var replaceStringDash = replaceStringDashHE;
+                    var replaceStringBC = replaceStringBCHE;
+                    var replaceStringBCDash = replaceStringBCDashHE;
+                }
+
+                // replaceString = i + 'th century' + ' [10' + i + 'th century <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
+                // replaceStringDash = i + 'th-century' + ' [10' + i + 'th century <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
+                // replaceStringBC = i + 'th century BC' + ' [' + centuryBC + 'th century <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
+                // replaceStringBCDash = i + 'th-century BC' + ' [' + centuryBC + 'th century <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
                 $("*").replaceText(regex, replaceString);
                 $("*").replaceText(regexDash, replaceStringDash);
                 $("*").replaceText(regexBC, replaceStringBC);
@@ -2265,10 +2365,35 @@ function _main_replacementRules (arrayOfYears, options) {
                 regexBC = new RegExp (regexStringBC, "");
                 regexBCDash = new RegExp (regexStringBCDash, "");
                 centuryBC = 100 - i;
-                replaceString = i + 'st century' + ' [1' + i + 'st century <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
-                replaceStringDash = i + 'st-century' + ' [1' + i + 'st century <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
-                replaceStringBC = i + 'st century BC' + ' [' + centuryBC + 'th century <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
-                replaceStringBCDash = i + 'st-century BC' + ' [' + centuryBC + 'th century <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
+
+                var replaceStringHE = startHoloceneStyle + startInsertBetween + '1' + i + 'st century' + startHoloceneAnchor + holoceneHeMark + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
+                var replaceStringDashHE = startHoloceneStyle + startInsertBetween + '1' + i + 'st-century' + startHoloceneAnchor + holoceneHeMark + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
+                var replaceStringBCHE = startHoloceneStyle + startInsertBetween + centuryBC + 'th-century' + startHoloceneAnchor + holoceneHeMark + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
+                var replaceStringBCDashHE = startHoloceneStyle + startInsertBetween + centuryBC + 'th-century' + startHoloceneAnchor + holoceneHeMark + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
+
+                if (!holoceneReplace) {
+                    if (!insertBefore) {
+                        var replaceString = i + 'st century' + ' ' + replaceStringHE;
+                        var replaceStringDash = i + 'st-century' + ' ' + replaceStringDashHE;
+                        var replaceStringBC = i + 'st century BC' + ' ' + replaceStringBCHE;
+                        var replaceStringBCDash = i + 'st-century BC' + ' ' + replaceStringBCDashHE;
+                    } else {
+                        var replaceString = replaceStringHE + ' ' + i + 'st century';
+                        var replaceStringDash = replaceStringDashHE + ' ' + i + 'st-century';
+                        var replaceStringBC = replaceStringBCHE + ' ' + i + 'st century BC';
+                        var replaceStringBCDash = replaceStringBCDashHE + ' ' + i + 'st-century BC';
+                    }
+                } else {
+                    var replaceString = replaceStringHE;
+                    var replaceStringDash = replaceStringDashHE;
+                    var replaceStringBC = replaceStringBCHE;
+                    var replaceStringBCDash = replaceStringBCDashHE;
+                }
+
+                // replaceString = i + 'st century' + ' [1' + i + 'st century <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
+                // replaceStringDash = i + 'st-century' + ' [1' + i + 'st century <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
+                // replaceStringBC = i + 'st century BC' + ' [' + centuryBC + 'th century <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
+                // replaceStringBCDash = i + 'st-century BC' + ' [' + centuryBC + 'th century <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
                 $("*").replaceText(regex, replaceString);
                 $("*").replaceText(regexDash, replaceStringDash);
                 $("*").replaceText(regexBC, replaceStringBC);
@@ -2283,10 +2408,35 @@ function _main_replacementRules (arrayOfYears, options) {
                 regexBC = new RegExp (regexStringBC, "");
                 regexBCDash = new RegExp (regexStringBCDash, "");
                 centuryBC = 100 - i;
-                replaceString = i + 'nd century' + ' [1' + i + 'nd century <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
-                replaceStringDash = i + 'nd-century' + ' [1' + i + 'nd century <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
-                replaceStringBC = i + 'nd century BC' + ' [' + centuryBC + 'th century <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
-                replaceStringBCDash = i + 'nd-century BC' + ' [' + centuryBC + 'th century <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
+
+                var replaceStringHE = startHoloceneStyle + startInsertBetween + '1' + i + 'nd century' + startHoloceneAnchor + holoceneHeMark + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
+                var replaceStringDashHE = startHoloceneStyle + startInsertBetween + '1' + i + 'nd-century' + startHoloceneAnchor + holoceneHeMark + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
+                var replaceStringBCHE = startHoloceneStyle + startInsertBetween + centuryBC + 'th century' + startHoloceneAnchor + holoceneHeMark + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
+                var replaceStringBCDashHE = startHoloceneStyle + startInsertBetween + centuryBC + 'th-century' + startHoloceneAnchor + holoceneHeMark + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
+
+                if (!holoceneReplace) {
+                    if (!insertBefore) {
+                        var replaceString = i + 'nd century' + ' ' + replaceStringHE;
+                        var replaceStringDash = i + 'nd-century' + ' ' + replaceStringDashHE;
+                        var replaceStringBC = i + 'nd century BC' + ' ' + replaceStringBCHE;
+                        var replaceStringBCDash = i + 'nd-century BC' + ' ' + replaceStringBCDashHE;
+                    } else {
+                        var replaceString = replaceStringHE + ' ' + i + 'nd century';
+                        var replaceStringDash = replaceStringDashHE + ' ' + i + 'nd-century';
+                        var replaceStringBC = replaceStringBCHE + ' ' + i + 'nd century BC';
+                        var replaceStringBCDash = replaceStringBCDashHE + ' ' + i + 'nd-century BC';
+                    }
+                } else {
+                    var replaceString = replaceStringHE;
+                    var replaceStringDash = replaceStringDashHE;
+                    var replaceStringBC = replaceStringBCHE;
+                    var replaceStringBCDash = replaceStringBCDashHE;
+                }
+
+                // replaceString = i + 'nd century' + ' [1' + i + 'nd century <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
+                // replaceStringDash = i + 'nd-century' + ' [1' + i + 'nd century <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
+                // replaceStringBC = i + 'nd century BC' + ' [' + centuryBC + 'th century <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
+                // replaceStringBCDash = i + 'nd-century BC' + ' [' + centuryBC + 'th century <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
                 $("*").replaceText(regex, replaceString);
                 $("*").replaceText(regexDash, replaceStringDash);
                 $("*").replaceText(regexBC, replaceStringBC);
@@ -2301,10 +2451,35 @@ function _main_replacementRules (arrayOfYears, options) {
                 regexBC = new RegExp (regexStringBC, "");
                 regexBC = new RegExp (regexStringBCDash, "");
                 centuryBC = 100 - i;
-                replaceString = i + 'rd century' + ' [1' + i + 'rd century <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
-                replaceStringDash = i + 'rd-century' + ' [1' + i + 'rd century <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
-                replaceStringBC = i + 'rd century BC' + ' [' + centuryBC + 'th century <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
-                replaceStringBCDash = i + 'rd-century BC' + ' [' + centuryBC + 'th century <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
+
+                var replaceStringHE = startHoloceneStyle + startInsertBetween + '1' + i + 'rd century' + startHoloceneAnchor + holoceneHeMark + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
+                var replaceStringDashHE = startHoloceneStyle + startInsertBetween + '1' + i + 'rd-century' + startHoloceneAnchor + holoceneHeMark + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
+                var replaceStringBCHE = startHoloceneStyle + startInsertBetween + centuryBC + 'th century' + startHoloceneAnchor + holoceneHeMark + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
+                var replaceStringBCDashHE = startHoloceneStyle + startInsertBetween + centuryBC + 'th-century' + startHoloceneAnchor + holoceneHeMark + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
+
+                if (!holoceneReplace) {
+                    if (!insertBefore) {
+                        var replaceString = i + 'rd century' + ' ' + replaceStringHE;
+                        var replaceStringDash = i + 'rd-century' + ' ' + replaceStringDashHE;
+                        var replaceStringBC = i + 'rd century BC' + ' ' + replaceStringBCHE;
+                        var replaceStringBCDash = i + 'rd-century BC' + ' ' + replaceStringBCDashHE;
+                    } else {
+                        var replaceString = replaceStringHE + ' ' + i + 'rd century';
+                        var replaceStringDash = replaceStringDashHE + ' ' + i + 'rd-century';
+                        var replaceStringBC = replaceStringBCHE + ' ' + i + 'rd century BC';
+                        var replaceStringBCDash = replaceStringBCDashHE + ' ' + i + 'rd-century BC';
+                    }
+                } else {
+                    var replaceString = replaceStringHE;
+                    var replaceStringDash = replaceStringDashHE;
+                    var replaceStringBC = replaceStringBCHE;
+                    var replaceStringBCDash = replaceStringBCDashHE;
+                }
+
+                // replaceString = i + 'rd century' + ' [1' + i + 'rd century <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
+                // replaceStringDash = i + 'rd-century' + ' [1' + i + 'rd century <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
+                // replaceStringBC = i + 'rd century BC' + ' [' + centuryBC + 'th century <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
+                // replaceStringBCDash = i + 'rd-century BC' + ' [' + centuryBC + 'th century <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
                 $("*").replaceText(regex, replaceString);
                 $("*").replaceText(regexDash, replaceStringDash);
                 $("*").replaceText(regexBC, replaceStringBC);
@@ -2319,10 +2494,35 @@ function _main_replacementRules (arrayOfYears, options) {
                 regexBC = new RegExp (regexStringBC, "");
                 regexBCDash = new RegExp (regexStringBCDash, "");
                 centuryBC = 100 - i;
-                replaceString = i + 'th century' + ' [1' + i + 'th century <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
-                replaceStringDash = i + 'th-century' + ' [1' + i + 'th century <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
-                replaceStringBC = i + 'th century BC' + ' [' + centuryBC + 'th century <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
-                replaceStringBCDash = i + 'th-century BC' + ' [' + centuryBC + 'th century <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
+
+                var replaceStringHE = startHoloceneStyle + startInsertBetween + '1' + i + 'th century' + startHoloceneAnchor + holoceneHeMark + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
+                var replaceStringDashHE = startHoloceneStyle + startInsertBetween + '1' + i + 'th-century' + startHoloceneAnchor + holoceneHeMark + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
+                var replaceStringBCHE = startHoloceneStyle + startInsertBetween + centuryBC + 'th century' + startHoloceneAnchor + holoceneHeMark + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
+                var replaceStringBCDashHE = startHoloceneStyle + startInsertBetween + centuryBC + 'th-century' + startHoloceneAnchor + holoceneHeMark + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
+
+                if (!holoceneReplace) {
+                    if (!insertBefore) {
+                        var replaceString = i + 'th century' + ' ' + replaceStringHE;
+                        var replaceStringDash = i + 'th-century' + ' ' + replaceStringDashHE;
+                        var replaceStringBC = i + 'th century BC' + ' ' + replaceStringBCHE;
+                        var replaceStringBCDash = i + 'th-century BC' + ' ' + replaceStringBCDashHE;
+                    } else {
+                        var replaceString = replaceStringHE + ' ' + i + 'th century';
+                        var replaceStringDash = replaceStringDashHE + ' ' + i + 'th-century';
+                        var replaceStringBC = replaceStringBCHE + ' ' + i + 'th century BC';
+                        var replaceStringBCDash = replaceStringBCDashHE + ' ' + i + 'th-century BC';
+                    }
+                } else {
+                    var replaceString = replaceStringHE;
+                    var replaceStringDash = replaceStringDashHE;
+                    var replaceStringBC = replaceStringBCHE;
+                    var replaceStringBCDash = replaceStringBCDashHE;
+                }
+
+                // replaceString = i + 'th century' + ' [1' + i + 'th century <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
+                // replaceStringDash = i + 'th-century' + ' [1' + i + 'th century <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
+                // replaceStringBC = i + 'th century BC' + ' [' + centuryBC + 'th century <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
+                // replaceStringBCDash = i + 'th-century BC' + ' [' + centuryBC + 'th century <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
                 $("*").replaceText(regex, replaceString);
                 $("*").replaceText(regexDash, replaceStringDash);
                 $("*").replaceText(regexBC, replaceStringBC);
