@@ -182,6 +182,10 @@ function _main_makeArrays (cleanedArray) {
         arrayOfYears["ThreeDigitsDashThreeDigitsBCE"] = [];
         arrayOfYears["ThreeDigitsDashOneTwoDigitsBC"] = [];
         arrayOfYears["ThreeDigitsDashOneTwoDigitsBCE"] = [];
+        arrayOfYears["ThreeDigitsSlashThreeDigitsBC"] = [];
+        arrayOfYears["ThreeDigitsSlashThreeDigitsBCE"] = [];
+        arrayOfYears["ThreeDigitsSlashOneDigitBC"] = [];
+        arrayOfYears["ThreeDigitsSlashOneDigitBCE"] = [];
 
         arrayOfYears["TwoDigitsYearAD"] = [];
         arrayOfYears["ADTwoDigitsYear"] = [];
@@ -275,7 +279,7 @@ function _main_makeArrays (cleanedArray) {
             // #### 3 digits
             if (/\b\d{3}s?\b/.test(arrayToBeChecked[i])) {
                 // #### 3 digits AD/CE
-                if (/\b\d{3}\b(?!])(?!:)/.test(arrayToBeChecked[i])
+                if (/\b\d{3}\b(?!])(?!:|\/)/.test(arrayToBeChecked[i])
                             && !/(–|-)/i.test(arrayToBeChecked[i])
                             && !/p+\.\s\d{3}/.test(arrayToBeChecked[i])
                             && !/p+\.\s/.test(arrayToBeChecked[i-1])
@@ -375,6 +379,38 @@ function _main_makeArrays (cleanedArray) {
                     dashThreeDigitsOneTwoArrayBCE[0] = parseInt(RegExp.$1);
                     dashThreeDigitsOneTwoArrayBCE[1] = parseInt(RegExp.$3);
                     arrayOfYears["ThreeDigitsDashOneTwoDigitsBCE"].push(dashThreeDigitsOneTwoArrayBCE);
+                }
+
+                if (/\b\d{3}(\/)\d{3}\b/.test(arrayToBeChecked[i]) && /BC\b/.test(arrayToBeChecked[i+1])) {
+                    var slashThreeDigitsThreeArrayBC = [];
+                    var matchSlashThreeDigitsThreeBC = /\b(\d{3})(\/)(\d{3})\b/.exec(arrayToBeChecked[i]);
+                    slashThreeDigitsThreeArrayBC[0] = parseInt(RegExp.$1);
+                    slashThreeDigitsThreeArrayBC[1] = parseInt(RegExp.$3);
+                    arrayOfYears["ThreeDigitsSlashThreeDigitsBC"].push(slashThreeDigitsThreeArrayBC);
+                }
+
+                if (/\b\d{3}(\/)\d{3}\b/.test(arrayToBeChecked[i]) && /BCE\b/.test(arrayToBeChecked[i+1])) {
+                    var slashThreeDigitsThreeArrayBCE = [];
+                    var matchSlashThreeDigitsThreeBCE = /\b(\d{3})(\/)(\d{3})\b/.exec(arrayToBeChecked[i]);
+                    slashThreeDigitsThreeArrayBCE[0] = parseInt(RegExp.$1);
+                    slashThreeDigitsThreeArrayBCE[1] = parseInt(RegExp.$3);
+                    arrayOfYears["ThreeDigitsSlashThreeDigitsBCE"].push(slashThreeDigitsThreeArrayBCE);
+                }
+
+                if (/\b\d{3}(\/)\d{1}\b/.test(arrayToBeChecked[i]) && /BC\b/.test(arrayToBeChecked[i+1])) {
+                    var slashThreeDigitsOneArrayBC = [];
+                    var matchSlashThreeDigitsOneBC = /\b(\d{3})(\/)(\d{1})\b/.exec(arrayToBeChecked[i]);
+                    slashThreeDigitsOneArrayBC[0] = parseInt(RegExp.$1);
+                    slashThreeDigitsOneArrayBC[1] = parseInt(RegExp.$3);
+                    arrayOfYears["ThreeDigitsSlashOneDigitBC"].push(slashThreeDigitsOneArrayBC);
+                }
+
+                if (/\b\d{3}(\/)\d{1}\b/.test(arrayToBeChecked[i]) && /BCE\b/.test(arrayToBeChecked[i+1])) {
+                    var slashThreeDigitsOneArrayBCE = [];
+                    var matchSlashThreeDigitsOneBCE = /\b(\d{3})(\/)(\d{1})\b/.exec(arrayToBeChecked[i]);
+                    slashThreeDigitsOneArrayBCE[0] = parseInt(RegExp.$1);
+                    slashThreeDigitsOneArrayBCE[1] = parseInt(RegExp.$3);
+                    arrayOfYears["ThreeDigitsSlashOneDigitBCE"].push(slashThreeDigitsOneArrayBCE);
                 }
             }
 
@@ -530,6 +566,10 @@ function _main_unique (arrayOfYears) {
     arrayOfYears["ThreeDigitsDashThreeDigitsBCE"] = unique(arrayOfYears["ThreeDigitsDashThreeDigitsBCE"]);
     arrayOfYears["ThreeDigitsDashOneTwoDigitsBC"] = unique(arrayOfYears["ThreeDigitsDashOneTwoDigitsBC"]);
     arrayOfYears["ThreeDigitsDashOneTwoDigitsBCE"] = unique(arrayOfYears["ThreeDigitsDashOneTwoDigitsBCE"]);
+    arrayOfYears["ThreeDigitsSlashThreeDigitsBC"] = unique(arrayOfYears["ThreeDigitsSlashThreeDigitsBC"]);
+    arrayOfYears["ThreeDigitsSlashThreeDigitsBCE"] = unique(arrayOfYears["ThreeDigitsSlashThreeDigitsBCE"]);
+    arrayOfYears["ThreeDigitsSlashOneDigitBC"] = unique(arrayOfYears["ThreeDigitsSlashOneDigitBC"]);
+    arrayOfYears["ThreeDigitsSlashOneDigitBCE"] = unique(arrayOfYears["ThreeDigitsSlashOneDigitBCE"]);
 
     arrayOfYears["TwoDigitsYearAD"] = unique(arrayOfYears["TwoDigitsYearAD"]);
     arrayOfYears["ADTwoDigitsYear"] = unique(arrayOfYears["ADTwoDigitsYear"]);
@@ -1520,6 +1560,142 @@ function _main_replacementRules (arrayOfYears, options) {
 
             var replaceStringPageStamp = "$1";
             var replaceStringHE = startHoloceneStyle + startInsertBetween + heYearOne + '–' + heYearTwo + startHoloceneAnchor + holoceneHeMark + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
+
+            if (!holoceneReplace) {
+                if (!insertBefore) {
+                    var replaceString = replaceStringPageStamp + ' ' + replaceStringHE;
+                } else {
+                    var replaceString = replaceStringHE + ' ' + replaceStringPageStamp;
+                }
+            } else {
+                var replaceString = replaceStringHE;
+            }
+
+            //var replaceString = '$1' + ' [' + heYearOne + '–' + heYearTwo + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
+            //var replaceString = heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>';
+            //var replaceString = heYear;
+            //console.log(replaceString);
+            $("*").replaceText(regex, replaceString);
+        }
+    }
+
+    if (typeof arrayOfYears["ThreeDigitsSlashThreeDigitsBC"] != 'undefined') {
+        for(var i = 0; i < arrayOfYears["ThreeDigitsSlashThreeDigitsBC"].length; i++) {
+            heYearOne = 10001 - arrayOfYears["ThreeDigitsSlashThreeDigitsBC"][i][0];
+            heYearTwo = 10001 - arrayOfYears["ThreeDigitsSlashThreeDigitsBC"][i][1];
+            //console.log(heYearOne, heYearTwo);
+            var regexString = '\\b(' + arrayOfYears["ThreeDigitsSlashThreeDigitsBC"][i][0] + '(\/)' + arrayOfYears["ThreeDigitsSlashThreeDigitsBC"][i][1] + '\\sBC)\\b(?!\\sBCE)';
+            //console.log(regexString);
+            var regex = new RegExp(regexString, "gi");
+
+            var replaceStringPageStamp = "$1";
+            var replaceStringHE = startHoloceneStyle + startInsertBetween + heYearOne + '/' + heYearTwo + startHoloceneAnchor + holoceneHeMark + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
+
+            if (!holoceneReplace) {
+                if (!insertBefore) {
+                    var replaceString = replaceStringPageStamp + ' ' + replaceStringHE;
+                } else {
+                    var replaceString = replaceStringHE + ' ' + replaceStringPageStamp;
+                }
+            } else {
+                var replaceString = replaceStringHE;
+            }
+
+            // var replaceString = '$1' + ' [' + heYearOne + '–' + heYearTwo + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
+            //var replaceString = heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>';
+            //var replaceString = heYear;
+            //console.log(replaceString);
+            $("*").replaceText(regex, replaceString);
+        }
+    }
+
+    if (typeof arrayOfYears["ThreeDigitsSlashThreeDigitsBCE"] != 'undefined') {
+        for(var i = 0; i < arrayOfYears["ThreeDigitsSlashThreeDigitsBCE"].length; i++) {
+            heYearOne = 10001 - arrayOfYears["ThreeDigitsSlashThreeDigitsBCE"][i][0];
+            heYearTwo = 10001 - arrayOfYears["ThreeDigitsSlashThreeDigitsBCE"][i][1];
+            //console.log(heYearOne, heYearTwo);
+            var regexString = '\\b(' + arrayOfYears["ThreeDigitsSlashThreeDigitsBCE"][i][0] + '(\/)' + arrayOfYears["ThreeDigitsSlashThreeDigitsBCE"][i][1] + '\\sBCE)\\b(?!\\sBC)';
+            //console.log(regexString);
+            var regex = new RegExp(regexString, "gi");
+
+            var replaceStringPageStamp = "$1";
+            var replaceStringHE = startHoloceneStyle + startInsertBetween + heYearOne + '/' + heYearTwo + startHoloceneAnchor + holoceneHeMark + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
+
+            if (!holoceneReplace) {
+                if (!insertBefore) {
+                    var replaceString = replaceStringPageStamp + ' ' + replaceStringHE;
+                } else {
+                    var replaceString = replaceStringHE + ' ' + replaceStringPageStamp;
+                }
+            } else {
+                var replaceString = replaceStringHE;
+            }
+
+            // var replaceString = '$1' + ' [' + heYearOne + '–' + heYearTwo + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
+            //var replaceString = heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>';
+            //var replaceString = heYear;
+            //console.log(replaceString);
+            $("*").replaceText(regex, replaceString);
+        }
+    }
+
+    if (typeof arrayOfYears["ThreeDigitsSlashOneDigitBC"] != 'undefined') {
+        for(var i = 0; i < arrayOfYears["ThreeDigitsSlashOneDigitBC"].length; i++) {
+            heYearOne = 10001 - arrayOfYears["ThreeDigitsSlashOneDigitBC"][i][0];
+            heYearTwo = 11 - arrayOfYears["ThreeDigitsSlashOneDigitBC"][i][1];
+            //console.log(heYearTwo);
+            heYearTwo = heYearTwo.toString();
+            if (heYearTwo[1]) {
+                heYearTwo = heYearTwo.toString().slice(1);
+                //console.log(heYearTwo);
+            }
+            heYearTwo = parseInt(heYearTwo);
+
+            //console.log(heYearOne, heYearTwo);
+            var regexString = '\\b(' + arrayOfYears["ThreeDigitsSlashOneDigitBC"][i][0] + '(\/)' + arrayOfYears["ThreeDigitsSlashOneDigitBC"][i][1] + '\\sBC)\\b(?!\\sBCE)';
+            //console.log(regexString);
+            var regex = new RegExp(regexString, "gi");
+
+            var replaceStringPageStamp = "$1";
+            var replaceStringHE = startHoloceneStyle + startInsertBetween + heYearOne + '/' + heYearTwo + startHoloceneAnchor + holoceneHeMark + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
+
+            if (!holoceneReplace) {
+                if (!insertBefore) {
+                    var replaceString = replaceStringPageStamp + ' ' + replaceStringHE;
+                } else {
+                    var replaceString = replaceStringHE + ' ' + replaceStringPageStamp;
+                }
+            } else {
+                var replaceString = replaceStringHE;
+            }
+
+            //var replaceString = '$1' + ' [' + heYearOne + '–' + heYearTwo + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>]';
+            //var replaceString = heYear + ' <a href=\"https://en.wikipedia.org/wiki/Holocene_calendar\">HE</a>';
+            //var replaceString = heYear;
+            //console.log(replaceString);
+            $("*").replaceText(regex, replaceString);
+        }
+    }
+
+    if (typeof arrayOfYears["ThreeDigitsSlashOneDigitBCE"] != 'undefined') {
+        for(var i = 0; i < arrayOfYears["ThreeDigitsSlashOneDigitBCE"].length; i++) {
+            heYearOne = 10001 - arrayOfYears["ThreeDigitsSlashOneDigitBCE"][i][0];
+            heYearTwo = 11 - arrayOfYears["ThreeDigitsSlashOneDigitBCE"][i][1];
+            //console.log(heYearTwo);
+            heYearTwo = heYearTwo.toString();
+            if (heYearTwo[1]) {
+                heYearTwo = heYearTwo.toString().slice(1);
+                //console.log(heYearTwo);
+            }
+            heYearTwo = parseInt(heYearTwo);
+
+            //console.log(heYearOne, heYearTwo);
+            var regexString = '\\b(' + arrayOfYears["ThreeDigitsSlashOneDigitBCE"][i][0] + '(\/)' + arrayOfYears["ThreeDigitsSlashOneDigitBCE"][i][1] + '\\sBCE)\\b(?!\\sBC)';
+            //console.log(regexString);
+            var regex = new RegExp(regexString, "gi");
+
+            var replaceStringPageStamp = "$1";
+            var replaceStringHE = startHoloceneStyle + startInsertBetween + heYearOne + '/' + heYearTwo + startHoloceneAnchor + holoceneHeMark + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
 
             if (!holoceneReplace) {
                 if (!insertBefore) {
