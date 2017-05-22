@@ -51,4 +51,4 @@ ___
 
 ### To Be Developed
 
-The alpha/beta version is powered by regular expression matching. Future iterations will match through natural language processing.
+The alpha/beta version is powered by Regular Expression matching. Future iterations will match through Natural Language Processing.
