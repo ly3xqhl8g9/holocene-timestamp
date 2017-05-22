@@ -78,7 +78,7 @@ function _main_extractText () {
 
     var bodyTextArray = [];
     bodyTextArray = $.each(bodyText.split(" ").slice(0,-1), function(index, item) { });
-    // console.log(bodyTextArray);
+    //console.log(bodyTextArray);
     return bodyTextArray;
 }
 
@@ -87,40 +87,58 @@ function _main_extractText () {
 // #### keep in array i, i+1, i-1 if i has one or more numbers and do some filtering
 function _main_clearArray (bodyTextArray) {
     function cleanArray(arrayToBeCleaned) {
-        var firstCleanArray = new Array();
-        var secondCleanArray = new Array();
-        var thirdCleanArray = new Array();
+        // var firstCleanArray = new Array();
+        // var secondCleanArray = new Array();
+        // var thirdCleanArray = new Array();
+        //
+        // for (var i = 0; i < arrayToBeCleaned.length; i++) {
+        //     if (/\b\d+s?\b/.test(arrayToBeCleaned[i]) && /\S/.test(arrayToBeCleaned[i]) && !/\d+]/.test(arrayToBeCleaned[i]) && !/p+\.\s\d+/.test(arrayToBeCleaned[i])) {
+        //         firstCleanArray.push(arrayToBeCleaned[i-1]);
+        //         firstCleanArray.push(arrayToBeCleaned[i]);
+        //         firstCleanArray.push(arrayToBeCleaned[i+1]);
+        //     }
+        // }
+        //
+        // for (var j = 0; j < firstCleanArray.length; j++) {
+        //     if (firstCleanArray[j] !== firstCleanArray[j+1]
+        //         && firstCleanArray[j] !== firstCleanArray[j+2]
+        //         && /\S/.test(firstCleanArray[j])
+        //         && !/\^/.test(firstCleanArray[j])
+        //         && !/p+./.test(firstCleanArray[j-1])
+        //         && !/p+./.test(firstCleanArray[j])
+        //         && !/\d{1}\.\d{1}/.test(firstCleanArray[j])
+        //         && !/(\d+-\d+-\d+-\d+)/.test(firstCleanArray[j])) {
+        //         secondCleanArray.push(firstCleanArray[j]);
+        //     }
+        // }
+        //
+        // for (var k = 0; k < secondCleanArray.length; k++) {
+        //     if((/\b\d{1,5}s?\b/.test(secondCleanArray[k])
+        //         && !/(\bISBN\b)|(\bISSN\b)/.test(secondCleanArray[k]))
+        //         || /(\bin\b)|(\bby\b)|(\bduring\b)|(\byear\b)|(\bc\.)|(\bca\.)|(\blate\b)|(\bjanuary\b)|(\bfebruary\b)|(\bmarch\b)|(\bapril\b)|(\bmay\b)|(\bjune\b)|(\bjuly\b)|(\baugust\b)|(\bseptember\b)|(\boctober\b)|(\bnovember\b)|(\bdecember\b)|(\blate\b)|(\bAD\b)|(\bB?CE?\b)/i.test(secondCleanArray[k])
+        //         ) {
+        //         thirdCleanArray.push(secondCleanArray[k]);
+        //     }
+        // }
+
+
+        //clean array version 2
+        var cleanArrayV2 = new Array();
 
         for (var i = 0; i < arrayToBeCleaned.length; i++) {
-            if (/\b\d+s?\b/.test(arrayToBeCleaned[i]) && /\S/.test(arrayToBeCleaned[i]) && !/\d+]/.test(arrayToBeCleaned[i]) && !/p+\.\s\d+/.test(arrayToBeCleaned[i])) {
-                firstCleanArray.push(arrayToBeCleaned[i-1]);
-                firstCleanArray.push(arrayToBeCleaned[i]);
-                firstCleanArray.push(arrayToBeCleaned[i+1]);
+            if(!arrayToBeCleaned[i] == ""
+               && /\S/.test(arrayToBeCleaned[i])
+              ) {
+                cleanArrayV2.push(arrayToBeCleaned[i]);
             }
         }
+        console.log(cleanArrayV2);
 
-        for (var j = 0; j < firstCleanArray.length; j++) {
-            if (firstCleanArray[j] !== firstCleanArray[j+1]
-                && firstCleanArray[j] !== firstCleanArray[j+2]
-                && /\S/.test(firstCleanArray[j])
-                && !/\^/.test(firstCleanArray[j])
-                && !/p+./.test(firstCleanArray[j-1])
-                && !/p+./.test(firstCleanArray[j])
-                && !/\d{1}\.\d{1}/.test(firstCleanArray[j])
-                && !/(\d+-\d+-\d+-\d+)/.test(firstCleanArray[j])) {
-                secondCleanArray.push(firstCleanArray[j]);
-            }
-        }
 
-        for (var k = 0; k < secondCleanArray.length; k++) {
-            if(/\b\d{1,5}s?\b/.test(secondCleanArray[k])
-                || /(\bin\b)|(\bby\b)|(\bduring\b)|(\byear\b)|(\bc\.)|(\bca\.)|(\blate\b)|(\bjanuary\b)|(\bfebruary\b)|(\bmarch\b)|(\bapril\b)|(\bmay\b)|(\bjune\b)|(\bjuly\b)|(\baugust\b)|(\bseptember\b)|(\boctober\b)|(\bnovember\b)|(\bdecember\b)|(\blate\b)|(\bAD\b)|(\bB?CE?\b)/i.test(secondCleanArray[k])
-                && !/(\bISBN\b)|(\bISSN\b)/.test(secondCleanArray[k])) {
-                thirdCleanArray.push(secondCleanArray[k]);
-            }
-        }
-
-        return thirdCleanArray;
+        //console.log(firstCleanArray);
+        //console.log(secondCleanArray);
+        // console.log(thirdCleanArray);
+        return arrayToBeCleaned;
     }
 
     var cleanedArray = cleanArray(bodyTextArray);
@@ -261,7 +279,7 @@ function _main_makeArrays (cleanedArray) {
                             && !/(–|-)/i.test(arrayToBeChecked[i])
                             && !/p+\.\s\d{3}/.test(arrayToBeChecked[i])
                             && !/p+\.\s/.test(arrayToBeChecked[i-1])
-                            && /(in|by|during|year|ca\.|c\.|late|january|february|march|april|may|june|july|august|september|october|november|december)/i.test(arrayToBeChecked[i-1])
+                            && /(in|by|during|year|ca\.|c\.|late|january|february|march|april|may|june|july|august|september|october|november|december)/gi.test(arrayToBeChecked[i-1])
                             && !/AD/.test(arrayToBeChecked[i+1])
                             && !/BC/.test(arrayToBeChecked[i+1])) {
                     if (parseInt(/\b\d{3}\b/.exec(arrayToBeChecked[i])[0]) >= 100) {
@@ -288,7 +306,8 @@ function _main_makeArrays (cleanedArray) {
 
                 if (/\b\d{3}(–|-)\d{3}\b/.test(arrayToBeChecked[i])
                             && !/p+\.\s\d{3}/.test(arrayToBeChecked[i])
-                            && !/p+\.\s/.test(arrayToBeChecked[i-1])) {
+                            && !/p+\.\s/.test(arrayToBeChecked[i-1])
+                            && !/:/.test(arrayToBeChecked[i-1])) {
                     var dashThreeDigitsArray = [];
                     var matchDashThreeDigits = /\b(\d{3})(–|-)(\d{3})\b/.exec(arrayToBeChecked[i]);
                     dashThreeDigitsArray[0] = parseInt(RegExp.$1);
@@ -615,7 +634,7 @@ function _main_replacementRules (arrayOfYears, options) {
                 // console.log(heYear);
                 var regexString = '\\b(' + arrayOfYears["FiveDigitsYearBC"][i] + '\\sBC)\\b(?!-|–|\/)(?!s)(?!E)'; // combination of lookbehind and lookahead for en-dash, and lookahead for s
                 //console.log(regexString);
-                var regex = new RegExp(regexString, "i");
+                var regex = new RegExp(regexString, "gi");
 
                 var replaceStringPageStamp = "$1";
                 var replaceStringHE = startHoloceneStyle + startInsertBetween + heYear + startHoloceneAnchor + holoceneHeMark + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
@@ -677,7 +696,7 @@ function _main_replacementRules (arrayOfYears, options) {
                 // console.log(heYear);
                 var regexString = '\\b(' + arrayOfYears["FiveDigitsYearBCE"][i] + '\\sBCE)\\b(?!-|–|\/)(?!s)'; // combination of lookbehind and lookahead for en-dash, and lookahead for s
                 //console.log(regexString);
-                var regex = new RegExp(regexString, "i");
+                var regex = new RegExp(regexString, "gi");
 
                 var replaceStringPageStamp = "$1";
                 var replaceStringHE = startHoloceneStyle + startInsertBetween + heYear + startHoloceneAnchor + holoceneHeMark + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
@@ -741,7 +760,7 @@ function _main_replacementRules (arrayOfYears, options) {
             //console.log(heYear);
             var regexString = '\\b(' + arrayOfYears["FourDigitsYear"][i] + ')\\b(?!-|–|\/)(?!s)(?!\\sAD)(?!\\sCE)(?!\\sBC)'; // combination of lookahead for en-dash, minus, BC, AD, and lookahead for s. ((?!([–])).|^)    ((?!([–|BC\\s|BCE\\s|AD\\s])).|^)- lookbehind for en-dash, not really working
             //console.log(regexString);
-            var regex = new RegExp(regexString, "i");
+            var regex = new RegExp(regexString, "gi");
             //console.log(regex);
 
             var replaceStringPageStamp = "$1";
@@ -771,7 +790,7 @@ function _main_replacementRules (arrayOfYears, options) {
             // console.log(heYear);
             var regexString = '\\b(' + arrayOfYears["FourDigitsYearAD"][i] + '\\sAD)\\b(?!-|–|\/)'; // combination of lookbehind and lookahead for en-dash, and lookahead for s
             //console.log(regexString);
-            var regex = new RegExp(regexString, "i");
+            var regex = new RegExp(regexString, "gi");
 
             var replaceStringPageStamp = "$1";
             var replaceStringHE = startHoloceneStyle + startInsertBetween + heYear + startHoloceneAnchor + holoceneHeMark + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
@@ -800,7 +819,7 @@ function _main_replacementRules (arrayOfYears, options) {
             // console.log(heYear);
             var regexString = '\\b(' + arrayOfYears["FourDigitsYearCE"][i] + '\\sCE)\\b(?!-|–|\/)'; // combination of lookbehind and lookahead for en-dash, and lookahead for s
             //console.log(regexString);
-            var regex = new RegExp(regexString, "i");
+            var regex = new RegExp(regexString, "gi");
 
             var replaceStringPageStamp = "$1";
             var replaceStringHE = startHoloceneStyle + startInsertBetween + heYear + startHoloceneAnchor + holoceneHeMark + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
@@ -828,7 +847,7 @@ function _main_replacementRules (arrayOfYears, options) {
             heYear = arrayOfYears["FourDigitsAndS"][i] + 10000;
             // console.log(heYear);
             var regexString = arrayOfYears["FourDigitsAndS"][i] + 's(?!\\sBCE?)';
-            var regex = new RegExp(regexString, "");
+            var regex = new RegExp(regexString, "gi");
 
             var replaceStringPageStamp = arrayOfYears["FourDigitsAndS"][i] + 's';
             var replaceStringHE = startHoloceneStyle + startInsertBetween + heYear + 's' + startHoloceneAnchor + holoceneHeMark + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
@@ -859,7 +878,7 @@ function _main_replacementRules (arrayOfYears, options) {
                 //console.log(heYearOne, heYearTwo);
                 var regexString = '\\b(' + arrayOfYears["FourDigitsDashFourDigits"][i][0] + '(–|-)' + arrayOfYears["FourDigitsDashFourDigits"][i][1] + ')\\b(?!\\sBC)(?!\\sBCE)(?!-\\d+-\\d+-\\d+)';
                 //console.log(regexString);
-                var regex = new RegExp(regexString, "");
+                var regex = new RegExp(regexString, "gi");
 
                 var replaceStringPageStamp = "$1";
                 var replaceStringHE = startHoloceneStyle + startInsertBetween + heYearOne + '–' + heYearTwo + startHoloceneAnchor + holoceneHeMark + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
@@ -891,7 +910,7 @@ function _main_replacementRules (arrayOfYears, options) {
                 //console.log(heYearOne, heYearTwo);
                 var regexString = '\\b(' + arrayOfYears["FourDigitsDashOneTwoDigits"][i][0] + '(–|-)' + arrayOfYears["FourDigitsDashOneTwoDigits"][i][1] + ')\\b(?!\\sBC)(?!\\sBCE)(?!-\\d+-\\d+-\\d+)';
                 //console.log(regexString);
-                var regex = new RegExp(regexString, "");
+                var regex = new RegExp(regexString, "gi");
 
                 var replaceStringPageStamp = "$1";
                 var replaceStringHE = startHoloceneStyle + startInsertBetween + heYearOne + '–' + heYearTwo + startHoloceneAnchor + holoceneHeMark + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
@@ -922,7 +941,7 @@ function _main_replacementRules (arrayOfYears, options) {
             // console.log(heYear);
             var regexString = '\\b(' + arrayOfYears["FourDigitsYearBC"][i] + '\\sBC)\\b(?!-|–|\/)'; // combination of lookbehind and lookahead for en-dash, and lookahead for s
             //console.log(regexString);
-            var regex = new RegExp(regexString, "i");
+            var regex = new RegExp(regexString, "gi");
 
             var replaceStringPageStamp = "$1";
             var replaceStringHE = startHoloceneStyle + startInsertBetween + heYear + startHoloceneAnchor + holoceneHeMark + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
@@ -951,7 +970,7 @@ function _main_replacementRules (arrayOfYears, options) {
             // console.log(heYear);
             var regexString = '\\b(' + arrayOfYears["FourDigitsYearBCE"][i] + '\\sBCE)\\b(?!-|–|\/)'; // combination of lookbehind and lookahead for en-dash, and lookahead for s
             //console.log(regexString);
-            var regex = new RegExp(regexString, "i");
+            var regex = new RegExp(regexString, "gi");
 
             var replaceStringPageStamp = "$1";
             var replaceStringHE = startHoloceneStyle + startInsertBetween + heYear + startHoloceneAnchor + holoceneHeMark + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
@@ -979,7 +998,7 @@ function _main_replacementRules (arrayOfYears, options) {
             heYear = 10000 - arrayOfYears["FourDigitsAndSBC"][i];
             // console.log(heYear);
             var regexString = arrayOfYears["FourDigitsAndSBC"][i] + 's\\sBC(?!E)';
-            var regex = new RegExp(regexString, "");
+            var regex = new RegExp(regexString, "gi");
 
             var replaceStringPageStamp = arrayOfYears["FourDigitsAndSBC"][i] + 's BC';
             var replaceStringHE = startHoloceneStyle + startInsertBetween + heYear + 's' + startHoloceneAnchor + holoceneHeMark + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
@@ -1007,7 +1026,7 @@ function _main_replacementRules (arrayOfYears, options) {
             heYear = 10000 - arrayOfYears["FourDigitsAndSBCE"][i];
             // console.log(heYear);
             var regexString = arrayOfYears["FourDigitsAndSBCE"][i] + 's\\sBCE';
-            var regex = new RegExp(regexString, "");
+            var regex = new RegExp(regexString, "gi");
 
             var replaceStringPageStamp = arrayOfYears["FourDigitsAndSBCE"][i] + 's BCE';
             var replaceStringHE = startHoloceneStyle + startInsertBetween + heYear + 's' + startHoloceneAnchor + holoceneHeMark + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
@@ -1039,7 +1058,7 @@ function _main_replacementRules (arrayOfYears, options) {
             // console.log(heYear);
             var regexString = '\\b(' + arrayOfYears["ThreeDigitsYear"][i] + ')\\b(?!-|–|\/|,)(?!])(?!s)(?!\\sBC?E?)(?!\\sAD)'; // combination of lookbehind and lookahead for en-dash, and lookahead for s
             // console.log(regexString);
-            var regex = new RegExp(regexString, "i");
+            var regex = new RegExp(regexString, "gi");
 
             var replaceStringPageStamp = "$1";
             var replaceStringHE = startHoloceneStyle + startInsertBetween + heYear + startHoloceneAnchor + holoceneHeMark + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
@@ -1068,7 +1087,7 @@ function _main_replacementRules (arrayOfYears, options) {
             //console.log(heYear);
             var regexString = '\\b(' + arrayOfYears["ThreeDigitsYearAD"][i] + '\\sAD)\\b'; // combination of lookbehind and lookahead for en-dash, and lookahead for s
             //console.log(regexString);
-            var regex = new RegExp(regexString, "i");
+            var regex = new RegExp(regexString, "gi");
 
             var replaceStringPageStamp = "$1";
             var replaceStringHE = startHoloceneStyle + startInsertBetween + heYear + startHoloceneAnchor + holoceneHeMark + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
@@ -1097,7 +1116,7 @@ function _main_replacementRules (arrayOfYears, options) {
             //console.log(heYear);
             var regexString = '\\b(AD\\s' + arrayOfYears["ADThreeDigitsYear"][i] + ')\\b(?!-|–|\/)';
             //console.log(regexString);
-            var regex = new RegExp(regexString, "");
+            var regex = new RegExp(regexString, "gi");
 
             var replaceStringPageStamp = "$1";
             var replaceStringHE = startHoloceneStyle + startInsertBetween + heYear + startHoloceneAnchor + holoceneHeMark + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
@@ -1126,7 +1145,7 @@ function _main_replacementRules (arrayOfYears, options) {
             // console.log(heYear);
             var regexString = '\\b(' + arrayOfYears["ThreeDigitsYearCE"][i] + '\\sCE)\\b(?!-|–|\/)'; // combination of lookbehind and lookahead for en-dash, and lookahead for s
             //console.log(regexString);
-            var regex = new RegExp(regexString, "i");
+            var regex = new RegExp(regexString, "gi");
 
             var replaceStringPageStamp = "$1";
             var replaceStringHE = startHoloceneStyle + startInsertBetween + heYear + startHoloceneAnchor + holoceneHeMark + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
@@ -1156,7 +1175,7 @@ function _main_replacementRules (arrayOfYears, options) {
             //console.log(heYearOne, heYearTwo);
             var regexString = '\\b(' + arrayOfYears["ThreeDigitsDashThreeDigits"][i][0] + '(–|-)' + arrayOfYears["ThreeDigitsDashThreeDigits"][i][1] + ')\\b(?!\\sBCE?)(?!-\\d+-\\d+)';
             //console.log(regexString);
-            var regex = new RegExp(regexString, "");
+            var regex = new RegExp(regexString, "gi");
 
             var replaceStringPageStamp = "$1";
             var replaceStringHE = startHoloceneStyle + startInsertBetween + heYearOne + '–' + heYearTwo + startHoloceneAnchor + holoceneHeMark + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
@@ -1186,7 +1205,7 @@ function _main_replacementRules (arrayOfYears, options) {
             //console.log(heYearOne, heYearTwo);
             var regexString = '\\b(' + arrayOfYears["ThreeDigitsDashOneTwoDigits"][i][0] + '(–|-)' + arrayOfYears["ThreeDigitsDashOneTwoDigits"][i][1] + ')\\b(?!\\sBCE?)(?!-\\d+-\\d+-\\d+)';
             //console.log(regexString);
-            var regex = new RegExp(regexString, "");
+            var regex = new RegExp(regexString, "gi");
 
             var replaceStringPageStamp = "$1";
             var replaceStringHE = startHoloceneStyle + startInsertBetween + heYearOne + '–' + heYearTwo + startHoloceneAnchor + holoceneHeMark + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
@@ -1214,7 +1233,7 @@ function _main_replacementRules (arrayOfYears, options) {
             heYear = arrayOfYears["ThreeDigitsAndS"][i] + 10000;
             // console.log(heYear);
             var regexString = arrayOfYears["ThreeDigitsAndS"][i] + 's(?!\\sBCE?)';
-            var regex = new RegExp(regexString, "");
+            var regex = new RegExp(regexString, "gi");
 
             var replaceStringPageStamp = arrayOfYears["ThreeDigitsAndS"][i] + 's';
             var replaceStringHE = startHoloceneStyle + startInsertBetween + heYear + 's' + startHoloceneAnchor + holoceneHeMark + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
@@ -1244,7 +1263,7 @@ function _main_replacementRules (arrayOfYears, options) {
             // console.log(heYear);
             var regexString = '\\b(' + arrayOfYears["ThreeDigitsYearBC"][i] + '\\sBC)\\b(?!-|–|\/)'; // combination of lookbehind and lookahead for en-dash, and lookahead for s
             //console.log(regexString);
-            var regex = new RegExp(regexString, "i");
+            var regex = new RegExp(regexString, "gi");
 
             var replaceStringPageStamp = "$1";
             var replaceStringHE = startHoloceneStyle + startInsertBetween + heYear + startHoloceneAnchor + holoceneHeMark + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
@@ -1273,7 +1292,7 @@ function _main_replacementRules (arrayOfYears, options) {
             // console.log(heYear);
             var regexString = '\\b(' + arrayOfYears["ThreeDigitsYearBCE"][i] + '\\sBCE)\\b(?!-|–|\/)'; // combination of lookbehind and lookahead for en-dash, and lookahead for s
             //console.log(regexString);
-            var regex = new RegExp(regexString, "i");
+            var regex = new RegExp(regexString, "gi");
 
             var replaceStringPageStamp = "$1";
             var replaceStringHE = startHoloceneStyle + startInsertBetween + heYear + startHoloceneAnchor + holoceneHeMark + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
@@ -1301,7 +1320,7 @@ function _main_replacementRules (arrayOfYears, options) {
             heYear = 10000 - arrayOfYears["ThreeDigitsAndSBC"][i];
             // console.log(heYear);
             var regexString = arrayOfYears["ThreeDigitsAndSBC"][i] + 's\\sBC(?!E)';
-            var regex = new RegExp(regexString, "");
+            var regex = new RegExp(regexString, "gi");
 
             var replaceStringPageStamp = arrayOfYears["ThreeDigitsAndSBC"][i] + 's BC';
             var replaceStringHE = startHoloceneStyle + startInsertBetween + heYear + 's' + startHoloceneAnchor + holoceneHeMark + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
@@ -1330,7 +1349,7 @@ function _main_replacementRules (arrayOfYears, options) {
             // console.log(heYear);
             var regexString = arrayOfYears["ThreeDigitsAndSBCE"][i] + 's\\sBCE';
             //console.log(regexString);
-            var regex = new RegExp(regexString, "");
+            var regex = new RegExp(regexString, "gi");
             //console.log(regex);
 
             var replaceStringPageStamp = arrayOfYears["ThreeDigitsAndSBCE"][i] + 's BCE';
@@ -1361,7 +1380,7 @@ function _main_replacementRules (arrayOfYears, options) {
             //console.log(heYearOne, heYearTwo);
             var regexString = '\\b(' + arrayOfYears["ThreeDigitsDashThreeDigitsBC"][i][0] + '(–|-)' + arrayOfYears["ThreeDigitsDashThreeDigitsBC"][i][1] + '\\sBC)\\b(?!\\sBCE)';
             //console.log(regexString);
-            var regex = new RegExp(regexString, "");
+            var regex = new RegExp(regexString, "gi");
 
             var replaceStringPageStamp = "$1";
             var replaceStringHE = startHoloceneStyle + startInsertBetween + heYearOne + '–' + heYearTwo + startHoloceneAnchor + holoceneHeMark + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
@@ -1391,7 +1410,7 @@ function _main_replacementRules (arrayOfYears, options) {
             //console.log(heYearOne, heYearTwo);
             var regexString = '\\b(' + arrayOfYears["ThreeDigitsDashThreeDigitsBCE"][i][0] + '(–|-)' + arrayOfYears["ThreeDigitsDashThreeDigitsBCE"][i][1] + '\\sBCE)\\b(?!\\sBC)';
             //console.log(regexString);
-            var regex = new RegExp(regexString, "");
+            var regex = new RegExp(regexString, "gi");
 
             var replaceStringPageStamp = "$1";
             var replaceStringHE = startHoloceneStyle + startInsertBetween + heYearOne + '–' + heYearTwo + startHoloceneAnchor + holoceneHeMark + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
@@ -1444,7 +1463,7 @@ function _main_replacementRules (arrayOfYears, options) {
             //console.log(heYearOne, heYearTwo);
             var regexString = '\\b(' + arrayOfYears["ThreeDigitsDashOneTwoDigitsBC"][i][0] + '(–|-)' + arrayOfYears["ThreeDigitsDashOneTwoDigitsBC"][i][1] + '\\sBC)\\b(?!\\sBCE)';
             //console.log(regexString);
-            var regex = new RegExp(regexString, "");
+            var regex = new RegExp(regexString, "gi");
 
             var replaceStringPageStamp = "$1";
             var replaceStringHE = startHoloceneStyle + startInsertBetween + heYearOne + '–' + heYearTwo + startHoloceneAnchor + holoceneHeMark + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
@@ -1497,7 +1516,7 @@ function _main_replacementRules (arrayOfYears, options) {
             //console.log(heYearOne, heYearTwo);
             var regexString = '\\b(' + arrayOfYears["ThreeDigitsDashOneTwoDigitsBCE"][i][0] + '(–|-)' + arrayOfYears["ThreeDigitsDashOneTwoDigitsBCE"][i][1] + '\\sBCE)\\b(?!\\sBC)';
             //console.log(regexString);
-            var regex = new RegExp(regexString, "");
+            var regex = new RegExp(regexString, "gi");
 
             var replaceStringPageStamp = "$1";
             var replaceStringHE = startHoloceneStyle + startInsertBetween + heYearOne + '–' + heYearTwo + startHoloceneAnchor + holoceneHeMark + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
@@ -1529,7 +1548,7 @@ function _main_replacementRules (arrayOfYears, options) {
             // console.log(heYear);
             var regexString = '\\b(' + arrayOfYears["TwoDigitsYearAD"][i] + '\\sAD)\\b(?!-|–|\/)'; // combination of lookbehind and lookahead for en-dash, and lookahead for s
             //console.log(regexString);
-            var regex = new RegExp(regexString, "i");
+            var regex = new RegExp(regexString, "gi");
 
             var replaceStringPageStamp = "$1";
             var replaceStringHE = startHoloceneStyle + startInsertBetween + heYear + startHoloceneAnchor + holoceneHeMark + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
@@ -1558,7 +1577,7 @@ function _main_replacementRules (arrayOfYears, options) {
             //console.log(heYear);
             var regexString = '(AD\\s' + arrayOfYears["ADTwoDigitsYear"][i] + ')(?!-|–|\/)'; // combination of lookbehind and lookahead for en-dash, and lookahead for s
             //console.log(regexString);
-            var regex = new RegExp(regexString, "i");
+            var regex = new RegExp(regexString, "gi");
 
             var replaceStringPageStamp = "$1";
             var replaceStringHE = startHoloceneStyle + startInsertBetween + heYear + startHoloceneAnchor + holoceneHeMark + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
@@ -1587,7 +1606,7 @@ function _main_replacementRules (arrayOfYears, options) {
             // console.log(heYear);
             var regexString = '\\b(' + arrayOfYears["TwoDigitsYearCE"][i] + '\\sCE)\\b(?!-|–|\/)'; // combination of lookbehind and lookahead for en-dash, and lookahead for s
             //console.log(regexString);
-            var regex = new RegExp(regexString, "i");
+            var regex = new RegExp(regexString, "gi");
 
             var replaceStringPageStamp = "$1";
             var replaceStringHE = startHoloceneStyle + startInsertBetween + heYear + startHoloceneAnchor + holoceneHeMark + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
@@ -1617,7 +1636,7 @@ function _main_replacementRules (arrayOfYears, options) {
             //console.log(heYearOne, heYearTwo);
             var regexString = '\\b(' + arrayOfYears["TwoDigitsDashOneTwoDigitsAD"][i][0] + '(–|-)' + arrayOfYears["TwoDigitsDashOneTwoDigitsAD"][i][1] + '\\sAD)\\b';
             //console.log(regexString);
-            var regex = new RegExp(regexString, "");
+            var regex = new RegExp(regexString, "gi");
 
             var replaceStringPageStamp = "$1";
             var replaceStringHE = startHoloceneStyle + startInsertBetween + heYearOne + '–' + heYearTwo + startHoloceneAnchor + holoceneHeMark + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
@@ -1647,7 +1666,7 @@ function _main_replacementRules (arrayOfYears, options) {
             //console.log(heYearOne, heYearTwo);
             var regexString = '\\b(' + arrayOfYears["TwoDigitsDashOneTwoDigitsCE"][i][0] + '(–|-)' + arrayOfYears["TwoDigitsDashOneTwoDigitsCE"][i][1] + '\\sCE)\\b';
             //console.log(regexString);
-            var regex = new RegExp(regexString, "");
+            var regex = new RegExp(regexString, "gi");
 
             var replaceStringPageStamp = "$1";
             var replaceStringHE = startHoloceneStyle + startInsertBetween + heYearOne + '–' + heYearTwo + startHoloceneAnchor + holoceneHeMark + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
@@ -1677,7 +1696,7 @@ function _main_replacementRules (arrayOfYears, options) {
             // console.log(heYear);
             var regexString = '\\b(' + arrayOfYears["TwoDigitsYearBC"][i] + '\\sBC)\\b(?!-|–|\/)'; // combination of lookbehind and lookahead for en-dash, and lookahead for s
             //console.log(regexString);
-            var regex = new RegExp(regexString, "i");
+            var regex = new RegExp(regexString, "gi");
 
             var replaceStringPageStamp = "$1";
             var replaceStringHE = startHoloceneStyle + startInsertBetween + heYear + startHoloceneAnchor + holoceneHeMark + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
@@ -1706,7 +1725,7 @@ function _main_replacementRules (arrayOfYears, options) {
             // console.log(heYear);
             var regexString = '\\b(' + arrayOfYears["TwoDigitsYearBCE"][i] + '\\sBCE)\\b(?!-|–|\/)'; // combination of lookbehind and lookahead for en-dash, and lookahead for s
             //console.log(regexString);
-            var regex = new RegExp(regexString, "i");
+            var regex = new RegExp(regexString, "gi");
 
             var replaceStringPageStamp = "$1";
             var replaceStringHE = startHoloceneStyle + startInsertBetween + heYear + startHoloceneAnchor + holoceneHeMark + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
@@ -1758,7 +1777,7 @@ function _main_replacementRules (arrayOfYears, options) {
             //console.log(heYearOne, heYearTwo);
             var regexString = '\\b(' + arrayOfYears["TwoDigitsDashOneTwoDigitsBC"][i][0] + '(–|-)' + arrayOfYears["TwoDigitsDashOneTwoDigitsBC"][i][1] + '\\sBC)\\b';
             //console.log(regexString);
-            var regex = new RegExp(regexString, "");
+            var regex = new RegExp(regexString, "gi");
 
             var replaceStringPageStamp = "$1";
             var replaceStringHE = startHoloceneStyle + startInsertBetween + heYearOne + '–' + heYearTwo + startHoloceneAnchor + holoceneHeMark + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
@@ -1809,7 +1828,7 @@ function _main_replacementRules (arrayOfYears, options) {
             //console.log(heYearOne, heYearTwo);
             var regexString = '\\b(' + arrayOfYears["TwoDigitsDashOneTwoDigitsBCE"][i][0] + '(–|-)' + arrayOfYears["TwoDigitsDashOneTwoDigitsBCE"][i][1] + '\\sBCE)\\b';
             //console.log(regexString);
-            var regex = new RegExp(regexString, "");
+            var regex = new RegExp(regexString, "gi");
 
             var replaceStringPageStamp = "$1";
             var replaceStringHE = startHoloceneStyle + startInsertBetween + heYearOne + '–' + heYearTwo + startHoloceneAnchor + holoceneHeMark + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
@@ -1841,7 +1860,7 @@ function _main_replacementRules (arrayOfYears, options) {
             // console.log(heYear);
             var regexString = '\\b(' + arrayOfYears["OneDigitYearAD"][i] + '\\sAD)\\b(?!–)'; // combination of lookbehind and lookahead for en-dash, and lookahead for s
             //console.log(regexString);
-            var regex = new RegExp(regexString, "i");
+            var regex = new RegExp(regexString, "gi");
 
             var replaceStringPageStamp = "$1";
             var replaceStringHE = startHoloceneStyle + startInsertBetween + heYear + startHoloceneAnchor + holoceneHeMark + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
@@ -1870,7 +1889,7 @@ function _main_replacementRules (arrayOfYears, options) {
             // console.log(heYear);
             var regexString = '\\b(AD\\s' + arrayOfYears["ADOneDigitYear"][i] + ')\\b(?!–)'; // combination of lookbehind and lookahead for en-dash, and lookahead for s
             //console.log(regexString);
-            var regex = new RegExp(regexString, "i");
+            var regex = new RegExp(regexString, "gi");
 
             var replaceStringPageStamp = "$1";
             var replaceStringHE = startHoloceneStyle + startInsertBetween + heYear + startHoloceneAnchor + holoceneHeMark + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
@@ -1899,7 +1918,7 @@ function _main_replacementRules (arrayOfYears, options) {
             // console.log(heYear);
             var regexString = '\\b(' + arrayOfYears["OneDigitYearCE"][i] + '\\sCE)\\b(?!-|–|\/)'; // combination of lookbehind and lookahead for en-dash, and lookahead for s
             //console.log(regexString);
-            var regex = new RegExp(regexString, "i");
+            var regex = new RegExp(regexString, "gi");
 
             var replaceStringPageStamp = "$1";
             var replaceStringHE = startHoloceneStyle + startInsertBetween + heYear + startHoloceneAnchor + holoceneHeMark + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
@@ -1929,7 +1948,7 @@ function _main_replacementRules (arrayOfYears, options) {
             // console.log(heYear);
             var regexString = '\\b(' + arrayOfYears["OneDigitYearBC"][i] + '\\sBC)\\b(?!-|–|\/)'; // combination of lookbehind and lookahead for en-dash, and lookahead for s
             //console.log(regexString);
-            var regex = new RegExp(regexString, "i");
+            var regex = new RegExp(regexString, "gi");
 
             var replaceStringPageStamp = "$1";
             var replaceStringHE = startHoloceneStyle + startInsertBetween + heYear + startHoloceneAnchor + holoceneHeMark + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
@@ -1958,7 +1977,7 @@ function _main_replacementRules (arrayOfYears, options) {
             // console.log(heYear);
             var regexString = '\\b(' + arrayOfYears["OneDigitYearBCE"][i] + '\\sBCE)\\b(?!-|–|\/)'; // combination of lookbehind and lookahead for en-dash, and lookahead for s
             //console.log(regexString);
-            var regex = new RegExp(regexString, "i");
+            var regex = new RegExp(regexString, "gi");
 
             var replaceStringPageStamp = "$1";
             var replaceStringHE = startHoloceneStyle + startInsertBetween + heYear + startHoloceneAnchor + holoceneHeMark + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
