@@ -10,7 +10,7 @@ e.g.
 
 ___
 
-### HEA on wikipedia
+### HEA on Wikipedia
 
 ![Caesar](https://github.com/caveljan/Holocene-Epoch-Addverter/blob/master/readme-source/caesar.PNG)
 #### [Julius Caesar's Wikipedia page](https://en.wikipedia.org/wiki/Julius_Caesar) with *default* settings on HEA.
