@@ -132,7 +132,7 @@ function _main_clearArray (bodyTextArray) {
                 cleanArrayV2.push(arrayToBeCleaned[i]);
             }
         }
-        console.log(cleanArrayV2);
+        //console.log(cleanArrayV2);
 
 
         //console.log(firstCleanArray);
@@ -142,7 +142,7 @@ function _main_clearArray (bodyTextArray) {
     }
 
     var cleanedArray = cleanArray(bodyTextArray);
-    console.log(cleanedArray)
+    //  console.log(cleanedArray)
     return cleanedArray;
 }
 
@@ -514,7 +514,7 @@ function _main_makeArrays (cleanedArray) {
     }
 
     arrayOfYears = makeArrays(cleanedArray);
-    console.log(arrayOfYears);
+    //console.log(arrayOfYears);
 
     return arrayOfYears;
 }
