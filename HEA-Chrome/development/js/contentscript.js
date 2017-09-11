@@ -55,16 +55,18 @@ function _main_ (options) {
         });
     };
 
-    if (/wikipedia/.test(document.location.href)) {
-        var isWiki = true;
-    } else {
-        var isWiki = false;
-    }
+    if(! /google/.test(document.location.href)) {
+        if (/wikipedia/.test(document.location.href)) {
+            var isWiki = true;
+        } else {
+            var isWiki = false;
+        }
 
-    if (options['activeOptions'] == "onWiki" && isWiki) {
-        _main_replacementRules(_main_unique(_main_makeArrays(_main_clearArray(_main_extractText()))), options);
-    } else if (options['activeOptions'] == "onSite") {
-        _main_replacementRules(_main_unique(_main_makeArrays(_main_clearArray(_main_extractText()))), options);
+        if (options['activeOptions'] == "onWiki" && isWiki) {
+            _main_replacementRules(_main_unique(_main_makeArrays(_main_clearArray(_main_extractText()))), options);
+        } else if (options['activeOptions'] == "onSite") {
+            _main_replacementRules(_main_unique(_main_makeArrays(_main_clearArray(_main_extractText()))), options);
+        }
     }
 }
 
@@ -2190,7 +2192,7 @@ function _main_replacementRules (arrayOfYears, options) {
                 regexDash = new RegExp (regexStringDash, "");
                 regexBC = new RegExp (regexStringBC, "");
                 regexBCDash = new RegExp (regexStringBCDash, "");
-                centuryBC = 100 - i;
+                centuryBC = 101 - i;
 
                 var replaceStringHE = startHoloceneStyle + startInsertBetween + '10' + i + 'st century' + startHoloceneAnchor + holoceneHeMark + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
                 var replaceStringDashHE = startHoloceneStyle + startInsertBetween + '10' + i + 'st-century' + startHoloceneAnchor + holoceneHeMark + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
@@ -2233,7 +2235,7 @@ function _main_replacementRules (arrayOfYears, options) {
                 regexDash = new RegExp (regexStringDash, "");
                 regexBC = new RegExp (regexStringBC, "");
                 regexBCDash = new RegExp (regexStringBCDash, "");
-                centuryBC = 100 - i;
+                centuryBC = 101 - i;
 
                 var replaceStringHE = startHoloceneStyle + startInsertBetween + '10' + i + 'nd century' + startHoloceneAnchor + holoceneHeMark + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
                 var replaceStringDashHE = startHoloceneStyle + startInsertBetween + '10' + i + 'nd-century' + startHoloceneAnchor + holoceneHeMark + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
@@ -2276,7 +2278,7 @@ function _main_replacementRules (arrayOfYears, options) {
                 regexDash = new RegExp (regexStringDash, "");
                 regexBC = new RegExp (regexStringBC, "");
                 regexBCDash = new RegExp (regexStringBCDash, "");
-                centuryBC = 100 - i;
+                centuryBC = 101 - i;
 
                 var replaceStringHE = startHoloceneStyle + startInsertBetween + '10' + i + 'rd century' + startHoloceneAnchor + holoceneHeMark + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
                 var replaceStringDashHE = startHoloceneStyle + startInsertBetween + '10' + i + 'rd-century' + startHoloceneAnchor + holoceneHeMark + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
@@ -2319,7 +2321,7 @@ function _main_replacementRules (arrayOfYears, options) {
                 regexDash = new RegExp (regexStringDash, "");
                 regexBC = new RegExp (regexStringBC, "");
                 regexBCDash = new RegExp (regexStringBCDash, "");
-                centuryBC = 100 - i;
+                centuryBC = 101 - i;
 
                 var replaceStringHE = startHoloceneStyle + startInsertBetween + '10' + i + 'th century' + startHoloceneAnchor + holoceneHeMark + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
                 var replaceStringDashHE = startHoloceneStyle + startInsertBetween + '10' + i + 'th-century' + startHoloceneAnchor + holoceneHeMark + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
@@ -2364,7 +2366,7 @@ function _main_replacementRules (arrayOfYears, options) {
                 regexDash = new RegExp (regexStringDash, "");
                 regexBC = new RegExp (regexStringBC, "");
                 regexBCDash = new RegExp (regexStringBCDash, "");
-                centuryBC = 100 - i;
+                centuryBC = 101 - i;
 
                 var replaceStringHE = startHoloceneStyle + startInsertBetween + '1' + i + 'st century' + startHoloceneAnchor + holoceneHeMark + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
                 var replaceStringDashHE = startHoloceneStyle + startInsertBetween + '1' + i + 'st-century' + startHoloceneAnchor + holoceneHeMark + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
@@ -2407,7 +2409,7 @@ function _main_replacementRules (arrayOfYears, options) {
                 regexDash = new RegExp (regexStringDash, "");
                 regexBC = new RegExp (regexStringBC, "");
                 regexBCDash = new RegExp (regexStringBCDash, "");
-                centuryBC = 100 - i;
+                centuryBC = 101 - i;
 
                 var replaceStringHE = startHoloceneStyle + startInsertBetween + '1' + i + 'nd century' + startHoloceneAnchor + holoceneHeMark + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
                 var replaceStringDashHE = startHoloceneStyle + startInsertBetween + '1' + i + 'nd-century' + startHoloceneAnchor + holoceneHeMark + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
@@ -2450,7 +2452,7 @@ function _main_replacementRules (arrayOfYears, options) {
                 regex = new RegExp (regexStringDash, "");
                 regexBC = new RegExp (regexStringBC, "");
                 regexBC = new RegExp (regexStringBCDash, "");
-                centuryBC = 100 - i;
+                centuryBC = 101 - i;
 
                 var replaceStringHE = startHoloceneStyle + startInsertBetween + '1' + i + 'rd century' + startHoloceneAnchor + holoceneHeMark + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
                 var replaceStringDashHE = startHoloceneStyle + startInsertBetween + '1' + i + 'rd-century' + startHoloceneAnchor + holoceneHeMark + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
@@ -2493,7 +2495,7 @@ function _main_replacementRules (arrayOfYears, options) {
                 regexDash = new RegExp (regexStringDash, "");
                 regexBC = new RegExp (regexStringBC, "");
                 regexBCDash = new RegExp (regexStringBCDash, "");
-                centuryBC = 100 - i;
+                centuryBC = 101 - i;
 
                 var replaceStringHE = startHoloceneStyle + startInsertBetween + '1' + i + 'th century' + startHoloceneAnchor + holoceneHeMark + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
                 var replaceStringDashHE = startHoloceneStyle + startInsertBetween + '1' + i + 'th-century' + startHoloceneAnchor + holoceneHeMark + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
