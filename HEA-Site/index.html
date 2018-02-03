@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Holocene Epoch Timestamp</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name=viewport content="width=device-width, initial-scale=1">
+        <meta name="description" content="Add the Holocene Epoch Timestamp to the years on the webpage, or replace them entirely.">
+
+        <link rel="stylesheet" type="text/css" href="style.css">
+    </head>
+    <body>
+        <nav>
+            <h1><a href="https://holocenetimestamp.org">Holocene Epoch Timestamp</a></h1>
+        </nav>
+
+
+        <div class="container">
+            <div class="tabs">
+                <ul id="ul-tabs">
+                    <li id="tab-about">About</li>
+                    <li class="active" id="tab-conversion">Conversion</li>
+                    <li id="tab-gift">Gift</li>
+                </ul>
+            </div>
+
+
+            <div class="content" id="content-about">
+                 <p>Cesare Emiliani proposed in 1993 to add 10,000 more years to the current year for a better grasping of our human civilization, to have a Holocene Epoch.</p>
+
+                <div class="content-about-center">
+                    <p>use the <a target="_blank" href="https://chrome.google.com/webstore/detail/holocene-epoch-addverter/fbdlbdcmaglfifdihlihdpnnnidnippp">Chrome</a> extension to add the HE timestamp</p>
+                </div>
+            </div>
+
+            <div class="content" id="content-conversion">
+				<p id="the-year">the year</p>
+
+				<div id="year-text">
+					<div>
+						<input type="text" maxlength="5" id="year-entry" autofocus>
+					</div>
+					
+					<div id="period">
+						<p class="period-select"><input type="radio" name="year" value="BC"><span class="period-select-text">BC</span></p>
+						<p class="period-select"><input type="radio" name="year" value="AD" checked><span class="period-select-text">AD</span></p>
+					</div>
+				</div>
+				
+				<p id="is">is</p>
+
+				<p id="he-year"></p>
+            </div>
+
+            <div class="content" id="content-gift">
+                <p>if you would enjoy gifting currency for server time or for whatever reason, consider</p>
+                
+                <div class="gift-wrapper">
+                    <div class="gift-card">
+                        <p>acryptos</p>
+                        <p>with <a target="_blank" href="https://paypal.me/caveljan">PayPal</a></p>
+                    </div>
+
+                    <div class="gift-card" id="gift-card-crypto">
+                        <p>cryptos</p>
+                        <p id="gift-crypto-expand">&#9660;</p>
+                        <div id="gift-card-drawer">
+                            <p>BTC<br> <span id="btc-address">1CKoEnMU3Hy1UiWfJVBTruVSmrLvhDkXd6</span></p>
+                            <p>ETH<br> <span id="eth-address">0x91936fc5A7e13ae96273E371fD3407B0F3ABc553</span></p>
+                            <p>BCH<br> <span id="bch-address">qrlar2grfap9n86gfrm6z69yw56ezv35zyts7ufxjv</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> 
+
+
+        <footer id="footer">
+            <p>a <a href="https://caveljan.com">caveljan</a> realization</p>
+        </footer>
+
+        <script type="text/javascript" src="script.js"></script>
+    </body>
+</html>
