@@ -21,7 +21,7 @@ function setTabs() {
     tabConversion.addEventListener("click", function() {
         setActiveClassToTab(this);
 
-        contentConversion.style.display = "block";
+        contentConversion.style.display = "flex";
         contentAbout.style.display = "none";
         contentGift.style.display = "none";
     })
@@ -132,14 +132,8 @@ init();
 
 
 
-
-
-
-
-///
-
-
-
+////////
+// LOGIC
 var year = document.getElementById("year-entry");
 var yearRadios = document.querySelectorAll('input[name="year"]');
 var HEyear = document.getElementById("he-year");
@@ -150,17 +144,7 @@ year.value = currentYear;
 
 HEyear.innerHTML = parseInt(year.value) + 10000 + " HE";
 
-for (var i = 0; i < yearRadios.length; i++) {
-    if (yearRadios[i].checked) {
-        yearMode = yearRadios[i].value;
-    }
-
-    yearRadios[i].onclick = function() {
-        yearMode = this.value;
-    }
-}
-
-year.addEventListener("keyup", function() {
+function setHeYear(year, yearMode, HEyear) {
     if (!isNaN(year.value)) {
         if (yearMode == "BC") {
             if (year.value > 10000) {
@@ -182,5 +166,21 @@ year.addEventListener("keyup", function() {
     if (year.value.match(/\D+/i)) {
         HEyear.innerHTML = "years have only numbers";
     }
+}
 
+setHeYear(year, yearMode, HEyear);
+
+for (var i = 0; i < yearRadios.length; i++) {
+    if (yearRadios[i].checked) {
+        yearMode = yearRadios[i].value;
+    }
+
+    yearRadios[i].onclick = function() {
+        yearMode = this.value;
+        setHeYear(year, yearMode, HEyear)
+    }
+}
+
+year.addEventListener("keyup", function() {
+    setHeYear(year, yearMode, HEyear);
 });

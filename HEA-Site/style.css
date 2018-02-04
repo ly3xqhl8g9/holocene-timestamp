@@ -23,7 +23,7 @@ body {
 
 html, body {
     color: hsl(0, 0%, 90%);
-    background: linear-gradient(rgb(60, 50, 80), rgb(35, 10, 40));
+    background: linear-gradient(to right, rgb(29, 78, 144) 50%, rgb(12, 57, 87) 50%);
     font-family: "Helvetica Neue", Arial, sans-serif;
 }
 
@@ -45,7 +45,7 @@ hr {
 
 a {
     text-decoration: none;
-    color: hsl(200, 30%, 40%);
+    color: hsl(215, 60%, 75%);
 }
 
 a:hover {
@@ -131,13 +131,8 @@ footer h1 {
 
 
 
-
-
-/*
-
-*/
-
-
+/*-------------------*/
+/* CONTENT-CONTAINER */
 .container {
     margin: 0 auto;
     padding: 50px;
@@ -149,28 +144,13 @@ footer h1 {
 @media (max-width: 800px) {
     .container {
         width: 90%;
-        padding: 30px;
+        padding-left: 10px;
+        padding-right: 10px;
     }
 }
 
-.rt-image {
-    margin: 30px auto;
-    height: 150px;
-}
-
-
-
-
-/* 
-CONTENT
-*/
-
 .content {
     margin-top: 50px;
-}
-
-#content-conversion {
-    text-align: center;
 }
 
 #content-about,
@@ -179,234 +159,37 @@ CONTENT
 }
 
 
+
+/*--------------*/
+/* CONTENT-ABOUT */
 #content-about {
     font-size: 18px;
     line-height: 1.8;
     text-align: justify;
 }
 
-
-#content-gift {
-    text-align: center;
-    font-size: 18px;
-}
-
-
-.gift-wrapper {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-
-.gift-card {
-    min-width: 300px;
-    width: 300px;
-    height: 200px;
-    margin: 30px;
+#image-container div {
     padding: 30px;
-    background-color: rgb(35, 10, 40);
-    overflow-wrap: break-word;
+    padding-bottom: 0px;
 }
 
-.gift-card p {
-    margin-bottom: 30px;
-}
-
-#gift-crypto-expand {
-    cursor: pointer;
-    user-select: none;
-    color: hsl(200, 30%, 40%);
-}
-
-#gift-crypto-expand:hover {
-    color: hsl(0, 0%, 100%);
-}
-
-#gift-card-drawer {
-    display: none;
-}
-
-#btc-address,
-#eth-address,
-#bch-address {
-    color: hsl(200, 30%, 40%);
-    cursor: pointer;
-}
-
-#btc-address:hover,
-#eth-address:hover,
-#bch-address:hover {
-    color: hsl(0, 0%, 100%);
-}
-
-.address-copy {
-    user-select: none;
-}
-
-
-
-/* 
-
-*/
-
-#conventional-time {
-    line-height: 50px;
-}
-
-.date-comma {
-    margin-right: 10px;
-}
-
-[name^="date-"] {
-    background-color: transparent;
-    color: white;
-    border: none;
-    -webkit-box-shadow: 0px 1px 0px 0px rgba(255,255,255,0.8);
-    -moz-box-shadow: 0px 1px 0px 0px rgba(255,255,255,0.8);
-    box-shadow: 0px 1px 0px 0px rgba(255,255,255,0.8);
-    outline: none;
-    padding: 5px;
-    font-size: 18px;
+#image-container p {
     text-align: center;
 }
 
-[name="date-month"] {
-    width: 120px;
+.responsive-image {
+    width: 100%;
 }
 
-[name="date-year"] {
-    width: 80px;
+#img-caesar {
+    margin: 0 auto;
+    width: 40%;
 }
 
-[name="date-day"],
-[name="date-hours"],
-[name="date-minutes"],
-[name="date-seconds"] {
-    width: 40px;
-}
-
-
-
-#date-reset svg {
-    margin-left: 10px;
-    margin-bottom: -3px;
-    cursor: pointer;
-    fill: white;
-    width: 16px;
-    height: 16px;
-    fill: hsl(200, 30%, 50%);
-}
-
-#date-reset svg:hover {
-    fill: hsl(0, 0%, 90%);
-}
-
-@keyframes rotate {
-    0% { 
-        -moz-transform: rotate(0deg);
-        -webkit-transform: rotate(0deg);
-        -o-transform: rotate(0deg);
-        -ms-transform: rotate(0deg);
-        transform: rotate(0deg);
+@media (max-width: 800px) {
+    #img-caesar {
+        width: 80%;
     }
-
-    100% {
-        -moz-transform: rotate(360deg);
-        -webkit-transform: rotate(360deg);
-        -o-transform: rotate(360deg);
-        -ms-transform: rotate(360deg);
-        transform: rotate(360deg);
-    }
-}
-
-
-#rational-time {
-    text-align: center;
-    margin-bottom: 20px;
-    font-size: 18px;
-    line-height: 2;
-}
-
-.rational-time-text {
-    margin-left: 7px;
-    font-size: 14px;
-}
-
-
-#holocene {
-    display: block;
-    position: relative;
-    margin-left: -30px;
-    text-align: center;
-    cursor: pointer;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-}
-
-/* Hide the browser's default checkbox */
-#holocene input {
-    position: absolute;
-    opacity: 0;
-    cursor: pointer;
-}
-
-/* Create a custom checkbox */
-#holocene-checkmark {
-    position: absolute;
-    margin-left: 10px;
-    height: 20px;
-    width: 20px;
-    background-color: #eee;
-}
-
-/* On mouse-over, add a grey background color */
-#holocene:hover input ~ #holocene-checkmark {
-    background-color: #ccc;
-}
-
-/* When the checkbox is checked, add a blue background */
-#holocene input:checked ~ #holocene-checkmark {
-    background-color: hsl(200, 30%, 40%);
-}
-
-/* Create the checkmark/indicator (hidden when not checked) */
-#holocene-checkmark:after {
-    content: "";
-    position: absolute;
-    display: none;
-}
-
-/* Show the checkmark when checked */
-#holocene input:checked ~ #holocene-checkmark:after {
-    display: block;
-}
-
-/* Style the checkmark/indicator */
-#holocene #holocene-checkmark:after {
-    left: 8px;
-    top: 4px;
-    width: 5px;
-    height: 10px;
-    border: solid white;
-    border-width: 0 3px 3px 0;
-    -webkit-transform: rotate(45deg);
-    -ms-transform: rotate(45deg);
-    transform: rotate(45deg);
-}
-
-
-
-
-
-
-/*ABOUT*/
-.span-accent {
-    background-color: hsl(200, 30%, 40%);
-    padding-left: 3px;
-    padding-right: 3px;
 }
 
 .content-about-center {
@@ -414,41 +197,66 @@ CONTENT
     text-align: center;
 }
 
-
-.responsive-image {
-    width: 100%;
+#chrome-extension {
+    position: absolute;
+    bototm: 0;
 }
 
-.large-image {
-    font-size: 12px;
+
+
+/*-------------------*/
+/* CONTENT-CONVERSION */
+#content-conversion {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@media (max-width: 620px) {
+    #content-conversion {
+        display: block;
+        flex-direction: column;
+        flex-wrap: auto;
+    }
+    
+    #conversion-left {
+        margin: 0 auto;
+        display: block !important;
+        text-align: center !important;
+        width: 100% !important;
+    }
+
+    #conversion-center {
+        margin: 0 auto !important;
+        display: block !important;
+
+    }
+
+    #conversion-right {
+        display: block !important;
+        text-align: center  !important;
+        width: 100% !important;
+    }
+}
+
+#conversion-left {
+    text-align: right;
+    width: 400px;
+}
+
+#conversion-center {
+    margin-left: 50px;
+    margin-right: 50px;
+    width: 100px;
+    display: flex;
+    flex: 1;
+    justify-content: center;
     text-align: center;
-    margin-top: 0px;
-    margin-bottom: 30px;
 }
 
-.large-image:last-child {
-    margin-bottom: 0px;
-}
-
-
-
-/*
-----------------
-*/
-
-
-
-#main-title {
-    padding: 50px;
-    font-weight: normal;
-    font-size: 1.8em;
-    line-height: 1.5;
-}
-
-#the-year {
-    font-size: 20px;
-    margin: 0;
-    margin-top: 50px;
+#conversion-right {
+    text-align: left;
+    width: 400px;
 }
 
 #year-text {
@@ -457,21 +265,28 @@ CONTENT
 
 #year-entry {
     margin-top: 27px;
-    width: 200px;
+    width: 150px;
     height: 45px;
     font-size: 20px;
     text-align: center;
     padding: 5px;
-    border-radius: 29.5px;
     outline: none;
-    background-color: hsl(250, 40%, 20%);
-    border: 2px solid hsl(250, 40%, 20%);
+    background-color: hsl(215, 80%, 20%);
+    border: 2px solid hsl(215, 80%, 20%);
     color: hsl(0, 0%, 90%);
 }
 
 #period {
     margin-top: 10px;
-    /*padding-left: 10px;*/
+}
+
+#is {
+    margin: 5px;
+    font-size: 20px;
+}
+
+#he-year {
+    font-size: 20px;
 }
 
 .period-select {
@@ -487,18 +302,63 @@ CONTENT
     font-size: 14px;
 }
 
-#is {
-    margin: 5px;
-    font-size: 20px;
+
+
+/*--------------*/
+/* CONTENT-GIFT */
+#content-gift {
+    text-align: center;
+    font-size: 18px;
 }
 
-#he-year {
-    margin: 20px;
-    font-size: 20px;
+.gift-wrapper {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
+.gift-card {
+    min-width: 300px;
+    width: 300px;
+    height: 200px;
+    margin: 30px;
+    padding: 30px;
+    background-color: hsl(215, 80%, 20%);
+    overflow-wrap: break-word;
+}
 
-#chrome-extension {
-    position: absolute;
-    bototm: 0;
+.gift-card p {
+    margin-bottom: 30px;
+}
+
+#gift-crypto-expand {
+    cursor: pointer;
+    user-select: none;
+    color: hsl(215, 60%, 75%);
+}
+
+#gift-crypto-expand:hover {
+    color: hsl(0, 0%, 100%);
+}
+
+#gift-card-drawer {
+    display: none;
+}
+
+#btc-address,
+#eth-address,
+#bch-address {
+    color: hsl(215, 60%, 75%);
+    cursor: pointer;
+}
+
+#btc-address:hover,
+#eth-address:hover,
+#bch-address:hover {
+    color: hsl(0, 0%, 100%);
+}
+
+.address-copy {
+    user-select: none;
 }
