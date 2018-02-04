@@ -41,14 +41,3 @@ ___
 
 ### Why "addverter"?
 Becase it adds the timestamp but also advertises the Holocene Epoch calendar.
-
-___
-
-### Support
-If you can offer it, please, your [support](https://www.paypal.me/caveljan) will be appreciated.
-
-___
-
-### To Be Developed
-
-The alpha/beta version is powered by Regular Expression matching. Future iterations will match through Natural Language Processing.
