@@ -330,13 +330,18 @@ function fetchYearFacts(inputYear) {
     function setFacts(response, inputYear) {
         let year = HEyear.value;
         let page = response['parse']['text']['*'];
+        // console.log(page);
 
-        // TODO
-        // remove citation needed
-        // remove references numbers
+        let pageCleaned = page.replace(/\[[0-9]{1,}\]/g, '')
+        pageCleaned = pageCleaned.replace(/citation needed/g, '')
+        pageCleaned = pageCleaned.replace(/clarification needed/g, '')
+        pageCleaned = pageCleaned.replace(/\[<i>/g, '')
+        pageCleaned = pageCleaned.replace(/<\/i>\]/g, '')
+
+
         let editString = `<span class="mw\\-editsection"><span class="mw\\-editsection\\-bracket">\\[<\/span><a href="\/w\/index\\.php\\?title=${inputYear}\\&amp;action=edit\\&amp;section=[0-9]{1,}" title="Edit section: .{1,100}">edit<\/a><span class="mw\\-editsection\\-bracket">\\]<\/span><\/span>`;
         let rxEdit = new RegExp(`${editString}`, 'gim');
-        let pageCleaned = page.replace(rxEdit, '');
+        pageCleaned = pageCleaned.replace(rxEdit, '');
 
         let anchorStringReplace = `<a target="_blank" href="https://en.wikipedia.org/wiki`;
         pageCleaned = pageCleaned.replace(/<a href="\/wiki/g, anchorStringReplace);
