@@ -37,7 +37,9 @@
             <div class="content" id="content-about">
                 <img class="responsive-image" id="he-logo" src="./assets/images/he-logo.png">
 
-                <p>Cesare Emiliani <a target="_blank" href="/assets/pdf/emilianisproposal.pdf">proposed in 1993</a> to add 10,000 more years to the current year for a better grasping of our human civilization, to have a Holocene Epoch.</p>
+                <p>Cesare Emiliani <a target="_blank" href="/assets/pdf/emilianisproposal.pdf">proposed in 1993</a> to add 10,000 more years to the current date for a better grasping of our human civilization, to have a <i>Holocene Epoch</i>.</p>
+
+                <p>The <i>Holocene Epoch Timestamp</i> grants the user with the possibility of making the conversion easy between the two types of date. The <a href="#browser-extension">browser extension</a> can be used to automatically convert the timestamps from the web page.</p>
 
                 <div id="image-container">
                     <div id="img-caesar">
@@ -49,11 +51,10 @@
                         <img class="responsive-image" src="./assets/images/newton.png">
                     </div>
                     <p><a target="_blank" href="https://en.wikipedia.org/wiki/Early_life_of_Isaac_Newton">Isaac Newton on Wikipedia</a> with Holocene Epoch Timestamp replacing the page timestamps.</p>
-
                 </div>
 
                 <div class="content-about-center">
-                    <p>use the <a target="_blank" href="https://chrome.google.com/webstore/detail/holocene-epoch-addverter/fbdlbdcmaglfifdihlihdpnnnidnippp">Chrome</a> extension to add the HE Timestamp or replace the one from the web page</p>
+                    <p id="browser-extension">use the <a target="_blank" href="https://chrome.google.com/webstore/detail/holocene-epoch-addverter/fbdlbdcmaglfifdihlihdpnnnidnippp">Chrome</a> extension to add the HE Timestamp or replace the one from the web page</p>
                     <p>the code is on <a target="_blank" href="https://github.com/caveljan/holocene-timestamp">github</a></p>
                 </div>
             </div>
@@ -63,7 +64,7 @@
                     <div id="conversion-left">
                         <div id="year-text">
                             <div>
-                                <input class="year-input" type="text" maxlength="5" id="year-entry" autofocus>
+                                <input type="text" class="year-input" id="year-entry" maxlength="5"  autofocus>
                             </div>
                             
                             <div id="period">
@@ -84,9 +85,7 @@
                     </div>
                     
                     <div id="conversion-right">
-                        <!-- TODO make he-year an input -->
-                        <input class="year-input" id="he-year" type="" name="">
-                        <!-- <p id="he-year"></p> -->
+                        <input type="text" class="year-input" id="he-year" maxlength="10">
                     </div>
                 </div>
 
@@ -127,7 +126,7 @@
 
 
         <footer id="footer">
-            <p>a <a href="https://caveljan.com">caveljan</a> realization</p>
+            <p>a <a taget="_blank" href="https://caveljan.com">caveljan</a> realization</p>
         </footer>
 
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
