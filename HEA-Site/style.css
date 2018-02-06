@@ -14,8 +14,6 @@ body {
     position: relative;
     margin: 0;
     overscroll-behavior-y: none;
-    /*background-size: cover;*/
-    /*overflow: hidden;*/
     padding-bottom: 3rem;
     min-height: 100%;
     font-size: 14px;
@@ -55,14 +53,10 @@ a {
     text-decoration: none;
     color: white;
     font-weight: bold;
-    /*color: hsl(215, 60%, 75%);*/
 }
 
 a:hover {
     color: hsl(215, 60%, 75%);
-    /*text-decoration: underline;*/
-    /*color: hsl(215, 60%, 75%);*/
-    /*color: hsl(0, 0%, 100%);*/
 }
 
 nav {
@@ -301,7 +295,6 @@ footer a {
 }
 
 .year-input {
-    /*margin-top: 27px;*/
     width: 150px;
     height: 45px;
     font-size: 20px;
@@ -313,37 +306,25 @@ footer a {
 #year-entry {
     background-color: hsl(215, 80%, 20%);
     border: 2px solid hsl(215, 80%, 20%);
-    /*color: hsl(0, 0%, 90%);*/
     color: hsl(215, 60%, 75%);
 }
 
-#period {
-    /*margin-top: 10px;*/
-}
-
 #is {
-    /*margin: 5px;*/
+    user-select: none;
     font-size: 20px;
 }
 
 #he-year {
-    /*margin-top: 8px;*/
     color: hsl(215, 60%, 75%);
-    /*color: hsl(215, 80%, 20%);*/
     background-color: hsl(215, 80%, 20%);
     border: 2px solid hsl(215, 80%, 20%);
-/*    background-color: hsl(215, 60%, 75%);
-    border: 2px solid hsl(215, 60%, 75%);*/
     font-size: 20px;
 }
 
 .period-select {
-    /*margin-left: 10px;*/
     position: relative;
     width: 30px;
     user-select: none;
-    /*background-color: hsl(215, 80%, 20%);*/
-    /*padding: 3px;*/
 }
 
 .active-period-select {
@@ -355,7 +336,6 @@ footer a {
     cursor: pointer;
     top: 3px;
     left: 8px;
-    /*margin-left: 5px;*/
     margin-right: 15px;
     font-size: 10px;
 }
