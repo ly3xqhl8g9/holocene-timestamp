@@ -21,7 +21,7 @@ function setTabs() {
     tabConversion.addEventListener("click", function() {
         setActiveClassToTab(this);
 
-        contentConversion.style.display = "flex";
+        contentConversion.style.display = "block";
         contentAbout.style.display = "none";
         contentGift.style.display = "none";
     })
@@ -134,15 +134,19 @@ init();
 
 ////////
 // LOGIC
-var year = document.getElementById("year-entry");
-var yearRadios = document.querySelectorAll('input[name="year"]');
-var HEyear = document.getElementById("he-year");
-var yearMode = "";
+let year = document.getElementById("year-entry");
+let yearRadios = document.querySelectorAll('input[name="year"]');
+let HEyear = document.getElementById("he-year");
+let contentFacts = document.getElementById('content-conversion-facts');
+let yearMode = "AD";
 
 currentYear = (new Date()).getFullYear();
-year.value = currentYear;
+//
+year.value = 35;
 
-HEyear.innerHTML = parseInt(year.value) + 10000 + " HE";
+// HEyear.innerHTML = parseInt(year.value) + 10000 + " HE";
+setHeYear(year, yearMode, HEyear);
+callFetchYear(year.value, contentFacts)
 
 function setHeYear(year, yearMode, HEyear) {
     if (!isNaN(year.value)) {
@@ -159,7 +163,7 @@ function setHeYear(year, yearMode, HEyear) {
         }
     }
 
-    if (year.value == "") {
+    if (year.value == "" || year.value == "0") {
         HEyear.innerHTML = "insert an year";
     }
 
@@ -168,7 +172,6 @@ function setHeYear(year, yearMode, HEyear) {
     }
 }
 
-setHeYear(year, yearMode, HEyear);
 
 for (var i = 0; i < yearRadios.length; i++) {
     if (yearRadios[i].checked) {
@@ -176,11 +179,208 @@ for (var i = 0; i < yearRadios.length; i++) {
     }
 
     yearRadios[i].onclick = function() {
+        let inputYear = parseInt(year.value, 10);
         yearMode = this.value;
-        setHeYear(year, yearMode, HEyear)
+        setHeYear(year, yearMode, HEyear);
+        callFetchYear(inputYear, contentFacts);
     }
 }
 
+
 year.addEventListener("keyup", function() {
     setHeYear(year, yearMode, HEyear);
+    let inputYear = parseInt(year.value, 10);
+
+    callFetchYear(inputYear, contentFacts);
 });
+
+
+
+function callFetchYear(inputYear, contentFacts) {
+    // let currentYear = (new Date()).getFullYear();
+
+    if (isNaN(inputYear)
+        || inputYear == 0
+        || inputYear > currentYear
+        || (inputYear > 730 && yearMode == 'BC')
+        ) {
+        contentFacts.style.display = "none";
+    }
+
+    if (!isNaN(inputYear) && inputYear != 0 && inputYear < currentYear) {
+        if (yearMode == 'AD') {
+            if (inputYear <= 100) {
+                inputYear = 'AD_' + inputYear;
+            }
+            fetchYearFacts(inputYear);
+            contentFacts.style.display = "block";
+        }
+
+        if (yearMode == 'BC' && inputYear <= 730) {
+            inputYear = inputYear + '_BC';
+            fetchYearFacts(inputYear);
+            contentFacts.style.display = "block";
+        }
+    }
+}
+
+
+
+function fetchYearFacts(inputYear) {
+    // let inputYear = '353_BC';
+    // console.log(inputYear);
+
+    // let url = 'https://en.wikipedia.org/w/api.php?origin=*&action=query&titles=1453&prop=revisions&rvprop=content&format=json&formatversion=2';
+    // let data = `origin=*&
+    //             action=query&
+    //             prop=revisions&
+    //             rvprop=content&
+    //             format=json&
+    //             formatversion=2&
+    //             titles=${inputYear}
+    //             `;
+    // https://en.wikipedia.org/w/api.php?origin=*&action=parse&page=1453
+    let data = `origin=*&
+                action=parse&
+                format=json&
+                page=${inputYear}`;
+
+    let url = 'https://en.wikipedia.org/w/api.php?' + data;
+
+    fetch(url, {
+        method: 'GET',
+        headers: new Headers({
+            'Content-Type': 'application/json'
+        })
+    }).then( res => res.json())
+    .catch(error => console.error('Error:', error))
+    .then (response => setFacts(response, inputYear));
+
+
+    function setFacts(response, inputYear) {
+        let year = HEyear.innerText;
+        let page = response['parse']['text']['*'];
+
+        let editString = `<span class="mw\\-editsection"><span class="mw\\-editsection\\-bracket">\\[<\/span><a href="\/w\/index\\.php\\?title=${inputYear}\\&amp;action=edit\\&amp;section=[0-9]{1,}" title="Edit section: .{1,100}">edit<\/a><span class="mw\\-editsection\\-bracket">\\]<\/span><\/span>`;
+
+        let rxEdit = new RegExp(`${editString}`, 'gis');
+        let pageCleaned = page.replace(rxEdit, '');
+
+        // let anchorString = `<a href="`;
+        // let anchorStringReplace = `<a target="\_blank" href="https:\/\/en\.wikipedia\.org\/wiki\/`;
+        // let anchorStringReplace = `<a target="_blank" href="https://en\.wikipedia\.org`;
+
+        // let rxAnchor = new RegExp(anchorString, "gis");
+        // let rxAnchorReplace = new RegExp(anchorStringReplace, "gis");
+        // pageCleaned = pageCleaned.replace(rxAnchor, rxAnchorReplace);
+        // console.log(pageCleaned);
+
+        let stringEventsTitle = `<h2><span class="mw\\-headline" id="Events">Events<\/span><\/h2>`;
+        let stringBirthsTitle = `<h2><span class="mw\\-headline" id="Births">Births<\/span><\/h2>`;
+        let stringDeathsTitle = `<h2><span class="mw\\-headline" id="Deaths">Deaths<\/span><\/h2>`;
+        let stringReferencesTitle = `<h2><span class="mw\\-headline" id="References">References<\/span><\/h2>`;
+
+        let rxGetEvents = new RegExp(`${stringEventsTitle}...+${stringBirthsTitle}`, 's');
+        let rxGetBirths = new RegExp(`${stringBirthsTitle}...+${stringDeathsTitle}`, 's');
+        let rxGetDeaths = new RegExp(`${stringDeathsTitle}...+${stringReferencesTitle}`, 's');
+        let rxReplaceEvents = new RegExp(`${stringEventsTitle}`);
+        let rxReplaceBirths = new RegExp(`${stringBirthsTitle}`);
+        let rxReplaceDeaths = new RegExp(`${stringDeathsTitle}`);
+        let rxReplaceReferences = new RegExp(`${stringReferencesTitle}`);
+
+        let events = rxGetEvents.exec(pageCleaned)[0];
+        events = events.replace(rxReplaceEvents, '');
+        events = events.replace(rxReplaceBirths, '');
+
+        let births = rxGetBirths.exec(pageCleaned)[0];
+        births = births.replace(rxReplaceBirths, '');
+        births = births.replace(rxReplaceDeaths, '');
+
+        let deaths = rxGetDeaths.exec(pageCleaned)[0];
+        deaths = deaths.replace(rxReplaceDeaths, '');
+        deaths = deaths.replace(rxReplaceReferences, '');
+
+
+        let conversionEvents = document.getElementById("content-conversion-events");
+        conversionEvents.innerHTML = `<h1 class="content-conversion-facts-title"
+                                      id="content-conversion-events-title">
+                                        Events in ${year}
+                                      </h1>
+                                      <hr>
+                                      <div id="content-conversion-events-content">
+                                        ${events}
+                                      </div>`;
+
+        let conversionBirths = document.getElementById("content-conversion-births");
+        // conversionBirths.innerHTML = births;
+        // let birthsIsEmpty = regexpEmpty.test(births);
+        // // console.log(birthsIsEmpty);
+        // if (!birthsIsEmpty) {
+        //     births = setMarkup(births);
+            conversionBirths.innerHTML = `<h1 class="content-conversion-facts-title"
+                                          id="content-conversion-births-title">
+                                            Births in ${year}
+                                          </h1>
+                                          <hr>
+                                          <div id="content-conversion-births-content">
+                                            ${births}
+                                          </div>`;
+        // } else {
+        //     conversionBirths.innerHTML = '';
+        // }
+
+
+        let conversionDeaths = document.getElementById("content-conversion-deaths");
+        conversionDeaths.innerHTML = deaths;
+        // let deathsIsEmpty = regexpEmpty.test(deaths);
+        // // console.log(deathsIsEmpty);
+        // if (!deathsIsEmpty) {
+        //     deaths = setMarkup(deaths);
+            conversionDeaths.innerHTML = `<h1 class="content-conversion-facts-title"
+                                          id="content-conversion-deaths-title">
+                                            Deaths in ${year}
+                                          </h1>
+                                          <hr>
+                                          <div id="content-conversion-deaths-content">
+                                            ${deaths}
+                                          </div>`;
+        // } else {
+        //     // console.log('a');
+        //     conversionDeaths.innerHTML = '';
+        // }
+
+
+
+        let eventsTitle = document.getElementById('content-conversion-events-title');
+        let eventsContent = document.getElementById('content-conversion-events-content');
+        let birthsTitle = document.getElementById('content-conversion-births-title');
+        let birthsContent = document.getElementById('content-conversion-births-content');
+        let deathsTitle = document.getElementById('content-conversion-deaths-title');
+        let deathsContent = document.getElementById('content-conversion-deaths-content');
+
+        closeOpenFacts(eventsTitle, eventsContent);
+        closeOpenFacts(birthsTitle, birthsContent);
+        closeOpenFacts(deathsTitle, deathsContent);
+        // console.log(HEyear);
+        // console.log("page", page);
+        // console.log("events", events);
+        // console.log("births", births);
+        // console.log("deaths", deaths);
+        // console.log(response);
+    }
+}
+
+
+
+
+function closeOpenFacts(title, content) {
+    title.addEventListener('click', () => {
+        if (content.style.display === "none") {
+            // console.log("A");
+            content.style.display = "block";
+        } else {
+            // console.log("B");
+            content.style.display = "none";
+        }
+    });
+}

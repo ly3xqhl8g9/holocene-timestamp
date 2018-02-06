@@ -35,21 +35,34 @@ h1 {
 h2 {
     font-weight: normal;
     line-height: 1.6;
+    margin-bottom: 5px;
+}
+
+h3 {
+    font-weight: normal;
+    line-height: 1.6;
+    margin-top: 10px;
+    margin-bottom: 5px;
 }
 
 hr {
-    width: 25%;
-    margin-top: 100px;
-    margin-bottom: 100px;
+    width: 100%;
+    border: 0;
+    border-top: 1px solid hsl(215, 60%, 75%);
 }
 
 a {
     text-decoration: none;
-    color: hsl(215, 60%, 75%);
+    color: white;
+    font-weight: bold;
+    /*color: hsl(215, 60%, 75%);*/
 }
 
 a:hover {
-    color: hsl(0, 0%, 100%);
+    color: hsl(215, 60%, 75%);
+    /*text-decoration: underline;*/
+    /*color: hsl(215, 60%, 75%);*/
+    /*color: hsl(0, 0%, 100%);*/
 }
 
 nav {
@@ -60,9 +73,13 @@ nav {
     background-color: rgb(40, 10, 30);
 }
 
-nav h1 {
+#nav-title {
     margin: 0;
     font-size: 16px;       
+}
+
+#nav-title a {
+    font-weight: 400;  
 }
 
 footer {
@@ -166,6 +183,14 @@ footer h1 {
     font-size: 18px;
     line-height: 1.8;
     text-align: justify;
+    padding: 20px;
+}
+
+#he-logo {
+    display: block;
+    margin: 0 auto;
+    height: 200px;
+    width: 200px;
 }
 
 #image-container div {
@@ -206,14 +231,14 @@ footer h1 {
 
 /*-------------------*/
 /* CONTENT-CONVERSION */
-#content-conversion {
+#content-conversion-time {
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
 @media (max-width: 620px) {
-    #content-conversion {
+    #content-conversion-time {
         display: block;
         flex-direction: column;
         flex-wrap: auto;
@@ -300,6 +325,38 @@ footer h1 {
 .period-select-text {
     margin-left: 5px;
     font-size: 14px;
+}
+
+#content-conversion-facts {
+    font-size: 18px;
+    line-height: 1.8;
+    text-align: justify;
+    padding: 20px;
+}
+
+#content-conversion-facts h1 {
+    margin-top: 50px;
+    margin-bottom: 0px;
+    font-size: 24px;
+}
+
+#content-conversion-facts h2 {
+    font-size: 22px;
+}
+
+#content-conversion-facts h3 {
+    font-size: 20px;
+}
+
+.content-conversion-facts-title {
+    cursor: pointer;
+    user-select: none;
+    font-weight: bold;
+    color: white;
+}
+
+.content-conversion-facts-title:hover {
+    color: hsl(215, 60%, 75%);    
 }
 
 
