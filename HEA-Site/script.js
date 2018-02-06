@@ -144,7 +144,7 @@ let yearMode = "AD";
 
 currentYear = (new Date()).getFullYear();
 //
-year.value = currentYear-5;
+year.value = currentYear;
 
 // HEyear.innerHTML = parseInt(year.value) + 10000 + " HE";
 setHeYear(year, yearMode, HEyear);

@@ -103,6 +103,10 @@ footer h1 {
     font-size: 12px;
 }
 
+footer a {
+    font-weight: normal;
+}
+
 
 
 /*-------*/
@@ -301,7 +305,8 @@ footer h1 {
 #year-entry {
     background-color: hsl(215, 80%, 20%);
     border: 2px solid hsl(215, 80%, 20%);
-    color: hsl(0, 0%, 90%);
+    /*color: hsl(0, 0%, 90%);*/
+    color: hsl(215, 60%, 75%);
 }
 
 #period {
@@ -399,11 +404,11 @@ footer h1 {
 #gift-crypto-expand {
     cursor: pointer;
     user-select: none;
-    color: hsl(215, 60%, 75%);
+    color: hsl(0, 0%, 100%);
 }
 
 #gift-crypto-expand:hover {
-    color: hsl(0, 0%, 100%);
+    color: hsl(215, 60%, 75%);    
 }
 
 #gift-card-drawer {
@@ -413,14 +418,15 @@ footer h1 {
 #btc-address,
 #eth-address,
 #bch-address {
-    color: hsl(215, 60%, 75%);
+    color: hsl(0, 0%, 100%);  
+    font-weight: bold;  
     cursor: pointer;
 }
 
 #btc-address:hover,
 #eth-address:hover,
 #bch-address:hover {
-    color: hsl(0, 0%, 100%);
+    color: hsl(215, 60%, 75%);
 }
 
 .address-copy {
