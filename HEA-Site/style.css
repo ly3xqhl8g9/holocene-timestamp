@@ -190,6 +190,12 @@ footer a {
     padding: 20px;
 }
 
+@media (max-width: 500px) {
+    #content-about {
+        text-align: left;
+    }
+}
+
 #he-logo {
     display: block;
     margin: 0 auto;
