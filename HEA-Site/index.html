@@ -20,7 +20,7 @@
     </head>
     <body>
         <nav>
-            <h1><a href="https://holocenetimestamp.org">Holocene Epoch Timestamp</a></h1>
+            <h1 id="nav-title"><a href="https://holocenetimestamp.org">Holocene Epoch Timestamp</a></h1>
         </nav>
 
 
@@ -35,6 +35,8 @@
 
 
             <div class="content" id="content-about">
+                <img class="responsive-image" id="he-logo" src="./assets/images/he-logo.png">
+
                 <p>Cesare Emiliani proposed in 1993 to add 10,000 more years to the current year for a better grasping of our human civilization, to have a Holocene Epoch.</p>
 
                 <div id="image-container">
@@ -56,31 +58,46 @@
             </div>
 
             <div class="content" id="content-conversion">
-                <div id="conversion-left">
-                    <div id="year-text">
-                        <div>
-                            <input type="text" maxlength="5" id="year-entry" autofocus>
+                <div id="content-conversion-time">
+                    <div id="conversion-left">
+                        <div id="year-text">
+                            <div>
+                                <input type="text" maxlength="5" id="year-entry" autofocus>
+                            </div>
+                            
+                            <div id="period">
+                                <p class="period-select">
+                                    <input type="radio" name="year" id="radio-BC" value="BC">
+                                    <label class="period-select-text" for="radio-BC">BC</label>
+                                </p>
+                                <p class="period-select">
+                                    <input type="radio" name="year" id="radio-AD" value="AD" checked>
+                                    <label class="period-select-text" for="radio-AD">AD</label>
+                                </p>
+                            </div>
                         </div>
-                        
-                        <div id="period">
-                            <p class="period-select">
-                                <input type="radio" name="year" id="radio-BC" value="BC">
-                                <label class="period-select-text" for="radio-BC">BC</label>
-                            </p>
-                            <p class="period-select">
-                                <input type="radio" name="year" id="radio-AD" value="AD" checked>
-                                <label class="period-select-text" for="radio-AD">AD</label>
-                            </p>
-                        </div>
+                    </div>
+
+                    <div id="conversion-center">
+                        <p id="is">&nbsp;is</p>
+                    </div>
+                    
+                    <div id="conversion-right">
+                        <!-- TODO make he-year an input -->
+                        <p id="he-year"></p>
                     </div>
                 </div>
 
-                <div id="conversion-center">
-                    <p id="is">is</p>
-                </div>
-				
-                <div id="conversion-right">
-                    <p id="he-year"></p>
+                <div id="content-conversion-facts">
+                    <!-- maybe, TODO make background blurry -->
+                    <div id="content-conversion-events">
+                    </div>
+
+                    <div id="content-conversion-births">
+                    </div>
+    
+                    <div id="content-conversion-deaths">
+                    </div>
                 </div>
             </div>
 
@@ -111,6 +128,7 @@
             <p>a <a href="https://caveljan.com">caveljan</a> realization</p>
         </footer>
 
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script type="text/javascript" src="script.js"></script>
     </body>
 </html>
