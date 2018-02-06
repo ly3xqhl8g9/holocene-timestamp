@@ -143,7 +143,7 @@ let contentFacts = document.getElementById('content-conversion-facts');
 let yearMode = "AD";
 
 currentYear = (new Date()).getFullYear();
-//
+
 year.value = currentYear;
 
 // HEyear.innerHTML = parseInt(year.value) + 10000 + " HE";
@@ -183,9 +183,19 @@ for (var i = 0; i < yearRadios.length; i++) {
     yearRadios[i].onclick = function() {
         let inputYear = parseInt(year.value, 10);
         yearMode = this.value;
+        // console.log(this.parentElement);
+        this.parentElement.classList.add("active-period-select");
         setHeYear(year, yearMode, HEyear);
         callFetchYear(inputYear, contentFacts);
     }
+
+    radioBC.addEventListener('change', function() {
+        radioAD.parentElement.classList.remove("active-period-select");
+    });
+
+    radioAD.addEventListener('change', function() {
+        radioBC.parentElement.classList.remove("active-period-select");
+    });
 }
 
 HEyear.addEventListener("keyup", () => {
@@ -215,11 +225,15 @@ HEyear.addEventListener("keyup", () => {
     if (yearValue < 0) {
         radioBC.checked = 'checked';
         yearMode = 'BC';
+        radioAD.parentElement.classList.remove("active-period-select");
+        radioBC.parentElement.classList.add("active-period-select");
         year.value = Math.abs(yearValue - 1);
     }
 
     if (HEnumber > 10000) {
         yearMode = 'AD';
+        radioBC.parentElement.classList.remove("active-period-select");
+        radioAD.parentElement.classList.add("active-period-select");
         radioAD.checked = 'checked';
         year.value = yearValue;
     }
