@@ -48,7 +48,7 @@ h3 {
 hr {
     width: 100%;
     border: 0;
-    border-top: 1px solid hsl(215, 60%, 75%);
+    border-top: 1px solid hsl(0, 0%, 90%);
 }
 
 a {
@@ -288,7 +288,7 @@ footer h1 {
     display: inline-flex;
 }
 
-#year-entry {
+.year-input {
     margin-top: 27px;
     width: 150px;
     height: 45px;
@@ -296,6 +296,9 @@ footer h1 {
     text-align: center;
     padding: 5px;
     outline: none;
+}
+
+#year-entry {
     background-color: hsl(215, 80%, 20%);
     border: 2px solid hsl(215, 80%, 20%);
     color: hsl(0, 0%, 90%);
@@ -311,6 +314,10 @@ footer h1 {
 }
 
 #he-year {
+    margin-top: 8px;
+    color: hsl(215, 80%, 20%);
+    background-color: hsl(215, 60%, 75%);
+    border: 2px solid hsl(215, 60%, 75%);
     font-size: 20px;
 }
 

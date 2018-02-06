@@ -136,13 +136,15 @@ init();
 // LOGIC
 let year = document.getElementById("year-entry");
 let yearRadios = document.querySelectorAll('input[name="year"]');
+let radioBC = document.getElementById('radio-BC');
+let radioAD = document.getElementById('radio-AD');
 let HEyear = document.getElementById("he-year");
 let contentFacts = document.getElementById('content-conversion-facts');
 let yearMode = "AD";
 
 currentYear = (new Date()).getFullYear();
 //
-year.value = 35;
+year.value = currentYear-5;
 
 // HEyear.innerHTML = parseInt(year.value) + 10000 + " HE";
 setHeYear(year, yearMode, HEyear);
@@ -152,23 +154,23 @@ function setHeYear(year, yearMode, HEyear) {
     if (!isNaN(year.value)) {
         if (yearMode == "BC") {
             if (year.value > 10000) {
-                HEyear.innerHTML = Math.abs(10000 - parseInt(year.value)) + " BHE";
+                HEyear.value = Math.abs(10000 - parseInt(year.value)) + " BHE";
             } else {
-                HEyear.innerHTML = 10001 - parseInt(year.value) + " HE";                    
+                HEyear.value = 10001 - parseInt(year.value) + " HE";                    
             }
         }
 
         if (yearMode == "AD") {
-            HEyear.innerHTML = parseInt(year.value) + 10000 + " HE";                    
+            HEyear.value = parseInt(year.value) + 10000 + " HE";                    
         }
     }
 
     if (year.value == "" || year.value == "0") {
-        HEyear.innerHTML = "insert an year";
+        HEyear.value = "insert an year";
     }
 
     if (year.value.match(/\D+/i)) {
-        HEyear.innerHTML = "years have only numbers";
+        HEyear.value = "only numbers";
     }
 }
 
@@ -186,8 +188,48 @@ for (var i = 0; i < yearRadios.length; i++) {
     }
 }
 
+HEyear.addEventListener("keyup", () => {
+    let currentValue = HEyear.value;
 
-year.addEventListener("keyup", function() {
+    if (!/HE/.test(currentValue) && !/H/.test(currentValue) && !/E/.test(currentValue)) {
+        HEyear.value = currentValue + "HE";
+    }
+
+    let HEnumber = currentValue;
+    HEnumber = HEnumber.replace("B", "");
+    HEnumber = HEnumber.replace("H", "");
+    HEnumber = HEnumber.replace("E", "");
+
+    console.log(HEnumber);
+    HEnumber = parseInt(HEnumber);        
+    console.log(HEnumber);
+
+
+    // TODO input validation
+    // if (HEnumber.match(/a-z/i)) {
+    //     year.value = "only numbers";
+    // } else {
+    //     HEnumber = parseInt(HEnumber);        
+    // }
+    let yearValue = HEnumber - 10000;
+    if (yearValue < 0) {
+        radioBC.checked = 'checked';
+        yearMode = 'BC';
+        year.value = Math.abs(yearValue - 1);
+    }
+
+    if (HEnumber > 10000) {
+        yearMode = 'AD';
+        radioAD.checked = 'checked';
+        year.value = yearValue;
+    }
+
+    let inputYear = parseInt(year.value, 10);
+    callFetchYear(inputYear, contentFacts);
+});
+
+
+year.addEventListener("keyup", () => {
     setHeYear(year, yearMode, HEyear);
     let inputYear = parseInt(year.value, 10);
 
@@ -258,11 +300,13 @@ function fetchYearFacts(inputYear) {
 
 
     function setFacts(response, inputYear) {
-        let year = HEyear.innerText;
+        let year = HEyear.value;
         let page = response['parse']['text']['*'];
 
+        // TODO
+        // remove citation needed
+        // remove references numbers
         let editString = `<span class="mw\\-editsection"><span class="mw\\-editsection\\-bracket">\\[<\/span><a href="\/w\/index\\.php\\?title=${inputYear}\\&amp;action=edit\\&amp;section=[0-9]{1,}" title="Edit section: .{1,100}">edit<\/a><span class="mw\\-editsection\\-bracket">\\]<\/span><\/span>`;
-
         let rxEdit = new RegExp(`${editString}`, 'gim');
         let pageCleaned = page.replace(rxEdit, '');
 
