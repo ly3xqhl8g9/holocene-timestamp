@@ -266,14 +266,8 @@ function fetchYearFacts(inputYear) {
         let rxEdit = new RegExp(`${editString}`, 'gis');
         let pageCleaned = page.replace(rxEdit, '');
 
-        // let anchorString = `<a href="`;
-        // let anchorStringReplace = `<a target="\_blank" href="https:\/\/en\.wikipedia\.org\/wiki\/`;
-        // let anchorStringReplace = `<a target="_blank" href="https://en\.wikipedia\.org`;
-
-        // let rxAnchor = new RegExp(anchorString, "gis");
-        // let rxAnchorReplace = new RegExp(anchorStringReplace, "gis");
-        // pageCleaned = pageCleaned.replace(rxAnchor, rxAnchorReplace);
-        // console.log(pageCleaned);
+        let anchorStringReplace = `<a target="_blank" href="https://en.wikipedia.org/wiki`;
+        pageCleaned = pageCleaned.replace(/<a href="\/wiki/g, anchorStringReplace);
 
         let stringEventsTitle = `<h2><span class="mw\\-headline" id="Events">Events<\/span><\/h2>`;
         let stringBirthsTitle = `<h2><span class="mw\\-headline" id="Births">Births<\/span><\/h2>`;
