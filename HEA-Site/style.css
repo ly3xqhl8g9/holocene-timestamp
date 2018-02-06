@@ -290,10 +290,12 @@ footer a {
 
 #year-text {
     display: inline-flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .year-input {
-    margin-top: 27px;
+    /*margin-top: 27px;*/
     width: 150px;
     height: 45px;
     font-size: 20px;
@@ -310,33 +312,58 @@ footer a {
 }
 
 #period {
-    margin-top: 10px;
+    /*margin-top: 10px;*/
 }
 
 #is {
-    margin: 5px;
+    /*margin: 5px;*/
     font-size: 20px;
 }
 
 #he-year {
-    margin-top: 8px;
-    color: hsl(215, 80%, 20%);
-    background-color: hsl(215, 60%, 75%);
-    border: 2px solid hsl(215, 60%, 75%);
+    /*margin-top: 8px;*/
+    color: hsl(215, 60%, 75%);
+    /*color: hsl(215, 80%, 20%);*/
+    background-color: hsl(215, 80%, 20%);
+    border: 2px solid hsl(215, 80%, 20%);
+/*    background-color: hsl(215, 60%, 75%);
+    border: 2px solid hsl(215, 60%, 75%);*/
     font-size: 20px;
 }
 
 .period-select {
-    margin-left: 10px;
+    /*margin-left: 10px;*/
+    position: relative;
+    width: 30px;
+    user-select: none;
+    /*background-color: hsl(215, 80%, 20%);*/
+    /*padding: 3px;*/
 }
 
-.period-select:first-child {
-    margin-left: 6px;
+.active-period-select {
+    background-color: hsl(215, 80%, 20%);
 }
 
 .period-select-text {
-    margin-left: 5px;
-    font-size: 14px;
+    position: absolute;
+    cursor: pointer;
+    top: 3px;
+    left: 8px;
+    /*margin-left: 5px;*/
+    margin-right: 15px;
+    font-size: 10px;
+}
+
+input[type="radio"] {
+    opacity: 0;
+}
+
+#period-select-BC {
+    margin-bottom: 6px;
+}
+
+#period-select-AD {
+    margin-top: 7px;
 }
 
 #content-conversion-facts {
