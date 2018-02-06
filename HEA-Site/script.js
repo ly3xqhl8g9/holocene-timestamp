@@ -119,6 +119,20 @@ function copyCryptosOnClick() {
 }
 
 
+function changeBackgroundOnScroll() {
+    window.addEventListener("scroll", function() {
+        let body = document.getElementsByTagName('body')[0];
+        const scrollPast = 295;
+        if (window.scrollY > scrollPast) {
+            body.style.background = "linear-gradient(to right, rgb(29, 78, 144), rgb(12, 57, 87) 30%)";
+        }
+        if (window.scrollY < scrollPast) {
+            body.style.background = "linear-gradient(to right, rgb(29, 78, 144) 50%, rgb(12, 57, 87) 50%)";
+        }
+    });
+}
+
+
 
 /////////////////
 // Function Calls
@@ -126,6 +140,7 @@ function init() {
     setTabs();
     expandGiftDrawer();
     copyCryptosOnClick();
+    changeBackgroundOnScroll();
 }
 
 init();
@@ -143,7 +158,6 @@ let contentFacts = document.getElementById('content-conversion-facts');
 let yearMode = "AD";
 
 currentYear = (new Date()).getFullYear();
-
 year.value = currentYear;
 
 // HEyear.innerHTML = parseInt(year.value) + 10000 + " HE";
