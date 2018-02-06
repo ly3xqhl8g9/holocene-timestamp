@@ -263,7 +263,7 @@ function fetchYearFacts(inputYear) {
 
         let editString = `<span class="mw\\-editsection"><span class="mw\\-editsection\\-bracket">\\[<\/span><a href="\/w\/index\\.php\\?title=${inputYear}\\&amp;action=edit\\&amp;section=[0-9]{1,}" title="Edit section: .{1,100}">edit<\/a><span class="mw\\-editsection\\-bracket">\\]<\/span><\/span>`;
 
-        let rxEdit = new RegExp(`${editString}`, 'gis');
+        let rxEdit = new RegExp(`${editString}`, 'gim');
         let pageCleaned = page.replace(rxEdit, '');
 
         let anchorStringReplace = `<a target="_blank" href="https://en.wikipedia.org/wiki`;
@@ -274,9 +274,9 @@ function fetchYearFacts(inputYear) {
         let stringDeathsTitle = `<h2><span class="mw\\-headline" id="Deaths">Deaths<\/span><\/h2>`;
         let stringReferencesTitle = `<h2><span class="mw\\-headline" id="References">References<\/span><\/h2>`;
 
-        let rxGetEvents = new RegExp(`${stringEventsTitle}...+${stringBirthsTitle}`, 's');
-        let rxGetBirths = new RegExp(`${stringBirthsTitle}...+${stringDeathsTitle}`, 's');
-        let rxGetDeaths = new RegExp(`${stringDeathsTitle}...+${stringReferencesTitle}`, 's');
+        let rxGetEvents = new RegExp(`${stringEventsTitle}[^]+${stringBirthsTitle}`, 'gim');
+        let rxGetBirths = new RegExp(`${stringBirthsTitle}[^]+${stringDeathsTitle}`, 'gim');
+        let rxGetDeaths = new RegExp(`${stringDeathsTitle}[^]+${stringReferencesTitle}`, 'gim');
         let rxReplaceEvents = new RegExp(`${stringEventsTitle}`);
         let rxReplaceBirths = new RegExp(`${stringBirthsTitle}`);
         let rxReplaceDeaths = new RegExp(`${stringDeathsTitle}`);
