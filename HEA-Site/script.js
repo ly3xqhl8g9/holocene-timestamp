@@ -1,3 +1,19 @@
+//////////
+// GENERAL
+function changeBackgroundOnScroll() {
+    window.addEventListener("scroll", function() {
+        let body = document.getElementsByTagName('body')[0];
+        const scrollPast = 295;
+        if (window.scrollY > scrollPast) {
+            body.style.background = "linear-gradient(to right, rgb(29, 78, 144), rgb(12, 57, 87) 30%)";
+        }
+        if (window.scrollY < scrollPast) {
+            body.style.background = "linear-gradient(to right, rgb(29, 78, 144) 50%, rgb(12, 57, 87) 50%)";
+        }
+    });
+}
+
+
 ///////
 // TABS
 function setTabs() {
@@ -35,7 +51,6 @@ function setTabs() {
     })
 }
 
-
 function setActiveClassToTab(element) {
     let ulTabs = document.getElementById("ul-tabs");
 
@@ -48,6 +63,8 @@ function setActiveClassToTab(element) {
 }
 
 
+////////
+// GIFT
 function expandGiftDrawer() {
     let giftCryptoExpand = document.getElementById("gift-crypto-expand");
     let giftCardCrypto = document.getElementById("gift-card-crypto");
@@ -66,7 +83,6 @@ function expandGiftDrawer() {
         }
     });
 }
-
 
 function copyCryptosOnClick() {
     function copyBtcAdressOnClick() {
@@ -119,52 +135,100 @@ function copyCryptosOnClick() {
 }
 
 
-function changeBackgroundOnScroll() {
-    window.addEventListener("scroll", function() {
-        let body = document.getElementsByTagName('body')[0];
-        const scrollPast = 295;
-        if (window.scrollY > scrollPast) {
-            body.style.background = "linear-gradient(to right, rgb(29, 78, 144), rgb(12, 57, 87) 30%)";
+///////////////////
+// CONVERSION LOGIC
+function conversionLogic() {
+    let year = document.getElementById("year-entry");
+    let yearRadios = document.querySelectorAll('input[name="year"]');
+    let radioBC = document.getElementById('radio-BC');
+    let radioAD = document.getElementById('radio-AD');
+    let HEyear = document.getElementById("he-year");
+    let contentFacts = document.getElementById('content-conversion-facts');
+    let yearMode = "AD";
+
+    currentYear = (new Date()).getFullYear();
+    year.value = currentYear;
+
+
+    for (var i = 0; i < yearRadios.length; i++) {
+        if (yearRadios[i].checked) {
+            yearMode = yearRadios[i].value;
         }
-        if (window.scrollY < scrollPast) {
-            body.style.background = "linear-gradient(to right, rgb(29, 78, 144) 50%, rgb(12, 57, 87) 50%)";
+
+        yearRadios[i].onclick = function() {
+            let inputYear = parseInt(year.value, 10);
+            yearMode = this.value;
+            // console.log(this.parentElement);
+            this.parentElement.classList.add("active-period-select");
+            setHeYear(year, yearMode, HEyear);
+            callFetchYear(inputYear, contentFacts);
         }
+
+        radioBC.addEventListener('change', function() {
+            radioAD.parentElement.classList.remove("active-period-select");
+        });
+
+        radioAD.addEventListener('change', function() {
+            radioBC.parentElement.classList.remove("active-period-select");
+        });
+    }
+
+    HEyear.addEventListener("keyup", () => {
+        let currentValue = HEyear.value;
+
+        if (!/HE/.test(currentValue) && !/H/.test(currentValue) && !/E/.test(currentValue)) {
+            HEyear.value = currentValue + "HE";
+        }
+
+        let HEnumber = currentValue;
+        HEnumber = HEnumber.replace("B", "");
+        HEnumber = HEnumber.replace("H", "");
+        HEnumber = HEnumber.replace("E", "");
+
+        // console.log(HEnumber);
+        HEnumber = parseInt(HEnumber);
+        // console.log(HEnumber);
+
+
+        // TODO input validation
+        // if (HEnumber.match(/a-z/i)) {
+        //     year.value = "only numbers";
+        // } else {
+        //     HEnumber = parseInt(HEnumber);    
+        // }
+        let yearValue = HEnumber - 10000;
+        if (yearValue < 0) {
+            radioBC.checked = 'checked';
+            yearMode = 'BC';
+            radioAD.parentElement.classList.remove("active-period-select");
+            radioBC.parentElement.classList.add("active-period-select");
+            year.value = Math.abs(yearValue - 1);
+        }
+
+        if (HEnumber > 10000) {
+            yearMode = 'AD';
+            radioBC.parentElement.classList.remove("active-period-select");
+            radioAD.parentElement.classList.add("active-period-select");
+            radioAD.checked = 'checked';
+            year.value = yearValue;
+        }
+
+        let inputYear = parseInt(year.value, 10);
+        callFetchYear(inputYear, contentFacts, HEyear, yearMode);
     });
+
+    year.addEventListener("keyup", () => {
+        setHeYear(year, HEyear, yearMode);
+        let inputYear = parseInt(year.value, 10);
+
+        callFetchYear(inputYear, contentFacts, HEyear, yearMode);
+    });
+
+    setHeYear(year, HEyear, yearMode);
+    callFetchYear(year.value, contentFacts, HEyear, yearMode);
 }
 
-
-
-/////////////////
-// Function Calls
-function init() {
-    setTabs();
-    expandGiftDrawer();
-    copyCryptosOnClick();
-    changeBackgroundOnScroll();
-}
-
-init();
-
-
-
-////////
-// LOGIC
-let year = document.getElementById("year-entry");
-let yearRadios = document.querySelectorAll('input[name="year"]');
-let radioBC = document.getElementById('radio-BC');
-let radioAD = document.getElementById('radio-AD');
-let HEyear = document.getElementById("he-year");
-let contentFacts = document.getElementById('content-conversion-facts');
-let yearMode = "AD";
-
-currentYear = (new Date()).getFullYear();
-year.value = currentYear;
-
-// HEyear.innerHTML = parseInt(year.value) + 10000 + " HE";
-setHeYear(year, yearMode, HEyear);
-callFetchYear(year.value, contentFacts)
-
-function setHeYear(year, yearMode, HEyear) {
+function setHeYear(year, HEyear, yearMode) {
     if (!isNaN(year.value)) {
         if (yearMode == "BC") {
             if (year.value > 10000) {
@@ -188,92 +252,12 @@ function setHeYear(year, yearMode, HEyear) {
     }
 }
 
-
-for (var i = 0; i < yearRadios.length; i++) {
-    if (yearRadios[i].checked) {
-        yearMode = yearRadios[i].value;
-    }
-
-    yearRadios[i].onclick = function() {
-        let inputYear = parseInt(year.value, 10);
-        yearMode = this.value;
-        // console.log(this.parentElement);
-        this.parentElement.classList.add("active-period-select");
-        setHeYear(year, yearMode, HEyear);
-        callFetchYear(inputYear, contentFacts);
-    }
-
-    radioBC.addEventListener('change', function() {
-        radioAD.parentElement.classList.remove("active-period-select");
-    });
-
-    radioAD.addEventListener('change', function() {
-        radioBC.parentElement.classList.remove("active-period-select");
-    });
-}
-
-HEyear.addEventListener("keyup", () => {
-    let currentValue = HEyear.value;
-
-    if (!/HE/.test(currentValue) && !/H/.test(currentValue) && !/E/.test(currentValue)) {
-        HEyear.value = currentValue + "HE";
-    }
-
-    let HEnumber = currentValue;
-    HEnumber = HEnumber.replace("B", "");
-    HEnumber = HEnumber.replace("H", "");
-    HEnumber = HEnumber.replace("E", "");
-
-    console.log(HEnumber);
-    HEnumber = parseInt(HEnumber);        
-    console.log(HEnumber);
-
-
-    // TODO input validation
-    // if (HEnumber.match(/a-z/i)) {
-    //     year.value = "only numbers";
-    // } else {
-    //     HEnumber = parseInt(HEnumber);        
-    // }
-    let yearValue = HEnumber - 10000;
-    if (yearValue < 0) {
-        radioBC.checked = 'checked';
-        yearMode = 'BC';
-        radioAD.parentElement.classList.remove("active-period-select");
-        radioBC.parentElement.classList.add("active-period-select");
-        year.value = Math.abs(yearValue - 1);
-    }
-
-    if (HEnumber > 10000) {
-        yearMode = 'AD';
-        radioBC.parentElement.classList.remove("active-period-select");
-        radioAD.parentElement.classList.add("active-period-select");
-        radioAD.checked = 'checked';
-        year.value = yearValue;
-    }
-
-    let inputYear = parseInt(year.value, 10);
-    callFetchYear(inputYear, contentFacts);
-});
-
-
-year.addEventListener("keyup", () => {
-    setHeYear(year, yearMode, HEyear);
-    let inputYear = parseInt(year.value, 10);
-
-    callFetchYear(inputYear, contentFacts);
-});
-
-
-
-function callFetchYear(inputYear, contentFacts) {
-    // let currentYear = (new Date()).getFullYear();
-
+function callFetchYear(inputYear, contentFacts, HEyear, yearMode) {
     if (isNaN(inputYear)
         || inputYear == 0
         || inputYear > currentYear
-        || (inputYear > 730 && yearMode == 'BC')
-        ) {
+        || (inputYear > 730 && yearMode == 'BC')) 
+    {
         contentFacts.style.display = "none";
     }
 
@@ -282,34 +266,19 @@ function callFetchYear(inputYear, contentFacts) {
             if (inputYear <= 100) {
                 inputYear = 'AD_' + inputYear;
             }
-            fetchYearFacts(inputYear);
+            fetchYearFacts(inputYear, HEyear);
             contentFacts.style.display = "block";
         }
 
         if (yearMode == 'BC' && inputYear <= 730) {
             inputYear = inputYear + '_BC';
-            fetchYearFacts(inputYear);
+            fetchYearFacts(inputYear, HEyear);
             contentFacts.style.display = "block";
         }
     }
 }
 
-
-
-function fetchYearFacts(inputYear) {
-    // let inputYear = '353_BC';
-    // console.log(inputYear);
-
-    // let url = 'https://en.wikipedia.org/w/api.php?origin=*&action=query&titles=1453&prop=revisions&rvprop=content&format=json&formatversion=2';
-    // let data = `origin=*&
-    //             action=query&
-    //             prop=revisions&
-    //             rvprop=content&
-    //             format=json&
-    //             formatversion=2&
-    //             titles=${inputYear}
-    //             `;
-    // https://en.wikipedia.org/w/api.php?origin=*&action=parse&page=1453
+function fetchYearFacts(inputYear, HEyear) {
     let data = `origin=*&
                 action=parse&
                 format=json&
@@ -324,10 +293,10 @@ function fetchYearFacts(inputYear) {
         })
     }).then( res => res.json())
     .catch(error => console.error('Error:', error))
-    .then (response => setFacts(response, inputYear));
+    .then (response => setFacts(response, inputYear, HEyear));
 
 
-    function setFacts(response, inputYear) {
+    function setFacts(response, inputYear, HEyear) {
         let year = HEyear.value;
         let page = response['parse']['text']['*'];
         // console.log(page);
@@ -441,17 +410,25 @@ function fetchYearFacts(inputYear) {
     }
 }
 
-
-
-
 function closeOpenFacts(title, content) {
     title.addEventListener('click', () => {
         if (content.style.display === "none") {
-            // console.log("A");
             content.style.display = "block";
         } else {
-            // console.log("B");
             content.style.display = "none";
         }
     });
 }
+
+
+/////////////////
+// Function Calls
+function init() {
+    changeBackgroundOnScroll();
+    setTabs();
+    expandGiftDrawer();
+    copyCryptosOnClick();
+    conversionLogic()
+}
+
+init();
