@@ -51,6 +51,7 @@ function setTabs() {
     })
 }
 
+
 function setActiveClassToTab(element) {
     let ulTabs = document.getElementById("ul-tabs");
 
@@ -83,6 +84,7 @@ function expandGiftDrawer() {
         }
     });
 }
+
 
 function copyCryptosOnClick() {
     function copyBtcAdressOnClick() {
@@ -158,10 +160,9 @@ function conversionLogic() {
         yearRadios[i].onclick = function() {
             let inputYear = parseInt(year.value, 10);
             yearMode = this.value;
-            // console.log(this.parentElement);
             this.parentElement.classList.add("active-period-select");
-            setHeYear(year, yearMode, HEyear);
-            callFetchYear(inputYear, contentFacts);
+            setHeYear(year, HEyear, yearMode);
+            callFetchYear(inputYear, contentFacts, HEyear, yearMode);
         }
 
         radioBC.addEventListener('change', function() {
@@ -228,6 +229,7 @@ function conversionLogic() {
     callFetchYear(year.value, contentFacts, HEyear, yearMode);
 }
 
+
 function setHeYear(year, HEyear, yearMode) {
     if (!isNaN(year.value)) {
         if (yearMode == "BC") {
@@ -251,6 +253,7 @@ function setHeYear(year, HEyear, yearMode) {
         HEyear.value = "only numbers";
     }
 }
+
 
 function callFetchYear(inputYear, contentFacts, HEyear, yearMode) {
     if (isNaN(inputYear)
@@ -278,6 +281,7 @@ function callFetchYear(inputYear, contentFacts, HEyear, yearMode) {
     }
 }
 
+
 function fetchYearFacts(inputYear, HEyear) {
     let data = `origin=*&
                 action=parse&
@@ -291,21 +295,20 @@ function fetchYearFacts(inputYear, HEyear) {
         headers: new Headers({
             'Content-Type': 'application/json'
         })
-    }).then( res => res.json())
+    }).then(res => res.json())
     .catch(error => console.error('Error:', error))
-    .then (response => setFacts(response, inputYear, HEyear));
+    .then(response => setFacts(response, inputYear, HEyear));
 
 
     function setFacts(response, inputYear, HEyear) {
-        let year = HEyear.value;
         let page = response['parse']['text']['*'];
-        // console.log(page);
+        let year = HEyear.value;
 
-        let pageCleaned = page.replace(/\[[0-9]{1,}\]/g, '')
-        pageCleaned = pageCleaned.replace(/citation needed/g, '')
-        pageCleaned = pageCleaned.replace(/clarification needed/g, '')
-        pageCleaned = pageCleaned.replace(/\[<i>/g, '')
-        pageCleaned = pageCleaned.replace(/<\/i>\]/g, '')
+        let pageCleaned = page.replace(/\[[0-9]{1,}\]/g, '');
+        pageCleaned = pageCleaned.replace(/citation needed/g, '');
+        pageCleaned = pageCleaned.replace(/clarification needed/g, '');
+        pageCleaned = pageCleaned.replace(/\[<i>/g, '');
+        pageCleaned = pageCleaned.replace(/<\/i>\]/g, '');
 
 
         let editString = `<span class="mw\\-editsection"><span class="mw\\-editsection\\-bracket">\\[<\/span><a href="\/w\/index\\.php\\?title=${inputYear}\\&amp;action=edit\\&amp;section=[0-9]{1,}" title="Edit section: .{1,100}">edit<\/a><span class="mw\\-editsection\\-bracket">\\]<\/span><\/span>`;
@@ -328,6 +331,7 @@ function fetchYearFacts(inputYear, HEyear) {
         let rxReplaceDeaths = new RegExp(`${stringDeathsTitle}`);
         let rxReplaceReferences = new RegExp(`${stringReferencesTitle}`);
 
+        // BUG console error when searching for 13 AD
         let events = rxGetEvents.exec(pageCleaned)[0];
         events = events.replace(rxReplaceEvents, '');
         events = events.replace(rxReplaceBirths, '');
@@ -335,80 +339,102 @@ function fetchYearFacts(inputYear, HEyear) {
         let births = rxGetBirths.exec(pageCleaned)[0];
         births = births.replace(rxReplaceBirths, '');
         births = births.replace(rxReplaceDeaths, '');
+        births = setHoloceneYears(births);
 
         let deaths = rxGetDeaths.exec(pageCleaned)[0];
         deaths = deaths.replace(rxReplaceDeaths, '');
         deaths = deaths.replace(rxReplaceReferences, '');
+        deaths = setHoloceneYears(deaths);
 
-
-        let conversionEvents = document.getElementById("content-conversion-events");
-        conversionEvents.innerHTML = `<h1 class="content-conversion-facts-title"
-                                      id="content-conversion-events-title">
-                                        Events in ${year}
-                                      </h1>
-                                      <hr>
-                                      <div id="content-conversion-events-content">
-                                        ${events}
-                                      </div>`;
-
-        let conversionBirths = document.getElementById("content-conversion-births");
-        // conversionBirths.innerHTML = births;
-        // let birthsIsEmpty = regexpEmpty.test(births);
-        // // console.log(birthsIsEmpty);
-        // if (!birthsIsEmpty) {
-        //     births = setMarkup(births);
-            conversionBirths.innerHTML = `<h1 class="content-conversion-facts-title"
-                                          id="content-conversion-births-title">
-                                            Births in ${year}
-                                          </h1>
-                                          <hr>
-                                          <div id="content-conversion-births-content">
-                                            ${births}
-                                          </div>`;
-        // } else {
-        //     conversionBirths.innerHTML = '';
-        // }
-
-
-        let conversionDeaths = document.getElementById("content-conversion-deaths");
-        conversionDeaths.innerHTML = deaths;
-        // let deathsIsEmpty = regexpEmpty.test(deaths);
-        // // console.log(deathsIsEmpty);
-        // if (!deathsIsEmpty) {
-        //     deaths = setMarkup(deaths);
-            conversionDeaths.innerHTML = `<h1 class="content-conversion-facts-title"
-                                          id="content-conversion-deaths-title">
-                                            Deaths in ${year}
-                                          </h1>
-                                          <hr>
-                                          <div id="content-conversion-deaths-content">
-                                            ${deaths}
-                                          </div>`;
-        // } else {
-        //     // console.log('a');
-        //     conversionDeaths.innerHTML = '';
-        // }
-
-
-
-        let eventsTitle = document.getElementById('content-conversion-events-title');
-        let eventsContent = document.getElementById('content-conversion-events-content');
-        let birthsTitle = document.getElementById('content-conversion-births-title');
-        let birthsContent = document.getElementById('content-conversion-births-content');
-        let deathsTitle = document.getElementById('content-conversion-deaths-title');
-        let deathsContent = document.getElementById('content-conversion-deaths-content');
-
-        closeOpenFacts(eventsTitle, eventsContent);
-        closeOpenFacts(birthsTitle, birthsContent);
-        closeOpenFacts(deathsTitle, deathsContent);
-        // console.log(HEyear);
-        // console.log("page", page);
-        // console.log("events", events);
-        // console.log("births", births);
-        // console.log("deaths", deaths);
-        // console.log(response);
+        setConversionFact('events', events, year);
+        setConversionFact('births', births, year);
+        setConversionFact('deaths', deaths, year);
     }
 }
+
+
+function setHoloceneYears(text) {
+    text = text.replace(/>(\d{1,3}) BC</g, function (match, capture) {
+        let year = 10001 - parseInt(capture);
+        let HEyear = '>' + year + ' HE<';
+        return HEyear;
+    }); 
+
+    text = text.replace(/>BC (\d{1,3})</g, function (match, capture) {
+        let year = 10001 - parseInt(capture);
+        let HEyear = '>' + year + ' HE<';
+        return HEyear;
+    });
+
+    text = text.replace(/>(\d{1,3}) AD</g, function (match, capture) {
+        let year = 10000 + parseInt(capture);
+        let HEyear = '>' + year + ' HE<';
+        return HEyear;
+    });
+
+    text = text.replace(/>AD (\d{1,3})</g, function (match, capture) {
+        let year = 10000 + parseInt(capture);
+        let HEyear = '>' + year + ' HE<';
+        return HEyear;
+    });
+
+    text = text.replace(/>(\d{3,4})</g, function (match, capture) {
+        let year = 10000 + parseInt(capture);
+        let HEyear = '>' + year + ' HE<';
+        return HEyear;
+    });
+
+    return text;
+}
+
+
+function setConversionFact(factString, factText, year) {
+    function capitalizeFirstLetter(string) {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    }
+    let conversionFactStringCap = capitalizeFirstLetter(factString);
+
+    let conversionFactString = `content-conversion-${factString}`;
+    let conversionFact = document.getElementById(conversionFactString);
+    let factIsEmpty = checkEmpty(factText);
+    if (!factIsEmpty) {
+        conversionFact.innerHTML = `<h1 class="content-conversion-facts-title"
+                                      id="content-conversion-${factString}-title">
+                                        ${conversionFactStringCap} in ${year}
+                                      </h1>
+                                      <hr>
+                                      <div id="content-conversion-${factString}-content">
+                                        ${factText}
+                                      </div>`;
+        setCloseOpen(factString);
+    } else {
+        conversionFact.innerHTML = '';
+    }
+}
+
+
+function checkEmpty(text) {
+    let regexpEmpty1 = new RegExp('This section is empty.');
+    let textIsEmpty1 = regexpEmpty1.test(text);
+    let regexpEmpty2 = new RegExp(`<li class="mw\-empty\-elt"><\/li>`);
+    let textIsEmpty2 = regexpEmpty2.test(text);
+
+    if (textIsEmpty1 || textIsEmpty2) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+
+function setCloseOpen(fact) {
+    let factTitle = `content-conversion-${fact}-title`;
+    let factContent = `content-conversion-${fact}-content`;
+    let factTitleDiv = document.getElementById(factTitle);
+    let factContentDiv = document.getElementById(factContent);
+    closeOpenFacts(factTitleDiv, factContentDiv);
+}
+
 
 function closeOpenFacts(title, content) {
     title.addEventListener('click', () => {
@@ -419,6 +445,7 @@ function closeOpenFacts(title, content) {
         }
     });
 }
+
 
 
 /////////////////
