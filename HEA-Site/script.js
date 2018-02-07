@@ -190,12 +190,11 @@ function conversionLogic() {
         HEnumber = parseInt(HEnumber);
         // console.log(HEnumber);
 
-
         // TODO input validation
         // if (HEnumber.match(/a-z/i)) {
         //     year.value = "only numbers";
         // } else {
-        //     HEnumber = parseInt(HEnumber);    
+        //     HEnumber = parseInt(HEnumber);
         // }
         let yearValue = HEnumber - 10000;
         if (yearValue < 0) {
@@ -215,6 +214,7 @@ function conversionLogic() {
         }
 
         let inputYear = parseInt(year.value, 10);
+
         callFetchYear(inputYear, contentFacts, HEyear, yearMode);
     });
 
@@ -331,7 +331,7 @@ function fetchYearFacts(inputYear, HEyear) {
         let rxReplaceDeaths = new RegExp(`${stringDeathsTitle}`);
         let rxReplaceReferences = new RegExp(`${stringReferencesTitle}`);
 
-        // BUG console error when searching for 13 AD
+        // BUG console error when searching for 13 and 14 AD
         let events = rxGetEvents.exec(pageCleaned)[0];
         events = events.replace(rxReplaceEvents, '');
         events = events.replace(rxReplaceBirths, '');
