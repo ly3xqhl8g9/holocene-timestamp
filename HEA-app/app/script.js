@@ -113,7 +113,7 @@ function copyCryptosOnClick() {
             selection.removeAllRanges();
             selection.addRange(range);
 
-            try {  
+            try {
                 if (crypto.innerHTML == address) {
                     document.execCommand('copy');
                 }
@@ -127,7 +127,7 @@ function copyCryptosOnClick() {
                     crypto.innerText = address;
                 }, 2000);
             }
-            window.getSelection().removeAllRanges(); 
+            window.getSelection().removeAllRanges();
         });
     }
 
@@ -236,12 +236,12 @@ function setHeYear(year, HEyear, yearMode) {
             if (year.value > 10000) {
                 HEyear.value = Math.abs(10000 - parseInt(year.value)) + " BHE";
             } else {
-                HEyear.value = 10001 - parseInt(year.value) + " HE";                    
+                HEyear.value = 10001 - parseInt(year.value) + " HE";
             }
         }
 
         if (yearMode == "AD") {
-            HEyear.value = parseInt(year.value) + 10000 + " HE";                    
+            HEyear.value = parseInt(year.value) + 10000 + " HE";
         }
     }
 
@@ -256,12 +256,20 @@ function setHeYear(year, HEyear, yearMode) {
 
 
 function callFetchYear(inputYear, contentFacts, HEyear, yearMode) {
+    // console.log(inputYear);
+    // console.log(contentFacts);
+    // console.log(HEyear);
+    // console.log(yearMode);
+
+    // additional check for inputYear == 1 to 'solve' bug below at events.replace
     if (isNaN(inputYear)
         || inputYear == 0
+        || inputYear == 1
         || inputYear > currentYear
-        || (inputYear > 730 && yearMode == 'BC')) 
+        || (inputYear > 730 && yearMode == 'BC'))
     {
         contentFacts.style.display = "none";
+        return;
     }
 
     if (!isNaN(inputYear) && inputYear != 0 && inputYear < currentYear) {
@@ -309,6 +317,7 @@ function fetchYearFacts(inputYear, HEyear) {
         pageCleaned = pageCleaned.replace(/clarification needed/g, '');
         pageCleaned = pageCleaned.replace(/\[<i>/g, '');
         pageCleaned = pageCleaned.replace(/<\/i>\]/g, '');
+        pageCleaned = pageCleaned.replace(/\/\//g, 'https://');
 
 
         let editString = `<span class="mw\\-editsection"><span class="mw\\-editsection\\-bracket">\\[<\/span><a href="\/w\/index\\.php\\?title=${inputYear}\\&amp;action=edit\\&amp;section=[0-9]{1,}" title="Edit section: .{1,100}">edit<\/a><span class="mw\\-editsection\\-bracket">\\]<\/span><\/span>`;
@@ -358,7 +367,7 @@ function setHoloceneYears(text) {
         let year = 10001 - parseInt(capture);
         let HEyear = '>' + year + ' HE<';
         return HEyear;
-    }); 
+    });
 
     text = text.replace(/>BC (\d{1,3})</g, function (match, capture) {
         let year = 10001 - parseInt(capture);
