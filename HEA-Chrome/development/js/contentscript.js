@@ -89,42 +89,6 @@ function _main_extractText () {
 // #### keep in array i, i+1, i-1 if i has one or more numbers and do some filtering
 function _main_clearArray (bodyTextArray) {
     function cleanArray(arrayToBeCleaned) {
-        // var firstCleanArray = new Array();
-        // var secondCleanArray = new Array();
-        // var thirdCleanArray = new Array();
-        //
-        // for (var i = 0; i < arrayToBeCleaned.length; i++) {
-        //     if (/\b\d+s?\b/.test(arrayToBeCleaned[i]) && /\S/.test(arrayToBeCleaned[i]) && !/\d+]/.test(arrayToBeCleaned[i]) && !/p+\.\s\d+/.test(arrayToBeCleaned[i])) {
-        //         firstCleanArray.push(arrayToBeCleaned[i-1]);
-        //         firstCleanArray.push(arrayToBeCleaned[i]);
-        //         firstCleanArray.push(arrayToBeCleaned[i+1]);
-        //     }
-        // }
-        //
-        // for (var j = 0; j < firstCleanArray.length; j++) {
-        //     if (firstCleanArray[j] !== firstCleanArray[j+1]
-        //         && firstCleanArray[j] !== firstCleanArray[j+2]
-        //         && /\S/.test(firstCleanArray[j])
-        //         && !/\^/.test(firstCleanArray[j])
-        //         && !/p+./.test(firstCleanArray[j-1])
-        //         && !/p+./.test(firstCleanArray[j])
-        //         && !/\d{1}\.\d{1}/.test(firstCleanArray[j])
-        //         && !/(\d+-\d+-\d+-\d+)/.test(firstCleanArray[j])) {
-        //         secondCleanArray.push(firstCleanArray[j]);
-        //     }
-        // }
-        //
-        // for (var k = 0; k < secondCleanArray.length; k++) {
-        //     if((/\b\d{1,5}s?\b/.test(secondCleanArray[k])
-        //         && !/(\bISBN\b)|(\bISSN\b)/.test(secondCleanArray[k]))
-        //         || /(\bin\b)|(\bby\b)|(\bduring\b)|(\byear\b)|(\bc\.)|(\bca\.)|(\blate\b)|(\bjanuary\b)|(\bfebruary\b)|(\bmarch\b)|(\bapril\b)|(\bmay\b)|(\bjune\b)|(\bjuly\b)|(\baugust\b)|(\bseptember\b)|(\boctober\b)|(\bnovember\b)|(\bdecember\b)|(\blate\b)|(\bAD\b)|(\bB?CE?\b)/i.test(secondCleanArray[k])
-        //         ) {
-        //         thirdCleanArray.push(secondCleanArray[k]);
-        //     }
-        // }
-
-
-        //clean array version 2
         var cleanArrayV2 = new Array();
 
         for (var i = 0; i < arrayToBeCleaned.length; i++) {
