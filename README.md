@@ -1,4 +1,21 @@
+<p align="center">
+    <img src="https://raw.githubusercontent.com/caveljan/holocene-timestamp/master/readme-source/logo.png" height="200px">
+</p>
+
+
+<p align="center">
+    <a href="https://chrome.google.com/webstore/detail/holocene-epoch-addverter/fbdlbdcmaglfifdihlihdpnnnidnippp">
+        <img src="https://img.shields.io/badge/chrome-1.0.3-blue.svg?colorB=492356&style=for-the-badge" alt="Chrome Version">
+    </a>
+    <a href="https://github.com/caveljan/holocene-timestamp/blob/master/LICENSE">
+        <img src="https://img.shields.io/badge/license-GPL%E2%80%933.0-blue.svg?colorB=492356&style=for-the-badge" alt="License">
+    </a>
+</p>
+
+
+
 # Holocene Epoch Addverter
+
 Browser extension to add the Holocene Epoch timestamp before or after the timestamps read from the webpage (or replace them).
 
 The Holocene Epoch sets the first year of the "recent" epoch 10,000 years before the first Anno Domini (1 AD) for a better grasping of the development of the human civilization. The proposal was advanced by Cesare Emiliani in 1993 (see more in the What is the Holocene Epoch? section below).
@@ -8,7 +25,9 @@ e.g.
 - "399 BC" can become "*/9602 HE/* 399 BC";
 - "10 Sep. 259 BC" can become "10 Sep. 9742 HE".
 
+
 ___
+
 
 ### HEA on Wikipedia
 
@@ -19,7 +38,9 @@ ___
 ![Newton](https://github.com/caveljan/Holocene-Epoch-Addverter/blob/master/readme-source/newton.JPG)
 #### [Isaac Newton's Early Life Wikipedia page](https://en.wikipedia.org/wiki/Early_life_of_Isaac_Newton) with the Holocene Epoch timestamp inserted between *nothing*, HE mark *removed*, and webpage timestamps *replaced* by the HE timestamp.
 
+
 ___
+
 
 ### HEA Options
 
