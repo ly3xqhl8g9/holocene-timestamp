@@ -29,12 +29,10 @@ e.g.
 <br>
 
 
-+ [HEA on Wikipeda](#hea-on-wikipedia)
++ [HEA on Wikipedia](#hea-on-wikipedia)
 + [HEA Options](#hea-options)
 + [What is the Holocene Epoch?](#what-is-the-holocene-epoch?)
 
-
-<br>
 
 
 ### HEA on Wikipedia
