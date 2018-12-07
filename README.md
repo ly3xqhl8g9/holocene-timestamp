@@ -59,5 +59,5 @@ e.g.
 ### What is the Holocene Epoch?
 ###### [Holocene Epoch Wiki](https://en.wikipedia.org/wiki/Holocene)
 ###### [Holocene Calendar Wiki](https://en.wikipedia.org/wiki/Holocene_calendar)
-###### [Emiliani’s Proposal](https://github.com/caveljan/holocene-timestamp/blob/master/HEA-Chrome/development/emiliani/emilianisproposal.pdf)
+###### [Emiliani’s Proposal](https://github.com/caveljan/holocene-timestamp/blob/master/chrome/development/emiliani/emilianisproposal.pdf)
 ###### [Kurzgesagt’s Summary](https://www.youtube.com/watch?v=czgOWmtGVGs)
