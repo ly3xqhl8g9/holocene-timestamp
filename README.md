@@ -14,7 +14,7 @@
 
 
 
-# Holocene Epoch Addverter
+# Holocene Epoch Timestamp
 
 Browser extension to add the Holocene Epoch timestamp before or after the timestamps read from the webpage (or replace them).
 
@@ -26,39 +26,40 @@ e.g.
 - "10 Sep. 259 BC" can become "10 Sep. 9742 HE".
 
 
-___
+<br>
+
+
++ [HEA on Wikipeda](#hea-on-wikipedia)
++ [HEA Options](#hea-options)
++ [What is the Holocene Epoch?](#what-is-the-holocene-epoch?)
+
+
+<br>
 
 
 ### HEA on Wikipedia
 
-![Caesar](https://github.com/caveljan/Holocene-Epoch-Addverter/blob/master/readme-source/caesar.PNG)
+![Caesar](https://raw.githubusercontent.com/caveljan/holocene-timestamp/master/readme-source/caesar.jpg)
 #### [Julius Caesar's Wikipedia page](https://en.wikipedia.org/wiki/Julius_Caesar) with *default* settings on HEA.
 
 
-![Newton](https://github.com/caveljan/Holocene-Epoch-Addverter/blob/master/readme-source/newton.JPG)
+![Newton](https://raw.githubusercontent.com/caveljan/holocene-timestamp/master/readme-source/newton.jpg)
 #### [Isaac Newton's Early Life Wikipedia page](https://en.wikipedia.org/wiki/Early_life_of_Isaac_Newton) with the Holocene Epoch timestamp inserted between *nothing*, HE mark *removed*, and webpage timestamps *replaced* by the HE timestamp.
 
-
-___
 
 
 ### HEA Options
 
-![Options](https://github.com/caveljan/Holocene-Epoch-Addverter/blob/master/readme-source/options.gif)
+![Options](https://raw.githubusercontent.com/caveljan/holocene-timestamp/master/readme-source/options.gif)
 #### Options Menu
 
-![Popup](https://github.com/caveljan/Holocene-Epoch-Addverter/blob/master/readme-source/popup.PNG)
+![Popup](https://raw.githubusercontent.com/caveljan/holocene-timestamp/master/readme-source/popup.png)
 #### Pop-up Menu
 
-___
+
 
 ### What is the Holocene Epoch?
 ###### [Holocene Epoch Wiki](https://en.wikipedia.org/wiki/Holocene)
 ###### [Holocene Calendar Wiki](https://en.wikipedia.org/wiki/Holocene_calendar)
 ###### [Emiliani’s Proposal](https://github.com/caveljan/Holocene-Epoch-Addverter/blob/master/HEA-Chrome/emiliani/emilianisproposal.pdf)
 ###### [Kurzgesagt’s Summary](https://www.youtube.com/watch?v=czgOWmtGVGs)
-
-___
-
-### Why "addverter"?
-Becase it adds the timestamp but also advertises the Holocene Epoch calendar.
