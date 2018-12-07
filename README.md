@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="https://raw.githubusercontent.com/caveljan/holocene-timestamp/master/readme-source/logo.png" height="200px">
+    <img src="https://raw.githubusercontent.com/caveljan/holocene-timestamp/master/readme/logo.png" height="200px">
 </p>
 
 
@@ -37,21 +37,21 @@ e.g.
 
 ### HET on Wikipedia
 
-![Caesar](https://raw.githubusercontent.com/caveljan/holocene-timestamp/master/readme-source/caesar.jpg)
+![Caesar](https://raw.githubusercontent.com/caveljan/holocene-timestamp/master/readme/caesar.jpg)
 #### [Julius Caesar's Wikipedia page](https://en.wikipedia.org/wiki/Julius_Caesar) with *default* settings on HET.
 
 
-![Newton](https://raw.githubusercontent.com/caveljan/holocene-timestamp/master/readme-source/newton.jpg)
+![Newton](https://raw.githubusercontent.com/caveljan/holocene-timestamp/master/readme/newton.jpg)
 #### [Isaac Newton's Early Life Wikipedia page](https://en.wikipedia.org/wiki/Early_life_of_Isaac_Newton) with the Holocene Epoch timestamp inserted between *nothing*, HE mark *removed*, and webpage timestamps *replaced* by the HE timestamp.
 
 
 
 ### HET Options
 
-![Options](https://raw.githubusercontent.com/caveljan/holocene-timestamp/master/readme-source/options.gif)
+![Options](https://raw.githubusercontent.com/caveljan/holocene-timestamp/master/readme/options.gif)
 #### Options Menu
 
-![Popup](https://raw.githubusercontent.com/caveljan/holocene-timestamp/master/readme-source/popup.png)
+![Popup](https://raw.githubusercontent.com/caveljan/holocene-timestamp/master/readme/popup.png)
 #### Pop-up Menu
 
 
