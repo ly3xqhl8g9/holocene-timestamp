@@ -29,16 +29,16 @@ e.g.
 <br>
 
 
-+ [HEA on Wikipedia](#hea-on-wikipedia)
-+ [HEA Options](#hea-options)
++ [HET on Wikipedia](#hea-on-wikipedia)
++ [HET Options](#hea-options)
 + [What is the Holocene Epoch?](#what-is-the-holocene-epoch?)
 
 
 
-### HEA on Wikipedia
+### HET on Wikipedia
 
 ![Caesar](https://raw.githubusercontent.com/caveljan/holocene-timestamp/master/readme-source/caesar.jpg)
-#### [Julius Caesar's Wikipedia page](https://en.wikipedia.org/wiki/Julius_Caesar) with *default* settings on HEA.
+#### [Julius Caesar's Wikipedia page](https://en.wikipedia.org/wiki/Julius_Caesar) with *default* settings on HET.
 
 
 ![Newton](https://raw.githubusercontent.com/caveljan/holocene-timestamp/master/readme-source/newton.jpg)
@@ -46,7 +46,7 @@ e.g.
 
 
 
-### HEA Options
+### HET Options
 
 ![Options](https://raw.githubusercontent.com/caveljan/holocene-timestamp/master/readme-source/options.gif)
 #### Options Menu
@@ -59,5 +59,5 @@ e.g.
 ### What is the Holocene Epoch?
 ###### [Holocene Epoch Wiki](https://en.wikipedia.org/wiki/Holocene)
 ###### [Holocene Calendar Wiki](https://en.wikipedia.org/wiki/Holocene_calendar)
-###### [Emiliani’s Proposal](https://github.com/caveljan/Holocene-Epoch-Addverter/blob/master/HEA-Chrome/emiliani/emilianisproposal.pdf)
+###### [Emiliani’s Proposal](https://raw.githubusercontent.com/caveljan/holocene-timestamp/master/HEA-Chrome/development/emiliani/emilianisproposal.pdf)
 ###### [Kurzgesagt’s Summary](https://www.youtube.com/watch?v=czgOWmtGVGs)
