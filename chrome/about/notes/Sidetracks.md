@@ -1,3 +1,6 @@
+<link rel="stylesheet" type="text/css" href="style.css">
+
+
 Capture a string delimited by spaces
 
 Form an array of all the strings from the page
