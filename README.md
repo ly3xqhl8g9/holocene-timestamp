@@ -21,7 +21,7 @@ Browser extension to add the Holocene Epoch timestamp before or after the timest
 The Holocene Epoch sets the first year of the "recent" epoch 10,000 years before the first Anno Domini (1 AD) for a better grasping of the development of the human civilization. The proposal was advanced by Cesare Emiliani in 1993 (see more in the What is the Holocene Epoch? section below).
 
 e.g.
-- "1 Aug. 2017" can become "1 Aug. 2017 [12017 [HE](https://en.wikipedia.org/wiki/Holocene_calendar)]";
+- "1 Aug. 2019" can become "1 Aug. 2019 [12019 [HE](https://en.wikipedia.org/wiki/Holocene_calendar)]";
 - "399 BC" can become "*/9602 HE/* 399 BC";
 - "10 Sep. 259 BC" can become "10 Sep. 9742 HE".
 
