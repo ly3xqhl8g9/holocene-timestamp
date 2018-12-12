@@ -188,7 +188,7 @@ function callFetchYear(inputYear, contentFacts, HEyear, yearMode) {
         return;
     }
 
-    if (!isNaN(inputYear) && inputYear != 0 && inputYear < currentYear) {
+    if (!isNaN(inputYear) && inputYear != 0) {
         if (yearMode == 'AD') {
             if (inputYear <= 100) {
                 inputYear = 'AD_' + inputYear;
@@ -243,10 +243,10 @@ function fetchYearFacts(inputYear, HEyear) {
         let anchorStringReplace = `<a target="_blank" href="https://en.wikipedia.org/wiki`;
         pageCleaned = pageCleaned.replace(/<a href="\/wiki/g, anchorStringReplace);
 
-        let stringEventsTitle = `<h2><span class="mw\\-headline" id="Events">Events<\/span><\/h2>`;
-        let stringBirthsTitle = `<h2><span class="mw\\-headline" id="Births">Births<\/span><\/h2>`;
-        let stringDeathsTitle = `<h2><span class="mw\\-headline" id="Deaths">Deaths<\/span><\/h2>`;
-        let stringReferencesTitle = `<h2><span class="mw\\-headline" id="References">References<\/span><\/h2>`;
+        let stringEventsTitle = `<h2><span class="mw-headline" id="Events">Events</span></h2>`;
+        let stringBirthsTitle = `<h2><span class="mw-headline" id="Births">Births</span></h2>`;
+        let stringDeathsTitle = `<h2><span class="mw-headline" id="Deaths">Deaths</span></h2>`;
+        let stringReferencesTitle = `<h2><span class="mw-headline" id="References">References</span></h2>`;
 
         let rxGetEvents = new RegExp(`${stringEventsTitle}[^]+${stringBirthsTitle}`, 'gim');
         let rxGetBirths = new RegExp(`${stringBirthsTitle}[^]+${stringDeathsTitle}`, 'gim');
@@ -256,7 +256,7 @@ function fetchYearFacts(inputYear, HEyear) {
         let rxReplaceDeaths = new RegExp(`${stringDeathsTitle}`);
         let rxReplaceReferences = new RegExp(`${stringReferencesTitle}`);
 
-        // BUG console error when searching for 13 and 14 AD
+        // BUG console error when searching for 13, 14, 2010 AD
         let events = rxGetEvents.exec(pageCleaned)[0];
         events = events.replace(rxReplaceEvents, '');
         events = events.replace(rxReplaceBirths, '');
@@ -383,10 +383,6 @@ function init() {
     changeBackgroundOnScroll();
     setTabs();
     conversionLogic()
-
-    let inputYear = '2018';
-    let HEyear = '12018';
-    fetchYearFacts(inputYear, HEyear)
 }
 
 init();
