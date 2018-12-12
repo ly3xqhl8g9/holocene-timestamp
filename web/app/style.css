@@ -72,11 +72,11 @@ nav {
 
 #nav-title {
     margin: 0;
-    font-size: 16px;       
+    font-size: 16px;
 }
 
 #nav-title a {
-    font-weight: 400;  
+    font-weight: 400;
 }
 
 footer {
@@ -145,7 +145,7 @@ footer a {
      color: hsl(0, 0%, 100%);
     -webkit-box-shadow: 0px 1px 0px 0px hsl(0, 0%, 100%);
     -moz-box-shadow: 0px 1px 0px 0px hsl(0, 0%, 100%);
-    box-shadow: 0px 1px 0px 0px hsl(0, 0%, 100%);   
+    box-shadow: 0px 1px 0px 0px hsl(0, 0%, 100%);
 }
 
 
@@ -254,7 +254,7 @@ footer a {
         flex-direction: column;
         flex-wrap: auto;
     }
-    
+
     #conversion-left {
         margin: 0 auto;
         display: block !important;
@@ -283,7 +283,7 @@ footer a {
 #conversion-center {
     margin-left: 50px;
     margin-right: 50px;
-    width: 100px;
+    max-width: 100px;
     display: flex;
     flex: 1;
     justify-content: center;
@@ -388,7 +388,7 @@ input[type="radio"] {
 }
 
 .content-conversion-facts-title:hover {
-    color: hsl(215, 60%, 75%);    
+    color: hsl(215, 60%, 75%);
 }
 
 
@@ -429,7 +429,7 @@ input[type="radio"] {
 }
 
 #gift-crypto-expand:hover {
-    color: hsl(215, 60%, 75%);    
+    color: hsl(215, 60%, 75%);
 }
 
 #gift-card-drawer {
@@ -439,8 +439,8 @@ input[type="radio"] {
 #btc-address,
 #eth-address,
 #bch-address {
-    color: hsl(0, 0%, 100%);  
-    font-weight: bold;  
+    color: hsl(0, 0%, 100%);
+    font-weight: bold;
     cursor: pointer;
 }
 

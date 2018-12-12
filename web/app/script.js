@@ -29,7 +29,6 @@ function setTabs() {
 
         contentAbout.style.display = "block";
         contentConversion.style.display = "none";
-        contentGift.style.display = "none";
     });
 
     tabConversion.addEventListener("click", function() {
@@ -37,7 +36,6 @@ function setTabs() {
 
         contentConversion.style.display = "block";
         contentAbout.style.display = "none";
-        contentGift.style.display = "none";
     });
 }
 
