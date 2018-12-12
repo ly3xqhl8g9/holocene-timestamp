@@ -1,0 +1,39 @@
+{
+    "name": "holocene-timestamp-chome",
+    "version": "1.0.4",
+    "description": "Chrome Extension for Holocene Epoch Timestamp",
+    "author": "Jan Cavel <mail@caveljan.com> (https://caveljan.com/)",
+    "license": "GPL-3.0",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/caveljan/holocene-timestamp"
+    },
+    "scripts": {
+        "build": "webpack",
+        "test": "jest ./test/unit/",
+        "test:coverage": "open ./coverage/index.html",
+        "watch": "webpack --watch"
+    },
+    "devDependencies": {
+        "@babel/core": "^7.1.6",
+        "@babel/preset-env": "^7.1.6",
+        "autoprefixer": "^9.3.1",
+        "babel-jest": "^23.6.0",
+        "babel-loader": "^8.0.4",
+        "css-loader": "^1.0.0",
+        "jest": "^23.6.0",
+        "jest-cli": "^23.6.0",
+        "mini-css-extract-plugin": "^0.4.1",
+        "node-sass": "^4.9.2",
+        "optimize-css-assets-webpack-plugin": "^5.0.0",
+        "postcss-loader": "^3.0.0",
+        "sass-loader": "^7.1.0",
+        "style-loader": "^0.23.1",
+        "stylelint": "^8.4.0",
+        "stylelint-webpack-plugin": "^0.10.5",
+        "uglifyjs-webpack-plugin": "^2.0.1",
+        "webpack": "^4.25.1",
+        "webpack-cli": "^3.1.0"
+    },
+    "dependencies": {}
+}
