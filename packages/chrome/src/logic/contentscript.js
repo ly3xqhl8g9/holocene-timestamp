@@ -17,8 +17,9 @@ document.querySelectorAll('body *').forEach(function(node) {
     node.childNodes.forEach(function(childNode) {
         if (childNode.nodeType === 3) {
             const parser = new HoloceneParser(childNode.nodeValue);
-            if (parser.textHE()) {
-                childNode.nodeValue = parser.textHE()
+            const textHE = parser.textHE();
+            if (textHE) {
+                childNode.nodeValue = textHE;
             }
             // console.log(childNode.nodeType);
             // console.log(childNode.nodeValue);

@@ -7,7 +7,7 @@ interface HoloceneParserTextHEOptions {
 const defaultTextHEOptions = {
     noHE: false,
     replace: true,
-}
+};
 
 
 class HoloceneParser {
