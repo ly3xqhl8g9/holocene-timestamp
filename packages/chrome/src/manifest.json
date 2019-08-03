@@ -9,7 +9,7 @@
     "browser_action" : {
         "default_title" : "Holocene Epoch Timestamp",
         "default_icon" : "assets/icons/icon.png",
-        "default_popup" : "index.html"
+        "default_popup" : "popup.html"
     },
 
     "icons" : {
@@ -30,7 +30,7 @@
     "content_scripts": [{
         "matches": ["<all_urls>"],
         "js": [
-            "/app/contentscript.js"
+            "contentscript.js"
         ],
         "run_at": "document_end"
     }],

@@ -21,12 +21,6 @@ coverage
 # node-waf configuration
 .lock-wscript
 
-# Compiled binary addons (http://nodejs.org/api/addons.html)
-build/Release
-
-# Dependency directories
-node_modules/
-
 # Optional npm cache directory
 .npm
 
@@ -77,20 +71,18 @@ Temporary Items
 .apdisk
 
 
-
-# dependencies
+# Dependencies
 /node_modules
 /.pnp
 .pnp.js
 /vendor
 
-# testing
-/coverage
+# Production
+build
+dist
+dist-zip
 
-# production
-/build
-
-# misc
+# Misc
 .DS_Store
 .env.local
 .env.development.local

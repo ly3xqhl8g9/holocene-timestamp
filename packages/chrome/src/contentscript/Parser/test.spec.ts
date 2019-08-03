@@ -1,4 +1,4 @@
-import HoloceneParser from './index';
+import HoloceneParser from './';
 
 
 
