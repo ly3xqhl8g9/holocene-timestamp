@@ -24,9 +24,9 @@
     ],
     "scripts": {
         "clean": "rm -rf dist && rm -rf build && rm -rf dist-zip",
-        "dev": "NODE_ENV=development webpack --watch",
-        "build": "NODE_ENV=production webpack",
-        "distribute": "NODE_ENV=production webpack && node scripts/zip.js",
+        "dev": "yarn clean && NODE_ENV=development webpack --watch",
+        "build": "yarn clean && NODE_ENV=production webpack",
+        "distribute": "yarn clean && NODE_ENV=production webpack && node scripts/zip.js",
         "test": "npm run unit-test && npm run e2e-test",
         "test.production": "NODE_ENV=production npm run unit-test && npm run e2e-test",
         "unit-test": "jest __tests__/.*.spec.js --silent",

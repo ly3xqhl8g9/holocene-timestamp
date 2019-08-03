@@ -15,7 +15,7 @@ const Popup: React.FC<any> = (properties) => {
     return (
         <StyledPopup>
             <div id="extTitle">
-                <h1 id="popupTitle">The Holocene Epoch Addverter is active</h1>
+                <h1 id="popupTitle">The Holocene Epoch is active</h1>
             </div>
 
             <div id="form">
@@ -43,7 +43,7 @@ const Popup: React.FC<any> = (properties) => {
             <div id="underForm">
                 <table id="underFormTable">
                     <tr>
-                        <td className="leftTable">2017</td>
+                        <td className="leftTable">2019</td>
                         <td className="centerTable">becomes</td>
                         <td className="rightTable"><span id="firstHE"></span></td>
                     </tr>
