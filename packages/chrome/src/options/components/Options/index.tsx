@@ -7,6 +7,9 @@ import {
 
 
 const Options: React.FC<any> = (properties) => {
+    // chrome.runtime.sendMessage({greeting: "hello"}, function(response: any) {
+    //     console.log(response.farewell);
+    // });
 
     return (
         <StyledOptions>

@@ -7,10 +7,22 @@ import {
 
 
 const Popup: React.FC<any> = (properties) => {
-
     // const openOptions = () => {
     //     chrome.runtime.openOptionsPage();
     // }
+
+    // chrome.runtime.onMessage.addListener(
+    //     function(request, sender, sendResponse) {
+    //         console.log(request);
+
+    //         console.log(sender.tab ?
+    //                     "from a content script:" + sender.tab.url :
+    //                     "from the extension");
+    //         if (request.greeting == "hello") {
+    //             sendResponse({farewell: "goodbye"});
+    //         }
+    //     }
+    // );
 
     return (
         <StyledPopup>
@@ -42,16 +54,18 @@ const Popup: React.FC<any> = (properties) => {
 
             <div id="underForm">
                 <table id="underFormTable">
-                    <tr>
-                        <td className="leftTable">2019</td>
-                        <td className="centerTable">becomes</td>
-                        <td className="rightTable"><span id="firstHE"></span></td>
-                    </tr>
-                    <tr>
-                        <td className="leftTable">399 BC</td>
-                        <td className="centerTable">becomes</td>
-                        <td className="rightTable"><span id="secondHE"></span></td>
-                    </tr>
+                    <tbody>
+                        <tr>
+                            <td className="leftTable">2019</td>
+                            <td className="centerTable">becomes</td>
+                            <td className="rightTable"><span id="firstHE"></span></td>
+                        </tr>
+                        <tr>
+                            <td className="leftTable">399 BC</td>
+                            <td className="centerTable">becomes</td>
+                            <td className="rightTable"><span id="secondHE"></span></td>
+                        </tr>
+                    </tbody>
                 </table>
             </div>
 
