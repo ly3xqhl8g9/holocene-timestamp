@@ -1,7 +1,7 @@
 {
     "compilerOptions": {
         "baseUrl": ".",
-        "outDir": "build/dist",
+        "outDir": "build/app",
         "module": "esnext",
         "target": "es5",
         "lib": ["es6", "dom"],
@@ -10,7 +10,7 @@
         "allowJs": true,
         "jsx": "react",
         "moduleResolution": "node",
-        "rootDir": "src",
+        "rootDir": "src/logic",
         "forceConsistentCasingInFileNames": true,
         "noImplicitReturns": true,
         "noImplicitThis": true,
@@ -18,17 +18,10 @@
         "importHelpers": true,
         "strictNullChecks": true,
         "suppressImplicitAnyIndexErrors": true,
-        "noUnusedLocals": true,
-        "esModuleInterop": true
+        "noUnusedLocals": true
     },
     "exclude": [
         "node_modules",
-        "scripts",
-        "acceptance-tests",
-        "webpack",
-        "jest",
-        "src/setupTests.ts",
-        "vendor",
         "public"
     ]
 }

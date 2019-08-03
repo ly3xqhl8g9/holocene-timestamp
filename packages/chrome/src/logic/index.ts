@@ -1,10 +1,21 @@
-document.querySelectorAll('body *').forEach((node) => {
+import HoloceneParser from './Parser';
+
+
+
+const handleNode = (node: Element) => {
     node.childNodes.forEach((childNode) => {
-        // console.log(childNode.nodeType);
-        // console.log(childNode.nodeValue);
-        // console.log('---');
-        if (childNode.nodeValue && childNode.nodeValue.match(/2019/)) {
-            childNode.nodeValue = childNode.nodeValue.replace('2019', '12019 HE');
+        if (childNode.nodeType === 3 && childNode.nodeValue) {
+            const parser = new HoloceneParser(childNode.nodeValue);
+            const textHE = parser.textHE();
+            if (textHE) {
+                childNode.nodeValue = textHE;
+            }
+            // console.log(childNode.nodeType);
+            // console.log(childNode.nodeValue);
+            // console.log('---');
         }
     });
-});
+}
+
+
+document.querySelectorAll('body *').forEach((node) => handleNode(node));

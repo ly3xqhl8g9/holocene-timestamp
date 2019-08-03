@@ -21,7 +21,7 @@
         "test": "jest",
         "test.react": "react-scripts-ts test --env=jsdom",
         "eject": "react-scripts eject",
-        "tsc": "tsc ./src/logic/Parser/index.ts"
+        "tsc": "tsc --p tsconfig-contentscript.json"
     },
     "dependencies": {
         "react": "^16.8.6",
