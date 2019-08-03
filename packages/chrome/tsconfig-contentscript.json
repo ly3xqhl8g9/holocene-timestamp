@@ -5,12 +5,10 @@
         "module": "esnext",
         "target": "es5",
         "lib": ["es6", "dom"],
-        "sourceMap": true,
+        "sourceMap": false,
         "skipLibCheck": true,
         "allowJs": true,
-        "jsx": "react",
-        "moduleResolution": "node",
-        "rootDir": "src/logic",
+        "rootDir": "logic",
         "forceConsistentCasingInFileNames": true,
         "noImplicitReturns": true,
         "noImplicitThis": true,
@@ -20,6 +18,10 @@
         "suppressImplicitAnyIndexErrors": true,
         "noUnusedLocals": true
     },
+    "files": [
+        "./src/logic/index.ts",
+        "./src/logic/Parser/index.ts"
+    ],
     "exclude": [
         "node_modules",
         "public"
