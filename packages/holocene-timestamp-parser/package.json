@@ -2,7 +2,12 @@
     "name": "holocene-timestamp-parser",
     "version": "0.0.1",
     "description": "",
-    "keywords": [],
+    "keywords": [
+        "holocene",
+        "epoch",
+        "timestamp",
+        "parser"
+    ],
     "main": "dist/holocene-timestamp-parser.umd.js",
     "module": "dist/holocene-timestamp-parser.es5.js",
     "typings": "dist/types/holocene-timestamp-parser.d.ts",

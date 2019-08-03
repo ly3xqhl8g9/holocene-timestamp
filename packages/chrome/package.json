@@ -9,7 +9,7 @@
         "chrome",
         "extension"
     ],
-    "license": "GPL-3.0",
+    "license": "MIT",
     "private": true,
     "repository": {
         "type": "git",
