@@ -2,6 +2,6 @@ import styled from 'styled-components';
 
 
 
-export const StyledPopup = styled.div`
+export const StyledOptions = styled.div`
 
 `;
