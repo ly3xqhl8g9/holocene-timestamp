@@ -1,3 +1,5 @@
-import HoloceneTimestampParser from './Parser'
+import HoloceneTimestampParser from './Parser';
 
-export default HoloceneTimestampParser
+
+
+export default HoloceneTimestampParser;
