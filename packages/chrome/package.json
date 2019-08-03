@@ -20,7 +20,8 @@
         "build": "react-scripts-ts build",
         "test": "jest",
         "test.react": "react-scripts-ts test --env=jsdom",
-        "eject": "react-scripts eject"
+        "eject": "react-scripts eject",
+        "tsc": "tsc ./src/logic/Parser/index.ts"
     },
     "dependencies": {
         "react": "^16.8.6",
