@@ -1,4 +1,4 @@
-import HoloceneTimestampParser from '../src'
+import HoloceneTimestampParser from '../src';
 
 
 
@@ -7,12 +7,11 @@ import HoloceneTimestampParser from '../src'
 */
 describe('Holocene Timestamp Parser sanity test', () => {
     it('works if true is truthy', () => {
-        expect(true).toBeTruthy()
-    })
+        expect(true).toBeTruthy();
+    });
 
     it('HoloceneTimestampParser is instantiable', () => {
-        expect(new HoloceneTimestampParser('2019 year')).toBeInstanceOf(
-            HoloceneTimestampParser
-        )
-    })
-})
+        expect(new HoloceneTimestampParser('2019 year'))
+            .toBeInstanceOf(HoloceneTimestampParser);
+    });
+});
