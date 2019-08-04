@@ -10,7 +10,7 @@
     ],
     "main": "dist/holocene-timestamp-parser.umd.js",
     "module": "dist/holocene-timestamp-parser.es5.js",
-    "typings": "dist/types/holocene-timestamp-parser.d.ts",
+    "typings": "dist/types/index.d.ts",
     "files": [
         "dist"
     ],

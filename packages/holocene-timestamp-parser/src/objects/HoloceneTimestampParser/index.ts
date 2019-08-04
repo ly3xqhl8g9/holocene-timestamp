@@ -160,7 +160,7 @@ class HoloceneTimestampParser implements IHoloceneTimestampParser {
             styleHETimestampEnd,
         } = holoceneStringAdditions;
 
-        const gregorianYearString = options.replaceTimestamp ? '' : gregorianYear;
+        const gregorianYearString = options.replaceTimestamp ? '' : gregorianYear.value;
 
         const holoceneYear = gregorianToHolocene(gregorianYear);
         const holoceneYearStringUnlocated = styleHETimestampStart
