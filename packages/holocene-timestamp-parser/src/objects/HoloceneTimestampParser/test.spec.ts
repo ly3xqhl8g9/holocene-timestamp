@@ -1,6 +1,8 @@
-import HoloceneTimestampParser, {
+import HoloceneTimestampParser from './';
+
+import {
     HoloceneTimestampParserOptions,
-} from './';
+} from '../../interfaces';
 
 
 
