@@ -5,7 +5,7 @@ import HoloceneTimestampParser from '../src';
 /**
 * Holocene Timestamp Parser sanity test
 */
-describe('Holocene Timestamp Parser sanity test', () => {
+xdescribe('Holocene Timestamp Parser sanity test', () => {
     it('works if true is truthy', () => {
         expect(true).toBeTruthy();
     });

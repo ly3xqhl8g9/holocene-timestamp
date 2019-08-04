@@ -12,9 +12,9 @@ import {
 
 export const defaultTextHEOptions: HoloceneTimestampParserOptions = {
     insertLocation: TIMESTAMP_LOCATION.AFTER,
-    insertBetween: BETWEEN_SIGNS.NOTHING,
+    insertBetween: BETWEEN_SIGNS.BRACKETS,
     styleHETimestamp: HE_TIMESTAMP_STYLES.REGULAR,
-    linkHE: false,
+    linkHE: true,
     removeHE: false,
-    replaceTimestamp: true,
+    replaceTimestamp: false,
 };

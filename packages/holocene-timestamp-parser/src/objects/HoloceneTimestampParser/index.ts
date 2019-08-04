@@ -1,6 +1,7 @@
 import {
     SPACE_SEPARATOR,
     WIKIPEDIA_HE_LINK,
+    HE_ANCHOR,
 } from '../../constants';
 
 import {
@@ -10,6 +11,8 @@ import {
 } from '../../enumerations';
 
 import {
+    IHoloceneTimestampParser,
+    HoloceneTimestampParsed,
     HoloceneTimestampParserOptions,
 } from '../../interfaces';
 
@@ -20,23 +23,28 @@ import {
 
 
 
-class HoloceneTimestampParser {
-    private text: string;
+class HoloceneTimestampParser implements IHoloceneTimestampParser {
+    private data: string;
 
-    constructor(text: string) {
-        this.text = text;
+    constructor(data: string) {
+        this.data = data;
     }
 
-    public textHE(
+    public text(
         options: Partial<HoloceneTimestampParserOptions> = defaultTextHEOptions
-    ): string {
+    ): HoloceneTimestampParsed {
         // console.log(options);
         let year;
         let yearHEString;
 
+        const response = {
+            HE: '',
+            matchedYears: [''],
+        }
+
         regExpRules.forEach(rule => {
             // console.log(rule);
-            const match = this.text.match(rule);
+            const match = this.data.match(rule);
 
             if (match) {
                 // console.log(match);
@@ -48,10 +56,12 @@ class HoloceneTimestampParser {
         });
 
         if (year && yearHEString) {
-            return this.text.replace(year, yearHEString);
+            const HE = this.data.replace(year, yearHEString);
+            response.HE = HE;
+            return response;
         }
 
-        return '';
+        return response;
     }
 
     private composeHEString = (
@@ -62,7 +72,7 @@ class HoloceneTimestampParser {
         const nameHEAnchor = options.removeHE
             ? ''
             : options.linkHE
-                ? `<a href=${WIKIPEDIA_HE_LINK}>HE</a>`
+                ? HE_ANCHOR
                 : 'HE';
         const nameHE = nameHESeparator + nameHEAnchor;
 

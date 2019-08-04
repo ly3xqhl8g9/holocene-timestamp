@@ -6,6 +6,17 @@ import {
 
 
 
+export interface IHoloceneTimestampParser {
+    text: (options: Partial<HoloceneTimestampParserOptions>) => HoloceneTimestampParsed | undefined;
+}
+
+
+export interface HoloceneTimestampParsed {
+    HE: string;
+    matchedYears: any[];
+}
+
+
 export interface HoloceneTimestampParserOptions {
     insertLocation: keyof typeof TIMESTAMP_LOCATION;
     insertBetween: keyof typeof BETWEEN_SIGNS;

@@ -1,49 +1,60 @@
 import HoloceneTimestampParser from './';
 
 import {
+    HE_ANCHOR
+} from '../../constants';
+
+import {
     HoloceneTimestampParserOptions,
 } from '../../interfaces';
 
 
 
 describe('Holocene Timestamp Parser basic', () => {
+    const cleanOptions: Partial<HoloceneTimestampParserOptions> = {
+        insertBetween: 'NOTHING',
+        linkHE: false,
+        replaceTimestamp: true,
+    }
+
     it('converts with default options', () => {
-        const text = 'words 2019 words'
-        const hetParser = new HoloceneTimestampParser(text);
-        const textHE = hetParser.textHE();
-        expect(textHE).toBe('words 12019 HE words');
+        const data = 'words 2019 words 2017 words'
+        const hetParser = new HoloceneTimestampParser(data);
+        const text = hetParser.text(cleanOptions);
+        expect(text.HE).toBe('words 12019 HE words 2017 words');
     });
 
     it('converts with default options', () => {
-        const text = 'words 2017 words'
-        const hetParser = new HoloceneTimestampParser(text);
-        const textHE = hetParser.textHE();
-        expect(textHE).toBe('words 12017 HE words');
+        const data = 'words 2019 words'
+        const hetParser = new HoloceneTimestampParser(data);
+        const text = hetParser.text();
+        expect(text.HE).toBe(`words 2019 [12019 ${HE_ANCHOR}] words`);
     });
 
     it('converts with default options', () => {
-        const text = 'words 1000 words'
-        const hetParser = new HoloceneTimestampParser(text);
-        const textHE = hetParser.textHE();
-        expect(textHE).toBe('words 11000 HE words');
+        const data = 'words 1000 words'
+        const hetParser = new HoloceneTimestampParser(data);
+        const text = hetParser.text();
+        expect(text.HE).toBe(`words 1000 [11000 ${HE_ANCHOR}] words`);
     });
 
     it('converts with default options', () => {
-        const text = 'words 100 words'
-        const hetParser = new HoloceneTimestampParser(text);
-        const textHE = hetParser.textHE();
-        expect(textHE).toBe('words 10100 HE words');
+        const data = 'words 100 words'
+        const hetParser = new HoloceneTimestampParser(data);
+        const text = hetParser.text();
+        expect(text.HE).toBe(`words 100 [10100 ${HE_ANCHOR}] words`);
     });
-
 
     it('converts with options: replaceTimestamp false', () => {
-        const text = 'words 2019 words'
-        const hetParser = new HoloceneTimestampParser(text);
+        const data = 'words 2019 words'
+        const hetParser = new HoloceneTimestampParser(data);
         const options: Partial<HoloceneTimestampParserOptions> = {
+            insertBetween: 'SLASHES',
             insertLocation: 'AFTER',
-            replaceTimestamp: false,
+            linkHE: true,
+            replaceTimestamp: true,
         };
-        const textHE = hetParser.textHE(options);
-        expect(textHE).toBe('words 2019 12019 HE words');
+        const text = hetParser.text(options);
+        expect(text.HE).toBe(`words /12019 ${HE_ANCHOR}/ words`);
     });
 });
