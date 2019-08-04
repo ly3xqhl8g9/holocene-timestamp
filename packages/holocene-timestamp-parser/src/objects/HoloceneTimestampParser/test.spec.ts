@@ -17,11 +17,11 @@ describe('Holocene Timestamp Parser basic', () => {
         replaceTimestamp: true,
     }
 
-    it('converts with default options', () => {
+    it.only('converts with default options', () => {
         const data = 'words 2019 words 2017 words'
         const hetParser = new HoloceneTimestampParser(data);
         const text = hetParser.text(cleanOptions);
-        expect(text.HE).toBe('words 12019 HE words 2017 words');
+        expect(text.HE).toBe('words 12019 HE words 12017 HE words');
     });
 
     it('converts with default options', () => {

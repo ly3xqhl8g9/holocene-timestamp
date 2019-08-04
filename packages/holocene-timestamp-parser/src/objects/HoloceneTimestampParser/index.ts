@@ -34,33 +34,52 @@ class HoloceneTimestampParser implements IHoloceneTimestampParser {
         options: Partial<HoloceneTimestampParserOptions> = defaultTextHEOptions
     ): HoloceneTimestampParsed {
         // console.log(options);
-        let year;
-        let yearHEString;
+        let replacedString = this.data;
+        const matchedYears: any[] = [];
 
-        const response = {
-            HE: '',
-            matchedYears: [''],
-        }
+        /**
+         * this.data = 'words 2019 words 2017 words'
+         *
+         * split this.data at spaces, then for each word look go through each rule
+         * match if match
+         * replace and add to matchedYears
+         */
 
-        regExpRules.forEach(rule => {
-            // console.log(rule);
-            const match = this.data.match(rule);
+        const splitData = this.data.split(SPACE_SEPARATOR);
 
-            if (match) {
-                // console.log(match);
-                const composedHEString = this.composeHEString(options, match);
-                year = composedHEString.year;
-                yearHEString = composedHEString.yearHEString;
-                // console.log(yearHEString);
-            }
+        splitData.forEach((word, index) => {
+            regExpRules.forEach(rule => {
+                // console.log(rule);
+                const firstWord = splitData[index - 1] ? splitData[index - 1] : '';
+                const lastWord = splitData[index + 1] ? splitData[index + 1] : '';
+                const wordWindow = firstWord
+                    + SPACE_SEPARATOR
+                    + word
+                    + SPACE_SEPARATOR
+                    + lastWord;
+
+                console.log(wordWindow);
+
+                const match = wordWindow.match(rule);
+
+                console.log(match);
+
+                if (match) {
+                    // console.log(match);
+                    const composedHEString = this.composeHEString(options, match);
+                    const year = composedHEString.year;
+                    const yearHEString = composedHEString.yearHEString;
+                    // console.log(yearHEString);
+                    replacedString = replacedString.replace(year, yearHEString);
+                    matchedYears.push(composedHEString.year);
+                }
+            });
         });
 
-        if (year && yearHEString) {
-            const HE = this.data.replace(year, yearHEString);
-            response.HE = HE;
-            return response;
+        const response = {
+            HE: replacedString,
+            matchedYears,
         }
-
         return response;
     }
 
