@@ -13,8 +13,9 @@ import {
     IHoloceneTimestampParser,
     HoloceneTimestampParsed,
     HoloceneTimestampParserOptions,
-    HoloceneYear,
     GregorianYear,
+    HoloceneStringAdditions,
+    ComposedHoloceneString,
 } from '../../interfaces';
 
 import {
@@ -41,21 +42,21 @@ class HoloceneTimestampParser implements IHoloceneTimestampParser {
         // console.log(options);
         let HEString = this.data;
         const matchedYears: Set<number> = new Set();
-        const textAdditions = this.computeAdditions(options);
-        const tokenize = this.data.split(SPACE_SEPARATOR);
+        const holoceneStringAdditions = this.computeHoloceneStringAdditions(options);
+        const tokenizedText = this.data.split(SPACE_SEPARATOR);
 
-        tokenize.forEach((word, index) => {
-            const checkedYear = this.checkYear(word, index, tokenize);
-            console.log(checkedYear);
+        tokenizedText.forEach((word, index) => {
+            const checkedYear = this.checkYear(word, index, tokenizedText);
+            // console.log(checkedYear);
 
             if (checkedYear && !matchedYears.has(checkedYear.value)) {
+                const gregorianYear = checkedYear;
                 const {
-                    year,
-                    yearHEString,
-                } = this.composeHEString(checkedYear, options, textAdditions);
-                const yearRE = new RegExp(year + '', 'g');
-                HEString = HEString.replace(yearRE, yearHEString);
-                matchedYears.add(year);
+                    holoceneString,
+                } = this.composeHoloceneString(gregorianYear, options, holoceneStringAdditions);
+                const gregorianYearRE = new RegExp(gregorianYear.value + '', 'g');
+                HEString = HEString.replace(gregorianYearRE, holoceneString);
+                matchedYears.add(gregorianYear.value);
             }
         });
 
@@ -67,8 +68,8 @@ class HoloceneTimestampParser implements IHoloceneTimestampParser {
     }
 
     private checkYear = (
-        word: string, index: number, splitData: string[],
-    ) => {
+        word: string, index: number, tokenizedText: string[],
+    ): GregorianYear | undefined => {
         /**
          * check year based on a nlp model
          * check year based on an array of RegExp
@@ -78,8 +79,8 @@ class HoloceneTimestampParser implements IHoloceneTimestampParser {
 
         regExpRules.forEach(rule => {
             // console.log(rule);
-            const firstWord = splitData[index - 1] ? splitData[index - 1] + SPACE_SEPARATOR : '';
-            const lastWord = splitData[index + 1] ? SPACE_SEPARATOR + splitData[index + 1] : '';
+            const firstWord = tokenizedText[index - 1] ? tokenizedText[index - 1] + SPACE_SEPARATOR : '';
+            const lastWord = tokenizedText[index + 1] ? SPACE_SEPARATOR + tokenizedText[index + 1] : '';
             const wordWindow = firstWord + word + lastWord;
             // console.log(wordWindow);
 
@@ -92,18 +93,19 @@ class HoloceneTimestampParser implements IHoloceneTimestampParser {
         });
 
         if (year) {
-            return {
+            const gregorianYear: GregorianYear = {
                 value: year,
                 type: 'AD',
-            };
+            }
+            return gregorianYear;
         }
 
         return;
     }
 
-    private computeAdditions = (
+    private computeHoloceneStringAdditions = (
         options: Partial<HoloceneTimestampParserOptions>,
-    ) => {
+    ): HoloceneStringAdditions => {
         const nameHESeparator = options.removeHE ? '' : SPACE_SEPARATOR;
         const nameHEAnchor = options.removeHE
             ? ''
@@ -142,39 +144,42 @@ class HoloceneTimestampParser implements IHoloceneTimestampParser {
             betweendEnd,
             styleHETimestampStart,
             styleHETimestampEnd,
-        }
+        };
     }
 
-    private composeHEString = (
-        year: any,
+    private composeHoloceneString = (
+        gregorianYear: GregorianYear,
         options: Partial<HoloceneTimestampParserOptions>,
-        textAdditions: any,
-    ) => {
+        holoceneStringAdditions: HoloceneStringAdditions,
+    ): ComposedHoloceneString => {
         const {
             nameHE,
             betweenStart,
             betweendEnd,
             styleHETimestampStart,
             styleHETimestampEnd,
-        } = textAdditions;
+        } = holoceneStringAdditions;
 
-        const yearString = options.replaceTimestamp ? '' : year;
+        const gregorianYearString = options.replaceTimestamp ? '' : gregorianYear;
 
-        const yearHE = gregorianToHolocene(year);
-        const yearHEStringUnlocated = styleHETimestampStart + betweenStart + yearHE.value + nameHE + betweendEnd + styleHETimestampEnd;
+        const holoceneYear = gregorianToHolocene(gregorianYear);
+        const holoceneYearStringUnlocated = styleHETimestampStart
+            + betweenStart
+            + holoceneYear.value
+            + nameHE
+            + betweendEnd
+            + styleHETimestampEnd;
 
-        const locatedSpaceSperator = yearString ? SPACE_SEPARATOR : '';
-        const yearHELocated = options.insertLocation === TIMESTAMP_LOCATION.AFTER
-            ? yearString + locatedSpaceSperator + yearHEStringUnlocated
-            : yearHEStringUnlocated + locatedSpaceSperator + yearString;
+        const locatedSpaceSeparator = gregorianYearString ? SPACE_SEPARATOR : '';
 
-        const yearHEString = yearHELocated;
+        const holoceneString = options.insertLocation === TIMESTAMP_LOCATION.AFTER
+            ? gregorianYearString + locatedSpaceSeparator + holoceneYearStringUnlocated
+            : holoceneYearStringUnlocated + locatedSpaceSeparator + gregorianYearString;
 
         return {
-            year: year.value,
-            yearHE,
-            yearHEString,
-        }
+            holoceneYear,
+            holoceneString
+        };
     }
 }
 

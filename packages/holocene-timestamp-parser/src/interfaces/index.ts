@@ -39,3 +39,18 @@ export interface HoloceneTimestampParserOptions {
     removeHE: boolean;
     replaceTimestamp: boolean;
 }
+
+
+export interface HoloceneStringAdditions {
+    nameHE: string;
+    betweenStart: string;
+    betweendEnd: string;
+    styleHETimestampStart: string;
+    styleHETimestampEnd: string;
+}
+
+
+export interface ComposedHoloceneString {
+    holoceneYear: HoloceneYear;
+    holoceneString: string;
+}
