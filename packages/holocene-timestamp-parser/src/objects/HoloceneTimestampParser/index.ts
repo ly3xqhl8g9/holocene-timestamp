@@ -34,7 +34,7 @@ class HoloceneTimestampParser implements IHoloceneTimestampParser {
         options: Partial<HoloceneTimestampParserOptions> = defaultTextHEOptions
     ): HoloceneTimestampParsed {
         // console.log(options);
-        let replacedString = this.data;
+        let HEString = this.data;
         const matchedYears = new Set(['']);
 
         const textAdditions = this.computeAdditions(options);
@@ -42,11 +42,9 @@ class HoloceneTimestampParser implements IHoloceneTimestampParser {
         /**
          * this.data = 'words 2019 words 2017 words'
          *
-         * split this.data at spaces, then for each word look go through each rule
-         * match if match
-         * replace and add to matchedYears
-         *
-         * get the year from the string
+         * split this.data at spaces,
+         * then for each word check if it is year
+         * if it is year replace and add to matchedYears
          *
          *
          *
@@ -55,33 +53,48 @@ class HoloceneTimestampParser implements IHoloceneTimestampParser {
         const splitData = this.data.split(SPACE_SEPARATOR);
 
         splitData.forEach((word, index) => {
-            regExpRules.forEach(rule => {
-                // console.log(rule);
-                const firstWord = splitData[index - 1] ? splitData[index - 1] + SPACE_SEPARATOR : '';
-                const lastWord = splitData[index + 1] ? SPACE_SEPARATOR + splitData[index + 1] : '';
-                const wordWindow = firstWord + word + lastWord;
-                console.log(wordWindow);
+            const checkedYear = this.checkYear(word, index, splitData);
+            console.log(checkedYear);
 
-                const match = wordWindow.match(rule);
-                console.log(match);
-
-                if (match && !matchedYears.has(match[2])) {
-                    // console.log(match);
-                    const composedHEString = this.composeHEString(match, options, textAdditions);
-                    const year = composedHEString.year;
-                    const yearHEString = composedHEString.yearHEString;
-                    const re = new RegExp(year, 'g');
-                    replacedString = replacedString.replace(re, yearHEString);
-                    matchedYears.add(composedHEString.year);
-                }
-            });
+            if (checkedYear && !matchedYears.has(checkedYear)) {
+                const {
+                    year,
+                    yearHEString,
+                } = this.composeHEString(checkedYear, options, textAdditions);
+                const yearRE = new RegExp(year, 'g');
+                HEString = HEString.replace(yearRE, yearHEString);
+                matchedYears.add(year);
+            }
         });
 
         const response = {
-            HE: replacedString,
+            HE: HEString,
             matchedYears,
         }
         return response;
+    }
+
+    private checkYear = (
+        word: string, index: number, splitData: string[],
+    ) => {
+        let year;
+
+        regExpRules.forEach(rule => {
+            // console.log(rule);
+            const firstWord = splitData[index - 1] ? splitData[index - 1] + SPACE_SEPARATOR : '';
+            const lastWord = splitData[index + 1] ? SPACE_SEPARATOR + splitData[index + 1] : '';
+            const wordWindow = firstWord + word + lastWord;
+            // console.log(wordWindow);
+
+            const match = wordWindow.match(rule);
+            // console.log(match);
+
+            if (match) {
+                year = parseInt(match[2]) || undefined;
+            }
+        });
+
+        return year;
     }
 
     private computeAdditions = (
@@ -132,7 +145,7 @@ class HoloceneTimestampParser implements IHoloceneTimestampParser {
     }
 
     private composeHEString = (
-        match: RegExpMatchArray,
+        year: string,
         options: Partial<HoloceneTimestampParserOptions>,
         textAdditions: any,
     ) => {
@@ -144,7 +157,6 @@ class HoloceneTimestampParser implements IHoloceneTimestampParser {
             styleHETimestampEnd,
         } = textAdditions;
 
-        const year = match[2];
         const yearString = options.replaceTimestamp ? '' : year;
 
         const yearHE = parseInt(year) + 10000;
