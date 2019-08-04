@@ -41,6 +41,36 @@ describe('gregorianToHolocene', () => {
         expect(convert.type).toBe('HE');
     });
 
+    it('converts 1 AD to 10001 HE', () => {
+        const year: GregorianYear = {
+            value: 1,
+            type: 'AD',
+        }
+        const convert = gregorianToHolocene(year);
+        expect(convert.value).toBe(10001);
+        expect(convert.type).toBe('HE');
+    });
+
+    it('converts 1 BC to 10000 HE', () => {
+        const year: GregorianYear = {
+            value: 1,
+            type: 'BC',
+        }
+        const convert = gregorianToHolocene(year);
+        expect(convert.value).toBe(10000);
+        expect(convert.type).toBe('HE');
+    });
+
+    it('converts 2 BC to 9999 HE', () => {
+        const year: GregorianYear = {
+            value: 2,
+            type: 'BC',
+        }
+        const convert = gregorianToHolocene(year);
+        expect(convert.value).toBe(9999);
+        expect(convert.type).toBe('HE');
+    });
+
     it('converts 19 BC to 9982 HE', () => {
         const year: GregorianYear = {
             value: 19,
@@ -112,6 +142,36 @@ describe('holoceneToGregorian', () => {
         const convert = holoceneToGregorian(year);
         expect(convert.value).toBe(19);
         expect(convert.type).toBe('AD');
+    });
+
+    it('converts 10001 HE to 1 AD', () => {
+        const year: HoloceneYear = {
+            value: 10001,
+            type: 'HE',
+        }
+        const convert = holoceneToGregorian(year);
+        expect(convert.value).toBe(1);
+        expect(convert.type).toBe('AD');
+    });
+
+    it('converts 10000 HE to 1 BC', () => {
+        const year: HoloceneYear = {
+            value: 10000,
+            type: 'HE',
+        }
+        const convert = holoceneToGregorian(year);
+        expect(convert.value).toBe(1);
+        expect(convert.type).toBe('BC');
+    });
+
+    it('converts 9999 HE to 2 BC', () => {
+        const year: HoloceneYear = {
+            value: 9999,
+            type: 'HE',
+        }
+        const convert = holoceneToGregorian(year);
+        expect(convert.value).toBe(2);
+        expect(convert.type).toBe('BC');
     });
 
     it('converts 9982 HE to 19 BC', () => {
