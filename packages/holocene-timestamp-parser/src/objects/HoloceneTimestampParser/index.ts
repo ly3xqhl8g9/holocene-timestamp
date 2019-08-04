@@ -14,6 +14,8 @@ import {
     IHoloceneTimestampParser,
     HoloceneTimestampParsed,
     HoloceneTimestampParserOptions,
+    HoloceneYear,
+    GregorianYear,
 } from '../../interfaces';
 
 import {

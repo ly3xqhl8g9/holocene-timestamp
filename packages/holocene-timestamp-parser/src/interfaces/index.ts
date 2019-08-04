@@ -1,9 +1,23 @@
 import {
+    HOLOCENE_YEAR_TYPES,
+    GREGORIAN_YEAR_TYPES,
     TIMESTAMP_LOCATION,
     BETWEEN_SIGNS,
     HE_TIMESTAMP_STYLES,
 } from '../enumerations';
 
+
+
+export interface HoloceneYear {
+    value: number;
+    type: keyof typeof HOLOCENE_YEAR_TYPES;
+}
+
+
+export interface GregorianYear {
+    value: number;
+    type: keyof typeof GREGORIAN_YEAR_TYPES;
+}
 
 
 export interface IHoloceneTimestampParser {
