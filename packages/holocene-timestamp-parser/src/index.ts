@@ -1,4 +1,4 @@
-import HoloceneTimestampParser from './HoloceneTimestampParser';
+import HoloceneTimestampParser from './objects/HoloceneTimestampParser';
 
 
 
