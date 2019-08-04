@@ -15,13 +15,13 @@ describe('Holocene Timestamp Parser basic', () => {
         insertBetween: 'NOTHING',
         linkHE: false,
         replaceTimestamp: true,
-    }
+    };
 
     it.only('converts with default options', () => {
-        const data = 'words 2019 words 2017 words'
+        const data = 'words_one 2019 words_two 2017 words_three 2019 words_four';
         const hetParser = new HoloceneTimestampParser(data);
         const text = hetParser.text(cleanOptions);
-        expect(text.HE).toBe('words 12019 HE words 12017 HE words');
+        expect(text.HE).toBe('words_one 12019 HE words_two 12017 HE words_three 12019 HE words_four');
     });
 
     it('converts with default options', () => {

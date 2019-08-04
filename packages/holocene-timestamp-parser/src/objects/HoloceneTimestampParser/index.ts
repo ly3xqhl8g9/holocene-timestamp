@@ -35,7 +35,9 @@ class HoloceneTimestampParser implements IHoloceneTimestampParser {
     ): HoloceneTimestampParsed {
         // console.log(options);
         let replacedString = this.data;
-        const matchedYears: any[] = [];
+        const matchedYears = new Set(['']);
+
+        const textAdditions = this.computeAdditions(options);
 
         /**
          * this.data = 'words 2019 words 2017 words'
@@ -43,6 +45,11 @@ class HoloceneTimestampParser implements IHoloceneTimestampParser {
          * split this.data at spaces, then for each word look go through each rule
          * match if match
          * replace and add to matchedYears
+         *
+         * get the year from the string
+         *
+         *
+         *
          */
 
         const splitData = this.data.split(SPACE_SEPARATOR);
@@ -50,28 +57,22 @@ class HoloceneTimestampParser implements IHoloceneTimestampParser {
         splitData.forEach((word, index) => {
             regExpRules.forEach(rule => {
                 // console.log(rule);
-                const firstWord = splitData[index - 1] ? splitData[index - 1] : '';
-                const lastWord = splitData[index + 1] ? splitData[index + 1] : '';
-                const wordWindow = firstWord
-                    + SPACE_SEPARATOR
-                    + word
-                    + SPACE_SEPARATOR
-                    + lastWord;
-
+                const firstWord = splitData[index - 1] ? splitData[index - 1] + SPACE_SEPARATOR : '';
+                const lastWord = splitData[index + 1] ? SPACE_SEPARATOR + splitData[index + 1] : '';
+                const wordWindow = firstWord + word + lastWord;
                 console.log(wordWindow);
 
                 const match = wordWindow.match(rule);
-
                 console.log(match);
 
-                if (match) {
+                if (match && !matchedYears.has(match[2])) {
                     // console.log(match);
-                    const composedHEString = this.composeHEString(options, match);
+                    const composedHEString = this.composeHEString(match, options, textAdditions);
                     const year = composedHEString.year;
                     const yearHEString = composedHEString.yearHEString;
-                    // console.log(yearHEString);
-                    replacedString = replacedString.replace(year, yearHEString);
-                    matchedYears.push(composedHEString.year);
+                    const re = new RegExp(year, 'g');
+                    replacedString = replacedString.replace(re, yearHEString);
+                    matchedYears.add(composedHEString.year);
                 }
             });
         });
@@ -83,9 +84,8 @@ class HoloceneTimestampParser implements IHoloceneTimestampParser {
         return response;
     }
 
-    private composeHEString = (
+    private computeAdditions = (
         options: Partial<HoloceneTimestampParserOptions>,
-        match: RegExpMatchArray,
     ) => {
         const nameHESeparator = options.removeHE ? '' : SPACE_SEPARATOR;
         const nameHEAnchor = options.removeHE
@@ -122,7 +122,29 @@ class HoloceneTimestampParser implements IHoloceneTimestampParser {
             ? '<i>'
             : '';
 
-        const year = match[1];
+        return {
+            nameHE,
+            betweenStart,
+            betweendEnd,
+            styleHETimestampStart,
+            styleHETimestampEnd,
+        }
+    }
+
+    private composeHEString = (
+        match: RegExpMatchArray,
+        options: Partial<HoloceneTimestampParserOptions>,
+        textAdditions: any,
+    ) => {
+        const {
+            nameHE,
+            betweenStart,
+            betweendEnd,
+            styleHETimestampStart,
+            styleHETimestampEnd,
+        } = textAdditions;
+
+        const year = match[2];
         const yearString = options.replaceTimestamp ? '' : year;
 
         const yearHE = parseInt(year) + 10000;
