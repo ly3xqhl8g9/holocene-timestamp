@@ -10,14 +10,14 @@ import {
 
 
 
-xdescribe('Holocene Timestamp Parser basic', () => {
+describe('Holocene Timestamp Parser basic', () => {
     const cleanOptions: Partial<HoloceneTimestampParserOptions> = {
         insertBetween: 'NOTHING',
         linkHE: false,
         replaceTimestamp: true,
     };
 
-    it('converts with default options', () => {
+    it.only('converts with default options', () => {
         const data = 'words_one 2019 words_two 2017 words_three 2019 words_four';
         const hetParser = new HoloceneTimestampParser(data);
         const text = hetParser.text(cleanOptions);

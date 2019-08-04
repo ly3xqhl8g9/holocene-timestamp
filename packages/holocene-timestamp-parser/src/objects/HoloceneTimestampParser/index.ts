@@ -1,5 +1,4 @@
 import {
-    HE_TIMEBASE,
     SPACE_SEPARATOR,
     HE_ANCHOR,
 } from '../../constants';
@@ -22,6 +21,10 @@ import {
     defaultParserOptions,
     regExpRules,
 } from '../../data';
+
+import {
+    gregorianToHolocene,
+} from '../../utilities';
 
 
 
@@ -157,13 +160,8 @@ class HoloceneTimestampParser implements IHoloceneTimestampParser {
 
         const yearString = options.replaceTimestamp ? '' : year;
 
-        let yearHE = 0;
-        if (year.type === 'AD') {
-            yearHE = year.value + HE_TIMEBASE;
-        } else {
-            yearHE = Math.abs(year.value - HE_TIMEBASE);
-        }
-        const yearHEStringUnlocated = styleHETimestampStart + betweenStart + yearHE + nameHE + betweendEnd + styleHETimestampEnd;
+        const yearHE = gregorianToHolocene(year);
+        const yearHEStringUnlocated = styleHETimestampStart + betweenStart + yearHE.value + nameHE + betweendEnd + styleHETimestampEnd;
 
         const locatedSpaceSperator = yearString ? SPACE_SEPARATOR : '';
         const yearHELocated = options.insertLocation === TIMESTAMP_LOCATION.AFTER
