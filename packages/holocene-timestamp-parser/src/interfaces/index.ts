@@ -6,7 +6,6 @@ import {
 
 
 
-
 export interface HoloceneTimestampParserOptions {
     insertLocation: keyof typeof TIMESTAMP_LOCATION;
     insertBetween: keyof typeof BETWEEN_SIGNS;
