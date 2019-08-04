@@ -13,7 +13,7 @@ export interface IHoloceneTimestampParser {
 
 export interface HoloceneTimestampParsed {
     HE: string;
-    matchedYears: Set<string>;
+    matchedYears: Set<number>;
 }
 
 

@@ -1,6 +1,5 @@
 import {
     SPACE_SEPARATOR,
-    WIKIPEDIA_HE_LINK,
     HE_ANCHOR,
 } from '../../constants';
 
@@ -35,33 +34,20 @@ class HoloceneTimestampParser implements IHoloceneTimestampParser {
     ): HoloceneTimestampParsed {
         // console.log(options);
         let HEString = this.data;
-        const matchedYears = new Set(['']);
-
+        const matchedYears: Set<number> = new Set();
         const textAdditions = this.computeAdditions(options);
-
-        /**
-         * this.data = 'words 2019 words 2017 words'
-         *
-         * split this.data at spaces,
-         * then for each word check if it is year
-         * if it is year replace and add to matchedYears
-         *
-         *
-         *
-         */
-
         const splitData = this.data.split(SPACE_SEPARATOR);
 
         splitData.forEach((word, index) => {
             const checkedYear = this.checkYear(word, index, splitData);
-            console.log(checkedYear);
+            // console.log(checkedYear);
 
             if (checkedYear && !matchedYears.has(checkedYear)) {
                 const {
                     year,
                     yearHEString,
                 } = this.composeHEString(checkedYear, options, textAdditions);
-                const yearRE = new RegExp(year, 'g');
+                const yearRE = new RegExp(year + '', 'g');
                 HEString = HEString.replace(yearRE, yearHEString);
                 matchedYears.add(year);
             }
@@ -77,7 +63,7 @@ class HoloceneTimestampParser implements IHoloceneTimestampParser {
     private checkYear = (
         word: string, index: number, splitData: string[],
     ) => {
-        let year;
+        let year: number | undefined;
 
         regExpRules.forEach(rule => {
             // console.log(rule);
@@ -145,7 +131,7 @@ class HoloceneTimestampParser implements IHoloceneTimestampParser {
     }
 
     private composeHEString = (
-        year: string,
+        year: number,
         options: Partial<HoloceneTimestampParserOptions>,
         textAdditions: any,
     ) => {
@@ -159,7 +145,7 @@ class HoloceneTimestampParser implements IHoloceneTimestampParser {
 
         const yearString = options.replaceTimestamp ? '' : year;
 
-        const yearHE = parseInt(year) + 10000;
+        const yearHE = year + 10000;
         const yearHEStringUnlocated = styleHETimestampStart + betweenStart + yearHE + nameHE + betweendEnd + styleHETimestampEnd;
 
         const locatedSpaceSperator = yearString ? SPACE_SEPARATOR : '';
