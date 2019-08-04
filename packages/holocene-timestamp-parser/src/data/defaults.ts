@@ -10,7 +10,7 @@ import {
 
 
 
-export const defaultTextHEOptions: HoloceneTimestampParserOptions = {
+export const defaultParserOptions: HoloceneTimestampParserOptions = {
     insertLocation: TIMESTAMP_LOCATION.AFTER,
     insertBetween: BETWEEN_SIGNS.BRACKETS,
     styleHETimestamp: HE_TIMESTAMP_STYLES.REGULAR,

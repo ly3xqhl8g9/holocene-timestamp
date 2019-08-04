@@ -1,11 +1,11 @@
 import {
-    defaultTextHEOptions as _defaultTextHEOptions,
+    defaultParserOptions as _defaultParserOptions,
 } from './defaults';
 
 import _regExpRules from './regexp';
 
 
 
-export const defaultTextHEOptions = _defaultTextHEOptions;
+export const defaultParserOptions = _defaultParserOptions;
 
 export const regExpRules = _regExpRules;

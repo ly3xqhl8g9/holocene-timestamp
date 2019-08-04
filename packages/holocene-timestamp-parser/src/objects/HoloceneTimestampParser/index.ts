@@ -1,4 +1,5 @@
 import {
+    HE_TIMEBASE,
     SPACE_SEPARATOR,
     HE_ANCHOR,
 } from '../../constants';
@@ -16,7 +17,7 @@ import {
 } from '../../interfaces';
 
 import {
-    defaultTextHEOptions,
+    defaultParserOptions,
     regExpRules,
 } from '../../data';
 
@@ -30,19 +31,19 @@ class HoloceneTimestampParser implements IHoloceneTimestampParser {
     }
 
     public text(
-        options: Partial<HoloceneTimestampParserOptions> = defaultTextHEOptions
+        options: Partial<HoloceneTimestampParserOptions> = defaultParserOptions
     ): HoloceneTimestampParsed {
         // console.log(options);
         let HEString = this.data;
         const matchedYears: Set<number> = new Set();
         const textAdditions = this.computeAdditions(options);
-        const splitData = this.data.split(SPACE_SEPARATOR);
+        const tokenize = this.data.split(SPACE_SEPARATOR);
 
-        splitData.forEach((word, index) => {
-            const checkedYear = this.checkYear(word, index, splitData);
-            // console.log(checkedYear);
+        tokenize.forEach((word, index) => {
+            const checkedYear = this.checkYear(word, index, tokenize);
+            console.log(checkedYear);
 
-            if (checkedYear && !matchedYears.has(checkedYear)) {
+            if (checkedYear && !matchedYears.has(checkedYear.value)) {
                 const {
                     year,
                     yearHEString,
@@ -63,6 +64,11 @@ class HoloceneTimestampParser implements IHoloceneTimestampParser {
     private checkYear = (
         word: string, index: number, splitData: string[],
     ) => {
+        /**
+         * check year based on a nlp model
+         * check year based on an array of RegExp
+         */
+
         let year: number | undefined;
 
         regExpRules.forEach(rule => {
@@ -76,11 +82,18 @@ class HoloceneTimestampParser implements IHoloceneTimestampParser {
             // console.log(match);
 
             if (match) {
-                year = parseInt(match[2]) || undefined;
+                year = parseInt(match[2]);
             }
         });
 
-        return year;
+        if (year) {
+            return {
+                value: year,
+                type: 'AD',
+            };
+        }
+
+        return;
     }
 
     private computeAdditions = (
@@ -109,16 +122,13 @@ class HoloceneTimestampParser implements IHoloceneTimestampParser {
                 betweenStart = '/';
                 betweendEnd = '/';
                 break;
-            default:
-                betweenStart = '';
-                betweendEnd = '';
         }
 
         const styleHETimestampStart = options.styleHETimestamp === HE_TIMESTAMP_STYLES.ITALIC
             ? '<i>'
             : '';
         const styleHETimestampEnd = options.styleHETimestamp === HE_TIMESTAMP_STYLES.ITALIC
-            ? '<i>'
+            ? '</i>'
             : '';
 
         return {
@@ -131,7 +141,7 @@ class HoloceneTimestampParser implements IHoloceneTimestampParser {
     }
 
     private composeHEString = (
-        year: number,
+        year: any,
         options: Partial<HoloceneTimestampParserOptions>,
         textAdditions: any,
     ) => {
@@ -145,7 +155,12 @@ class HoloceneTimestampParser implements IHoloceneTimestampParser {
 
         const yearString = options.replaceTimestamp ? '' : year;
 
-        const yearHE = year + 10000;
+        let yearHE = 0;
+        if (year.type === 'AD') {
+            yearHE = year.value + HE_TIMEBASE;
+        } else {
+            yearHE = Math.abs(year.value - HE_TIMEBASE);
+        }
         const yearHEStringUnlocated = styleHETimestampStart + betweenStart + yearHE + nameHE + betweendEnd + styleHETimestampEnd;
 
         const locatedSpaceSperator = yearString ? SPACE_SEPARATOR : '';
@@ -156,7 +171,7 @@ class HoloceneTimestampParser implements IHoloceneTimestampParser {
         const yearHEString = yearHELocated;
 
         return {
-            year,
+            year: year.value,
             yearHE,
             yearHEString,
         }
