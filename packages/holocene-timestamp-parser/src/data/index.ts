@@ -1,27 +1,11 @@
 import {
-    HoloceneTimestampParserOptions
-} from '../interfaces';
+    defaultTextHEOptions as _defaultTextHEOptions,
+} from './defaults';
 
-import {
-    TIMESTAMP_LOCATION,
-    BETWEEN_SIGNS,
-    HE_TIMESTAMP_STYLES,
-} from '../enumerations';
+import _regExpRules from './regexp';
 
 
 
-export const defaultTextHEOptions: HoloceneTimestampParserOptions = {
-    insertLocation: TIMESTAMP_LOCATION.AFTER,
-    insertBetween: BETWEEN_SIGNS.NOTHING,
-    styleHETimestamp: HE_TIMESTAMP_STYLES.REGULAR,
-    linkHE: false,
-    removeHE: false,
-    replaceTimestamp: true,
-};
+export const defaultTextHEOptions = _defaultTextHEOptions;
 
-
-
-export const regExpRules = [
-    '\\s(\\d{4})\\s',
-    '\\s(\\d{3})\\s',
-];
+export const regExpRules = _regExpRules;
