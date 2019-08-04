@@ -26,14 +26,14 @@ export const gregorianToHolocene = (year: GregorianYear): HoloceneYear => {
         const value = HE_TIMEBASE - year.value;
         if (value > 0) {
             const holoceneYear: HoloceneYear = {
-                value,
+                value: value + 1,
                 type: HOLOCENE_YEAR_TYPES.HE,
             }
             return holoceneYear;
         }
 
         const holoceneYear: HoloceneYear = {
-            value,
+            value: Math.abs(value),
             type: HOLOCENE_YEAR_TYPES.BHE,
         }
         return holoceneYear;
@@ -46,11 +46,12 @@ export const holoceneToGregorian = (year: HoloceneYear): GregorianYear => {
         const value = year.value - HE_TIMEBASE;
         if (value < 0) {
             const gregorianYear: GregorianYear = {
-                value: Math.abs(value),
+                value: Math.abs(value) + 1,
                 type: GREGORIAN_YEAR_TYPES.BC,
             }
             return gregorianYear;
         }
+
         const gregorianYear: GregorianYear = {
             value,
             type: GREGORIAN_YEAR_TYPES.AD,
@@ -60,7 +61,7 @@ export const holoceneToGregorian = (year: HoloceneYear): GregorianYear => {
         const value = year.value + HE_TIMEBASE;
         const gregorianYear: GregorianYear = {
             value,
-            type: GREGORIAN_YEAR_TYPES.AD,
+            type: GREGORIAN_YEAR_TYPES.BC,
         }
         return gregorianYear;
     }
