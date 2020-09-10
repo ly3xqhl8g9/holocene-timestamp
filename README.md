@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="https://raw.githubusercontent.com/caveljan/holocene-timestamp/master/readme/logo.png" height="200px">
+    <img src="https://raw.githubusercontent.com/ly3xqhl8g9/holocene-timestamp/master/readme/logo.png" height="200px">
 </p>
 
 
@@ -7,7 +7,7 @@
     <a href="https://chrome.google.com/webstore/detail/holocene-epoch-addverter/fbdlbdcmaglfifdihlihdpnnnidnippp">
         <img src="https://img.shields.io/badge/chrome-v1.0.4-blue.svg?colorB=004F91&style=for-the-badge" alt="Chrome Version">
     </a>
-    <a href="https://github.com/caveljan/holocene-timestamp/blob/master/LICENSE">
+    <a href="https://github.com/ly3xqhl8g9/holocene-timestamp/blob/master/LICENSE">
         <img src="https://img.shields.io/badge/license-GPL%E2%80%933.0-blue.svg?colorB=492356&style=for-the-badge" alt="License">
     </a>
 </p>
@@ -37,21 +37,21 @@ e.g.
 
 ### HET on Wikipedia
 
-![Caesar](https://raw.githubusercontent.com/caveljan/holocene-timestamp/master/readme/caesar.jpg)
+![Caesar](https://raw.githubusercontent.com/ly3xqhl8g9/holocene-timestamp/master/readme/caesar.jpg)
 #### [Julius Caesar's Wikipedia page](https://en.wikipedia.org/wiki/Julius_Caesar) with *default* settings on HET.
 
 
-![Newton](https://raw.githubusercontent.com/caveljan/holocene-timestamp/master/readme/newton.jpg)
+![Newton](https://raw.githubusercontent.com/ly3xqhl8g9/holocene-timestamp/master/readme/newton.jpg)
 #### [Isaac Newton's Early Life Wikipedia page](https://en.wikipedia.org/wiki/Early_life_of_Isaac_Newton) with the Holocene Epoch timestamp inserted between *nothing*, HE mark *removed*, and webpage timestamps *replaced* by the HE timestamp.
 
 
 
 ### HET Options
 
-![Options](https://raw.githubusercontent.com/caveljan/holocene-timestamp/master/readme/options.gif)
+![Options](https://raw.githubusercontent.com/ly3xqhl8g9/holocene-timestamp/master/readme/options.gif)
 #### Options Menu
 
-![Popup](https://raw.githubusercontent.com/caveljan/holocene-timestamp/master/readme/popup.png)
+![Popup](https://raw.githubusercontent.com/ly3xqhl8g9/holocene-timestamp/master/readme/popup.png)
 #### Pop-up Menu
 
 
@@ -59,5 +59,5 @@ e.g.
 ### What is the Holocene Epoch?
 ###### [Holocene Epoch Wiki](https://en.wikipedia.org/wiki/Holocene)
 ###### [Holocene Calendar Wiki](https://en.wikipedia.org/wiki/Holocene_calendar)
-###### [Emiliani’s Proposal](https://github.com/caveljan/holocene-timestamp/blob/master/chrome/development/emiliani/emilianisproposal.pdf)
+###### [Emiliani’s Proposal](https://github.com/ly3xqhl8g9/holocene-timestamp/blob/master/chrome/development/emiliani/emilianisproposal.pdf)
 ###### [Kurzgesagt’s Summary](https://www.youtube.com/watch?v=czgOWmtGVGs)

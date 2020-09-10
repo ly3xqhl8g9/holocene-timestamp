@@ -14,10 +14,10 @@
     "files": [
         "dist"
     ],
-    "author": "Jan Cavel <mail@caveljan.com> (https://caveljan.com/)",
+    "author": "ly3xqhl8g9 <ly3xqhl8g9@plurid.com> (https://plurid.com)",
     "repository": {
         "type": "git",
-        "url": "https://github.com/caveljan/holocene-timestamp"
+        "url": "https://github.com/ly3xqhl8g9/holocene-timestamp"
     },
     "license": "MIT",
     "engines": {
