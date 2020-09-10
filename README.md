@@ -37,21 +37,21 @@ e.g.
 
 ### HET on Wikipedia
 
-![Caesar](https://raw.githubusercontent.com/ly3xqhl8g9/holocene-timestamp/master/readme/caesar.jpg)
+![Caesar](https://raw.githubusercontent.com/ly3xqhl8g9/holocene-timestamp/master/about/images/caesar.jpg)
 #### [Julius Caesar's Wikipedia page](https://en.wikipedia.org/wiki/Julius_Caesar) with *default* settings on HET.
 
 
-![Newton](https://raw.githubusercontent.com/ly3xqhl8g9/holocene-timestamp/master/readme/newton.jpg)
+![Newton](https://raw.githubusercontent.com/ly3xqhl8g9/holocene-timestamp/master/about/images/newton.jpg)
 #### [Isaac Newton's Early Life Wikipedia page](https://en.wikipedia.org/wiki/Early_life_of_Isaac_Newton) with the Holocene Epoch timestamp inserted between *nothing*, HE mark *removed*, and webpage timestamps *replaced* by the HE timestamp.
 
 
 
 ### HET Options
 
-![Options](https://raw.githubusercontent.com/ly3xqhl8g9/holocene-timestamp/master/readme/options.gif)
+![Options](https://raw.githubusercontent.com/ly3xqhl8g9/holocene-timestamp/master/about/images/options.gif)
 #### Options Menu
 
-![Popup](https://raw.githubusercontent.com/ly3xqhl8g9/holocene-timestamp/master/readme/popup.png)
+![Popup](https://raw.githubusercontent.com/ly3xqhl8g9/holocene-timestamp/master/about/images/popup.png)
 #### Pop-up Menu
 
 
