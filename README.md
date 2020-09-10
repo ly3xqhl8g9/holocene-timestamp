@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="https://raw.githubusercontent.com/ly3xqhl8g9/holocene-timestamp/master/readme/logo.png" height="200px">
+    <img src="https://raw.githubusercontent.com/ly3xqhl8g9/holocene-timestamp/master/about/images/logo.png" height="200px">
 </p>
 
 
