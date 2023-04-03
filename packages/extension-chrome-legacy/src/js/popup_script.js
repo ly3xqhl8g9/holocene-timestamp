@@ -167,10 +167,10 @@ function addHeText(insertBeforeParameter,
     }
 
 
-    var firstHeYear = '12017';
+    var firstHeYear = '12023';
     var secondHeYear = '9602'
 
-    var replaceStringFirstPageStamp = '2017';
+    var replaceStringFirstPageStamp = '2023';
     var replaceStringSecondPageStamp = '399 BC';
     var replaceStringFirstHE = startHoloceneStyle + startInsertBetween + firstHeYear + startHoloceneAnchor + holoceneHeMark + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
     console.log(replaceStringFirstHE);

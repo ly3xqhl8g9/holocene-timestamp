@@ -1,12 +1,12 @@
 {
-    "manifest_version" : 2,
+    "manifest_version" : 3,
     "name" : "Holocene Epoch Timestamp",
     "short_name" : "HET",
-    "description" : "Add the Holocene Epoch timestamp (2019 CE becomes 12019 HE) before or after the timestamps present on the webpage (or replace them).",
-    "version" : "1.0.4",
-    "author": "caveljan",
+    "description" : "Add the Holocene Epoch timestamp (2023 CE becomes 12023 HE) before or after the timestamps present on the webpage (or replace them).",
+    "version" : "1.0.5",
+    "author": "ly3xqhl8g9",
 
-    "browser_action" : {
+    "action" : {
         "default_title" : "Holocene Epoch Timestamp",
         "default_icon" : "icons/icon.png",
         "default_popup" : "popup.html"
@@ -20,18 +20,16 @@
     },
 
     "options_ui": {
-        "page": "options.html",
-        "chrome_style": true
+        "page": "options.html"
     },
 
-    "content_security_policy": "script-src 'self' https://ajax.googleapis.com; object-src 'self'",
     "incognito": "spanning",
 
     "content_scripts": [{
         "matches": ["<all_urls>"],
         "js": [
-            "/js/jquery-3.1.1.min.js",
-            "/js/contentscript.js"
+            "/jquery-3.1.1.min.js",
+            "/contentscript.js"
         ],
         "run_at": "document_end"
     }],
@@ -39,7 +37,10 @@
     "permissions": [
         "activeTab",
         "tabs",
-        "storage",
+        "storage"
+    ],
+
+    "host_permissions": [
         "<all_urls>"
     ]
 }

@@ -9,6 +9,12 @@ html, body {
     padding: 5px;
 }
 
+body {
+    color:white;
+    padding: 2rem;
+    background: linear-gradient(to right, rgb(29, 78, 144) 50%, rgb(12, 57, 87) 50%);
+}
+
 hr {
     margin-top: 15px;
     margin-bottom: 15px;
@@ -60,7 +66,7 @@ p {
 }
 
 a {
-    color: hsl(0, 0%, 0%);
+    color: #ccc;
 }
 
 a:link {

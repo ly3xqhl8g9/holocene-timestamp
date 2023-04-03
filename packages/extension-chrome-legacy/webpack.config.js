@@ -1,59 +1,156 @@
-const appName = 'state-share-image';
-
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
-const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
-
-
-const miniCssExtract = new MiniCssExtractPlugin({
-    filename: `./styles.css`,
-    disable: process.env.NODE_ENV === "development"
-});
+const webpack = require('webpack');
 const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 
 
-module.exports = {
-    mode: 'development',
-    // mode: 'production',
-    entry: './app.ts',
-    output: {
-        filename: 'script.js',
-        path: path.resolve(__dirname, 'pkg/')
+
+const DEVELOPMENT = 'development';
+const { NODE_ENV = DEVELOPMENT } = process.env;
+
+const outputPath = path.join(__dirname, 'distribution');
+
+
+const base = {
+    context: __dirname,
+    entry: {
+        contentscript: './src/js/contentscript.js',
+        popup: './src/js/popup_script.js',
+        options: './src/js/options.js',
     },
-    optimization: {
-        minimizer: [
-            new UglifyJsPlugin({
-                cache: true,
-                parallel: true,
-                sourceMap: true
-            }),
-            new OptimizeCSSAssetsPlugin({})
-        ]
-    },
-    plugins: [
-        miniCssExtract
-    ],
     resolve: {
-        extensions: [".ts", ".tsx", ".js"]
+        extensions: [".ts", ".tsx", ".js", ".jsx"]
+    },
+    output: {
+        path: outputPath,
+        filename: '[name].js',
     },
     module: {
         rules: [
             {
-                test: /\.scss$/,
-                use: [
-                    MiniCssExtractPlugin.loader,
-                    'css-loader',
-                    'postcss-loader',
-                    'sass-loader',
-                ],
+                test: /\.tsx?$/,
+                use: 'ts-loader',
+                exclude: /node_modules/,
             },
             {
-                test: /\.ts$/,
+                test: /\.css$/,
+                use: 'css-loader',
                 exclude: /node_modules/,
-                use: {
-                    loader: 'awesome-typescript-loader'
-                }
-            }
-        ]
-    }
+            },
+        ],
+    },
+    plugins: [
+        new CopyPlugin({
+            patterns: [
+                { from: './src/manifest.json', to: 'manifest.json' },
+                { from: './src/js/jquery-3.1.1.min.js', to: 'jquery-3.1.1.min.js' },
+                { from: './src/icons', to: 'icons' },
+                { from: './src/css', to: 'css' },
+            ],
+        }),
+        new HtmlWebpackPlugin({
+            template: './src/popup.html',
+            chunks: ['popup'],
+            filename: 'popup.html',
+        }),
+        new HtmlWebpackPlugin({
+            template: './src/options.html',
+            chunks: ['options'],
+            filename: 'options.html',
+        }),
+        new webpack.DefinePlugin({
+            'process.env': {
+                NODE_ENV: JSON.stringify(NODE_ENV),
+            },
+        }),
+    ],
 };
+
+
+const development = {
+    ...base,
+    mode: 'development',
+    devtool: false,
+};
+
+
+const production = {
+    ...base,
+    mode: 'production',
+    plugins: [
+        ...base.plugins,
+        new webpack.LoaderOptionsPlugin({
+            minimize: true,
+            debug: false,
+        }),
+    ],
+}
+
+
+if (NODE_ENV === DEVELOPMENT) {
+    module.exports = development;
+} else {
+    module.exports = production;
+}
+
+
+
+
+
+// const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+// const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+// const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
+
+
+// const miniCssExtract = new MiniCssExtractPlugin({
+//     filename: `./styles.css`,
+//     // disable: process.env.NODE_ENV === "development"
+// });
+// const path = require('path');
+
+
+// module.exports = {
+//     // mode: 'development',
+//     mode: 'production',
+//     entry: './app.ts',
+//     output: {
+//         filename: 'script.js',
+//         path: path.resolve(__dirname, 'pkg/')
+//     },
+//     optimization: {
+//         minimizer: [
+//             new UglifyJsPlugin({
+//                 cache: true,
+//                 parallel: true,
+//                 sourceMap: true
+//             }),
+//             new OptimizeCSSAssetsPlugin({})
+//         ]
+//     },
+//     plugins: [
+//         miniCssExtract
+//     ],
+//     resolve: {
+//         extensions: [".ts", ".tsx", ".js"]
+//     },
+//     module: {
+//         rules: [
+//             {
+//                 test: /\.scss$/,
+//                 use: [
+//                     MiniCssExtractPlugin.loader,
+//                     'css-loader',
+//                     'postcss-loader',
+//                     'sass-loader',
+//                 ],
+//             },
+//             {
+//                 test: /\.ts$/,
+//                 exclude: /node_modules/,
+//                 use: {
+//                     loader: 'awesome-typescript-loader'
+//                 }
+//             }
+//         ]
+//     }
+// };
