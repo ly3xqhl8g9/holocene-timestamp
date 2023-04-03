@@ -11,16 +11,11 @@
     "scripts": {
         "clear": "rm -rf ./distribution",
         "build.development": "pnpm clear && NODE_ENV=development webpack",
-        "build": "pnpm clear && NODE_ENV=production webpack",
-        "test": "jest ./test/unit/",
-        "test:coverage": "open ./coverage/index.html",
-        "watch": "webpack --watch"
+        "build": "pnpm clear && NODE_ENV=production webpack"
     },
     "devDependencies": {
         "copy-webpack-plugin": "^11.0.0",
         "html-webpack-plugin": "^5.5.0",
-        "jest": "^29.5.0",
-        "jest-cli": "^29.5.0",
         "webpack": "^5.77.0",
         "webpack-cli": "^5.0.1"
     }
