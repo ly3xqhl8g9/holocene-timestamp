@@ -15,7 +15,7 @@ const base = {
     context: __dirname,
     entry: {
         contentscript: './src/js/contentscript.js',
-        popup: './src/js/popup_script.js',
+        popup: './src/js/popup.js',
         options: './src/js/options.js',
     },
     resolve: {
@@ -46,6 +46,7 @@ const base = {
                 { from: './src/js/jquery-3.1.1.min.js', to: 'jquery-3.1.1.min.js' },
                 { from: './src/icons', to: 'icons' },
                 { from: './src/css', to: 'css' },
+                { from: './src/emiliani', to: 'emiliani' },
             ],
         }),
         new HtmlWebpackPlugin({
