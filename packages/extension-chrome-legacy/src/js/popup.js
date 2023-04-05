@@ -1,7 +1,7 @@
 chrome.storage.sync.get(['activeOptions', 'insertBefore', 'insertBetween', 'holoceneStyle', 'holoceneAnchor', 'holoceneHeRemove','holoceneReplace'], function(element) {
-    if (element['activeOptions'] == 'off') {
+    if (element['activeOptions'] == 'off' || element['activeOptions'] == undefined) {
         document.getElementById('extensionOff').setAttribute("checked", "checked");
-        document.getElementById('popupTitle').textContent = "The Holocene Epoch Addverter is";
+        document.getElementById('popupTitle').textContent = "The Holocene Epoch Timestamp is";
         document.getElementById('radioButtonOff').style.background = "rgb(12, 57, 87)";
         document.getElementById('radioButtonOnWiki').style.background = "linear-gradient(to right, rgb(29, 78, 144) 50%, rgb(12, 57, 87) 50%)";
         document.getElementById('radioButtonOnSite').style.background = "linear-gradient(to right, rgb(29, 78, 144) 50%, rgb(12, 57, 87) 50%)";
@@ -9,17 +9,18 @@ chrome.storage.sync.get(['activeOptions', 'insertBefore', 'insertBetween', 'holo
     } else {
         if (element['activeOptions'] == 'onWiki') {
             document.getElementById('extensionOnWiki').setAttribute("checked", "checked");
-            document.getElementById('popupTitle').textContent = "The Holocene Epoch Addverter is active";
+            document.getElementById('popupTitle').textContent = "The Holocene Epoch Timestamp is active";
             document.getElementById('radioButtonOnWiki').style.background = "rgb(12, 57, 87)";
             document.getElementById('radioButtonOnSite').style.background = "linear-gradient(to right, rgb(29, 78, 144) 50%, rgb(12, 57, 87) 50%)";
             document.getElementById('radioButtonOff').style.background = "linear-gradient(to right, rgb(29, 78, 144) 50%, rgb(12, 57, 87) 50%)";
         } else if (element['activeOptions'] == 'onSite') {
             document.getElementById('extensionOnSite').setAttribute("checked", "checked");
-            document.getElementById('popupTitle').textContent = "The Holocene Epoch Addverter is active";
+            document.getElementById('popupTitle').textContent = "The Holocene Epoch Timestamp is active";
             document.getElementById('radioButtonOnSite').style.background = "rgb(12, 57, 87)";
             document.getElementById('radioButtonOnWiki').style.background = "linear-gradient(to right, rgb(29, 78, 144) 50%, rgb(12, 57, 87) 50%)";
             document.getElementById('radioButtonOff').style.background = "linear-gradient(to right, rgb(29, 78, 144) 50%, rgb(12, 57, 87) 50%)";
         }
+
         addHeText(element['insertBefore'],
                   element['insertBetween'],
                   element['holoceneStyle'],
@@ -33,7 +34,7 @@ chrome.storage.sync.get(['activeOptions', 'insertBefore', 'insertBetween', 'holo
 function extensionIsOnWiki () {
     chrome.storage.sync.set({activeOptions: 'onWiki'});
     document.getElementById('extensionOnWiki').setAttribute("checked", "checked");
-    document.getElementById('popupTitle').textContent = "The Holocene Epoch Addverter is active";
+    document.getElementById('popupTitle').textContent = "The Holocene Epoch Timestamp is active";
     document.getElementById('radioButtonOnWiki').style.background = "rgb(12, 57, 87)";
     document.getElementById('radioButtonOnSite').style.background = "linear-gradient(to right, rgb(29, 78, 144) 50%, rgb(12, 57, 87) 50%)";
     document.getElementById('radioButtonOff').style.background = "linear-gradient(to right, rgb(29, 78, 144) 50%, rgb(12, 57, 87) 50%)";
@@ -58,7 +59,7 @@ document.getElementById('radioButtonOnWiki').addEventListener('click', function(
 function extensionIsOnSite () {
     chrome.storage.sync.set({activeOptions: 'onSite'});
     document.getElementById('extensionOnWiki').setAttribute("checked", "checked");
-    document.getElementById('popupTitle').textContent = "The Holocene Epoch Addverter is active";
+    document.getElementById('popupTitle').textContent = "The Holocene Epoch Timestamp is active";
     document.getElementById('radioButtonOnSite').style.background = "rgb(12, 57, 87)";
     document.getElementById('radioButtonOnWiki').style.background = "linear-gradient(to right, rgb(29, 78, 144) 50%, rgb(12, 57, 87) 50%)";
     document.getElementById('radioButtonOff').style.background = "linear-gradient(to right, rgb(29, 78, 144) 50%, rgb(12, 57, 87) 50%)";
@@ -83,7 +84,7 @@ document.getElementById('radioButtonOnSite').addEventListener('click', function(
 function extensionIsOff () {
     chrome.storage.sync.set({activeOptions: 'off'});
     document.getElementById('extensionOff').setAttribute("checked", "checked");
-    document.getElementById('popupTitle').textContent = "The Holocene Epoch Addverter is";
+    document.getElementById('popupTitle').textContent = "The Holocene Epoch Timestamp is";
     document.getElementById('radioButtonOff').style.background = "rgb(12, 57, 87)";
     document.getElementById('radioButtonOnWiki').style.background = "linear-gradient(to right, rgb(29, 78, 144) 50%, rgb(12, 57, 87) 50%)";
     document.getElementById('radioButtonOnSite').style.background = "linear-gradient(to right, rgb(29, 78, 144) 50%, rgb(12, 57, 87) 50%)";
@@ -102,12 +103,12 @@ document.getElementById('adjustOptions').addEventListener('click', function(ev) 
 })
 
 
-function addHeText(insertBeforeParameter,
-                   insertBetweenParameter,
-                   holoceneStyleParameter,
-                   holoceneAnchorParameter,
-                   holoceneHeRemoveParameter,
-                   holoceneReplaceParameter) {
+function addHeText(insertBeforeParameter = 'after',
+                   insertBetweenParameter = 'brackets',
+                   holoceneStyleParameter = 'regular',
+                   holoceneAnchorParameter = 'yesAnchor',
+                   holoceneHeRemoveParameter = 'noRemove',
+                   holoceneReplaceParameter = 'noReplace') {
     if (insertBeforeParameter == 'before') {
         var insertBefore = true;
     } else if (insertBeforeParameter == 'after') {
@@ -173,7 +174,7 @@ function addHeText(insertBeforeParameter,
     var replaceStringFirstPageStamp = '2023';
     var replaceStringSecondPageStamp = '399 BC';
     var replaceStringFirstHE = startHoloceneStyle + startInsertBetween + firstHeYear + startHoloceneAnchor + holoceneHeMark + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
-    console.log(replaceStringFirstHE);
+    // console.log(replaceStringFirstHE);
     var replaceStringSecondHE = startHoloceneStyle + startInsertBetween + secondHeYear + startHoloceneAnchor + holoceneHeMark + endHoloceneAnchor + endInsertBetween + endHoloceneStyle;
 
     if (!holoceneReplace) {

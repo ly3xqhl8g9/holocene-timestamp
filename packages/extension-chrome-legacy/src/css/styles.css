@@ -19,8 +19,9 @@ h1 {
 #extTitle {
     text-align:center;
     padding: 0;
-    margin: 15px 0px;
+    margin: 15px auto;
     margin-top: 20px;
+    max-width: 210px;
 }
 
 
@@ -39,7 +40,7 @@ fieldset {
 #extensionActive {
     margin: 0 auto;
     margin-top: 20px;
-    margin-left: 109px;
+    margin-left: 79px;
     text-align: left;
 }
 
@@ -70,7 +71,7 @@ label {
 
 #underFormTable {
     margin: 0 auto;
-    margin-left: 83px;
+    margin-left: 53px;
 }
 
 .leftTable {

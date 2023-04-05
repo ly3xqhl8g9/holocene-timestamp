@@ -1,16 +1,14 @@
 /* OPTIONS */
 
 html {
-    margin: auto;
-    width: 500px;
-}
-
-html, body {
-    padding: 5px;
+    margin: 0;
+    width: 450px;
+    background: rgb(12, 57, 87);
 }
 
 body {
-    color:white;
+    margin: 0;
+    color: white;
     padding: 2rem;
     background: linear-gradient(to right, rgb(29, 78, 144) 50%, rgb(12, 57, 87) 50%);
 }
@@ -50,7 +48,7 @@ h1 {
 }
 
 .spanDefault {
-    color: hsl(0, 0%, 50%);
+    color: #69a3ff;
 }
 
 fieldset {
@@ -66,7 +64,7 @@ p {
 }
 
 a {
-    color: #ccc;
+    color: #69a3ff;
 }
 
 a:link {
