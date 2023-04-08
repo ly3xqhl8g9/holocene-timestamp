@@ -1,4 +1,25 @@
 chrome.storage.sync.get(['activeOptions', 'insertBefore', 'insertBetween', 'holoceneStyle', 'holoceneAnchor', 'holoceneHeRemove','holoceneReplace'], function(element) {
+    if(
+        element['activeOptions'] == null
+        || element['insertBefore'] == null
+        || element['insertBetween'] == null
+        || element['holoceneStyle'] == null
+        || element['holoceneAnchor'] == null
+        || element['holoceneHeRemove'] == null
+        || element['holoceneReplace'] == null
+    ) {
+        // set defatuls
+        chrome.storage.sync.set({
+            activeOptions: 'onWiki',
+            insertBefore: 'after',
+            insertBetween: 'brackets',
+            holoceneStyle: 'regular',
+            holoceneAnchor: 'yesAnchor',
+            holoceneHeRemove: 'noRemove',
+            holoceneReplace: 'noReplace'
+        }, function() {});
+    }
+
     if (element['activeOptions'] == 'off' || element['activeOptions'] == undefined) {
         document.getElementById('extensionOff').setAttribute("checked", "checked");
         document.getElementById('popupTitle').textContent = "The Holocene Epoch Timestamp is";
