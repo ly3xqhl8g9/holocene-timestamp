@@ -16,7 +16,7 @@ Environment: macOS ARM64, Node **24.22.0**, pnpm **11.3.0**, TypeScript **6.0.3*
 | `pnpm package` | Passed: all manifest assets, single script loading per interface page, permissions, and ZIP round trip validated |
 | ZIP reproducibility | Identical output for UTC and Europe/Bucharest packaging timestamps |
 | Independent ZIP inspection | Passed: CRC, 15 assets, manifest, permissions, checksum, and byte-for-byte match with the production build |
-| Frozen dependency installation | Passed from the local public-package cache; registry archive integrity verified |
+| Fresh frozen dependency installation | Passed in a separate workspace with `pnpm install --offline --frozen-lockfile`: all 318 supply-chain checks passed using authentic npm publication metadata and cached public package archives |
 | `pnpm test:e2e --list` | Five browser scenarios discovered; discovery is not an execution pass |
 | `pnpm test:e2e --max-failures=1` | Blocked before extension loading: required Chromium executable missing; one infrastructure failure, four scenarios not run |
 | `git diff --check` | Passed |
@@ -59,6 +59,16 @@ The checks also confirmed no nested anchors on the inspected Wikipedia/BBC pages
 Live BBC search testing caught another parser bug: the letters “ce” inside “since” could be consumed as a CE prefix, preventing the following date from matching. The same failure was reproduced directly with seven expressions before fixing prefix word boundaries. Ten regression checks were added, including genuine prefix/suffix era cases. The exact live BBC headings passed after rebuilding and reloading the extension.
 
 The manifest description, popup preview, and options example now use `2027` / `12027`. The six interface tests, type checking, linting, and production build passed for this copy update. The unpacked test folder was refreshed and checked byte-for-byte against the latest ZIP.
+
+## CI dependency-policy correction — 18 October 2026
+
+The first GitHub Actions run rejected `schema-utils@4.6.0` and `watchpack@2.6.2` because they were less than 24 hours old. The earlier cached local install did not reproduce the fresh-CI policy check. The failure was subsequently reproduced in a separate workspace with the same pnpm version and authentic npm publication metadata.
+
+The lockfile now selects `schema-utils@4.5.0` and `watchpack@2.6.1`, both within Webpack's declared dependency ranges. Replaying the original CI cutoff against all 318 lockfile entries reports the original two violations before the change and none afterward. A fresh frozen install then passed all 318 checks and installed successfully. The 24-hour policy remains enabled with no package exclusions or trusted-lockfile bypass. Obsolete pnpm settings were replaced with `pmOnFail` and `allowBuilds`.
+
+That verification also exposed a timing bug in `test:bundle`: it waited for one early example and could assert later examples before their conversion batch ran. The smoke check now waits for each expected result. A controlled one-block-per-batch reproduction fails with the old check and passes with the corrected check.
+
+All 573 tests, type checking, linting, and the production builds passed after the dependency correction. The rebuilt ZIP is byte-for-byte identical to the version tested in Chrome. The remote Actions workflow still needs to run after these changes are pushed; no remote CI pass is claimed here.
 
 ## Browser checks still required
 

@@ -2,8 +2,15 @@ packages:
   - packages/extension-chrome-legacy
   - packages/holocene-timestamp-parser
 
-managePackageManagerVersions: false
-onlyBuiltDependencies:
-  - '@parcel/watcher'
-  - esbuild
-  - unrs-resolver
+pmOnFail: error
+minimumReleaseAge: 1440
+
+# Keep the build on releases that passed the release-age policy when 1.1.0 was prepared.
+overrides:
+  schema-utils: 4.5.0
+  watchpack: 2.6.1
+
+allowBuilds:
+  '@parcel/watcher': true
+  esbuild: true
+  unrs-resolver: true

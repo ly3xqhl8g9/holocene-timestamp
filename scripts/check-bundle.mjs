@@ -23,11 +23,10 @@ try {
   dom.window.chrome = { storage: { sync: { get: async () => values } } };
   dom.window.eval(script);
   const document = dom.window.document;
-  const wait = async predicate => {
+  const wait = async (predicate, failure = 'Production bundle did not finish converting.') => {
     const deadline = Date.now() + 5000;
-    while (!predicate()) { if (Date.now() > deadline) throw new Error('Production bundle did not finish converting.'); await new Promise(resolve => setTimeout(resolve, 10)); }
+    while (!predicate()) { if (Date.now() > deadline) throw new Error(failure); await new Promise(resolve => setTimeout(resolve, 10)); }
   };
-  await wait(() => document.querySelector('#forskning').textContent === '17.10.12026');
   for (const [id, expected] of [
     ['range', '11958–12009. Born in 11958; died in 12009.'],
     ['english', 'August 29, 11958 – June 25, 12009'],
@@ -36,7 +35,10 @@ try {
     ['audit', '7975-10-17; 2345 BHE; 12026-10; 10/17/12026; 1 January 7975; 2026-10-170'],
     ['already-he', '1960-årene HE; 19th century HE; 2026-10-17 HE'],
     ['bbc-since', 'Netflix to shed 1,000 jobs in steepest cuts since 12022'],
-  ]) assert.equal(document.getElementById(id).textContent, expected, id);
+  ]) {
+    await wait(() => document.getElementById(id).textContent === expected, `${id} did not become ${JSON.stringify(expected)}.`);
+    assert.equal(document.getElementById(id).textContent, expected, id);
+  }
   assert.equal(document.getElementById('bbc').getAttribute('datetime'), '2026-10-17');
   document.querySelector('main').innerHTML = '<p id="new">470–399 <b>BC</b></p>';
   await wait(() => document.getElementById('new').textContent === '9531–9602');

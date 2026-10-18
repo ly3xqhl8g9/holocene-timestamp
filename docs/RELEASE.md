@@ -15,6 +15,8 @@ pnpm package
 
 `pnpm check` runs the unit/DOM suite, type checking, linting, both production builds, production-bundle DOM smoke checks, and the actual unpacked extension in Playwright's bundled Chromium. Browser tests use deterministic page fixtures and temporary profiles; they require no publisher credentials or local web server. On Linux, use `pnpm exec playwright install --with-deps chromium`.
 
+The workspace explicitly retains pnpm's [24-hour minimum release age](https://pnpm.io/settings/dependency-resolution#minimumreleaseage). The build dependencies `schema-utils@4.5.0` and `watchpack@2.6.1` are pinned to mature versions compatible with Webpack. Dependency updates should preserve this policy and regenerate the lockfile with pnpm 11.3.0 using registry metadata that includes publication timestamps. Native dependency build permissions use pnpm 11's `allowBuilds` setting.
+
 The extension declares Chrome 95 as its minimum version because its [promise-based storage API](https://developer.chrome.com/docs/extensions/reference/api/storage/StorageArea) requires it. No additional permissions are requested.
 
 The extension's package version controls the generated manifest version. `pnpm package` builds from source, checks all manifest references, script loading, permissions, and ZIP contents, and creates a reproducible archive and SHA-256 file under `release/`. Do not upload an older cached `distribution` directory.

@@ -13,3 +13,5 @@
 - Preserve saved preferences when settings are missing; fix popup selection, dependent options, saving, reset, and formatting previews.
 - Replace the jQuery conversion engine with a shared TypeScript parser and DOM renderer. Keep the existing interface and permissions.
 - Add automated conversion, DOM, settings, formatting, build, and browser tests, plus reproducible ZIP packaging.
+- Keep pnpm's 24-hour dependency release-age protection enabled, pin mature build dependencies, and migrate build permissions to pnpm 11 settings.
+- Wait for every batched conversion in the production-bundle smoke check to prevent timing-dependent CI failures.
