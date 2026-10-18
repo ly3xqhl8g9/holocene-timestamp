@@ -1,44 +1,44 @@
 {
-    "manifest_version" : 3,
-    "name" : "Holocene Epoch Timestamp",
-    "short_name" : "HET",
-    "description" : "Add the Holocene Epoch timestamp (2023 CE becomes 12023 HE) before or after the timestamps present on the webpage (or replace them).",
-    "version" : "1.0.6",
-    "author": "ly3xqhl8g9",
-
-    "action" : {
-        "default_title" : "Holocene Epoch Timestamp",
-        "default_icon" : "icons/icon.png",
-        "default_popup" : "popup.html"
-    },
-
-    "icons" : {
-        "16" : "icons/icon16.png",
-        "32" : "icons/icon32.png",
-        "48" : "icons/icon48.png",
-        "128" : "icons/icon128.png"
-    },
-
-    "options_ui": {
-        "page": "options.html"
-    },
-
-    "incognito": "spanning",
-
-    "content_scripts": [{
-        "matches": ["<all_urls>"],
-        "js": [
-            "/jquery-3.1.1.min.js",
-            "/contentscript.js"
-        ],
-        "run_at": "document_end"
-    }],
-
-    "permissions": [
-        "storage"
-    ],
-
-    "host_permissions": [
+  "manifest_version": 3,
+  "name": "Holocene Epoch Timestamp",
+  "short_name": "HET",
+  "description": "Add the Holocene Epoch timestamp (2027 CE becomes 12027 HE) before or after the timestamps present on the webpage (or replace them).",
+  "version": "1.1.0",
+  "minimum_chrome_version": "95",
+  "author": "ly3xqhl8g9",
+  "action": {
+    "default_title": "Holocene Epoch Timestamp",
+    "default_icon": "icons/icon.png",
+    "default_popup": "popup.html"
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "options_ui": {
+    "page": "options.html"
+  },
+  "incognito": "spanning",
+  "content_scripts": [
+    {
+      "matches": [
         "<all_urls>"
-    ]
+      ],
+      "js": [
+        "contentscript.js"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "permissions": [
+    "storage"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  }
 }

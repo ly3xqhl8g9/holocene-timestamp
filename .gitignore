@@ -120,6 +120,12 @@ temp/
 
 # End of https://www.gitignore.io/api/node
 
+# Workspace verification and release artifacts
+.cache/
+release/
+test-results/
+playwright-report/
+
 
 
 ### SECRETS ###

@@ -1,0 +1,9 @@
+packages:
+  - packages/extension-chrome-legacy
+  - packages/holocene-timestamp-parser
+
+managePackageManagerVersions: false
+onlyBuiltDependencies:
+  - '@parcel/watcher'
+  - esbuild
+  - unrs-resolver

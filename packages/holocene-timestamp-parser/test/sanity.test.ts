@@ -1,17 +1,7 @@
 import HoloceneTimestampParser from '../src';
 
-
-
-/**
-* Holocene Timestamp Parser sanity test
-*/
-xdescribe('Holocene Timestamp Parser sanity test', () => {
-    it('works if true is truthy', () => {
-        expect(true).toBeTruthy();
-    });
-
-    it('HoloceneTimestampParser is instantiable', () => {
-        expect(new HoloceneTimestampParser('2019 year'))
-            .toBeInstanceOf(HoloceneTimestampParser);
-    });
+it('retains the public constructor and default formatted output', () => {
+  const result = new HoloceneTimestampParser('the year 2019').text();
+  expect(result.HE).toContain('2019 [12019 ');
+  expect(result.matchedYears).toEqual(new Set([2019]));
 });

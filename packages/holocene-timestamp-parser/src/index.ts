@@ -45,3 +45,7 @@ export const gregorianToHolocene = _gregorianToHolocene;
 
 
 export default HoloceneTimestampParser;
+
+export { parseDateSpans, applyTextEdits, formatDateSpan, parserOptions, delimiters, visibleEra, convertedText } from './parser';
+export type { DateSpan, DateContext, TextEdit } from './parser';
+export { HE_LINK_WIKIPEDIA } from './constants';

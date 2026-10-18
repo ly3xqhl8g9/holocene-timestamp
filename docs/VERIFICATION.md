@@ -1,0 +1,75 @@
+# 1.1.0 verification
+
+**Partially verified.** The code, production bundles, release archive, and live-site checks using the installed extension in Chrome passed the checks below. The reported conversions were checked in insertion and replacement modes. The separate automated browser suite, fresh-install behavior in a browser, and popup/options visual comparison remain pending. Run `pnpm check` in an unrestricted development environment or CI and complete the remaining browser review in `RELEASE.md` before submitting the ZIP.
+
+## Executed checks
+
+Environment: macOS ARM64, Node **24.22.0**, pnpm **11.3.0**, TypeScript **6.0.3**.
+
+| Check | Result |
+| --- | --- |
+| `pnpm test` | **573 passed**, 10 files; no skipped or focused tests |
+| `pnpm typecheck` | Passed |
+| `pnpm lint` | Passed |
+| `pnpm build` | Passed: extension, parser UMD/ES module, and type declarations |
+| `pnpm test:bundle` | Passed: production content script and public UMD library in a DOM simulation |
+| `pnpm package` | Passed: all manifest assets, single script loading per interface page, permissions, and ZIP round trip validated |
+| ZIP reproducibility | Identical output for UTC and Europe/Bucharest packaging timestamps |
+| Independent ZIP inspection | Passed: CRC, 15 assets, manifest, permissions, checksum, and byte-for-byte match with the production build |
+| Frozen dependency installation | Passed from the local public-package cache; registry archive integrity verified |
+| `pnpm test:e2e --list` | Five browser scenarios discovered; discovery is not an execution pass |
+| `pnpm test:e2e --max-failures=1` | Blocked before extension loading: required Chromium executable missing; one infrastructure failure, four scenarios not run |
+| `git diff --check` | Passed |
+| Existing CSS, icons, and bundled proposal PDF | Unchanged from the repository's initial revision |
+| Documentation references | All 11 relative links resolve across the 9 active/archival documents reviewed |
+| Installed extension in Chrome | Passed: live English/Norwegian Wikipedia, Socrates, BBC, and forskning.no checks described below |
+
+The tests cover the reported years/ranges/decades and BC cleanup, calendar boundaries, month/day preservation, abbreviated and mixed-era ranges, Wikipedia citations within a date range, all 128 formatting combinations across three expression types, dynamic DOM updates, existing links, excluded content, malicious-looking text remaining text, saved preferences, storage failures, and popup/options behavior.
+
+Before replacing the shared parser implementation, 9 of its 14 initial regression checks failed. Separate reproduction of the shipping engine confirmed the overlapping range-replacement bug, lost final tokens, unsupported Norwegian decades, and BC context lost across inline elements.
+
+## Follow-up audit — 18 October 2026
+
+The second implementation review added 37 regression checks and fixed additional cases reproduced before the fixes:
+
+- ISO dates with a trailing BC/BCE label retain their month, day, and time. Prefix eras on numeric and named dates are removed and used in the arithmetic.
+- Grouped historical years and ranges, such as `12,345 BC`, convert as complete numbers. Unlabelled grouped quantities remain unchanged.
+- ISO month dates and month/year slash dates take precedence over year ranges. Valid US slash dates convert; invalid numeric dates and multi-part identifiers are protected.
+- Existing HE/BHE numeric dates, Norwegian decades, and centuries remain unchanged.
+- Original text is restored when a region becomes editable or hidden, then converted again if the region becomes eligible.
+- Explicitly undefined optional parser properties retain their defaults.
+
+The production-bundle smoke check now exercises these date formats and editing transitions. The Playwright fixtures also include them, but that automated suite is still pending. README links were repaired, the [current architecture](ARCHITECTURE.md) was documented, and old implementation notes were marked archival.
+
+## Installed-extension live checks — 18 October 2026
+
+After the owner installed the unpacked 1.1.0 extension, public pages were tested in their Chrome browser. English/Norwegian Wikipedia and Socrates first passed with insertion after the original, brackets, and HE shown. The owner then saved the reporter's replacement settings: on every site, replace original dates, remove HE, and no delimiters. The extension was reloaded after the final fix and these checks passed again:
+
+| Live page | Confirmed replacement behavior |
+| --- | --- |
+| [English Michael Jackson](https://en.wikipedia.org/wiki/Michael_Jackson) | Birth/death years become `11958` and `12009`; English decades convert. Hidden ISO birth metadata stays `1958-08-29`. |
+| [Norwegian Michael Jackson](https://no.wikipedia.org/wiki/Michael_Jackson) | `11958–12009`, `11960-årene`, and `11980-årene`; the visible year link changes while its original `/wiki/1958` destination is retained. |
+| [Socrates](https://en.wikipedia.org/wiki/Socrates) | Intro becomes `9531 – 9602`; infobox birth/death dates become `9531` and `9602`; obsolete BC labels are removed from those dates. |
+| [BBC article](https://www.bbc.com/news/articles/c639mm1mrv94o) | Publication date becomes `26 September 12026`; `2022` in the headline and article becomes `12022`. The original `datetime` attribute is retained. |
+| [BBC search results](https://www.bbc.com/search?q=2022) | Years after “since” become `12022`/`12002`, publication dates use `12026`, and the quantity `1,000 jobs` stays unchanged. |
+| [forskning.no article](https://www.forskning.no/planeter-universet/hva-skjer-hvis-jorda-slutter-a-rotere/2722817) | Publication date becomes `18.10.12026 - 00:01`; the original ISO `datetime` attribute is retained. |
+
+The checks also confirmed no nested anchors on the inspected Wikipedia/BBC pages. BBC's search controls remained interactive and a typed `2022` stayed unchanged in the search input. Screenshots of Norwegian Wikipedia in insertion mode, Socrates in replacement mode, and the BBC article in replacement mode were inspected for readable dates and intact page layout. These are live page checks, not a claim that the separate Playwright suite passed.
+
+Live BBC search testing caught another parser bug: the letters “ce” inside “since” could be consumed as a CE prefix, preventing the following date from matching. The same failure was reproduced directly with seven expressions before fixing prefix word boundaries. Ten regression checks were added, including genuine prefix/suffix era cases. The exact live BBC headings passed after rebuilding and reloading the extension.
+
+The manifest description, popup preview, and options example now use `2027` / `12027`. The six interface tests, type checking, linting, and production build passed for this copy update. The unpacked test folder was refreshed and checked byte-for-byte against the latest ZIP.
+
+## Browser checks still required
+
+A cached Chromium launch terminated before loading the extension (`SIGABRT`, with host permission errors during cleanup). The follow-up audit reran `pnpm test:e2e --max-failures=1`; it stopped before browser launch because the matching `chromium-1248` executable was missing from the default cache. Browser URL policy also blocked local fixtures and `chrome://extensions`. Public-page testing became possible after the owner installed the unpacked extension and performed the required reload/settings clicks; those results are recorded above.
+
+The included Playwright suite uses a temporary profile, loads the real production extension, and supplies deterministic HTTPS page fixtures without a local server. It tests the reported date shapes, fresh installation, popup/options persistence, activation scope, dynamic content, link interaction, and responsiveness on a large article. CI is configured to run this suite after installing Playwright's matching Chromium build. Fresh installation, the full popup/options flow and visual comparison, activation/off modes, and the fixture stress tests still require that remaining browser verification.
+
+## Release artifact
+
+`release/holocene-epoch-timestamp-1.1.0.zip` contains only the 15 extension assets, with `manifest.json` at the archive root. Its adjacent `.sha256` file records the exact digest. Source maps, dependencies, tests, old scripts, and jQuery are excluded.
+
+The manifest remains V3, retains the existing name and permissions, and declares Chrome 95 or newer for the promise-based storage API. The original seven synchronized preference keys are retained. The extension UI has no design changes; its existing control behavior and markup defects were repaired. A visual browser comparison is still required.
+
+The archive is a release candidate until the remaining browser checks pass. No Chrome Web Store upload/publication or separate npm publication was performed. Submission is the owner's chosen next step.

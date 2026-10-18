@@ -1,95 +1,27 @@
-const webpack = require('webpack');
-const path = require('path');
+const path = require('node:path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
+const { version } = require('./package.json');
 
-
-
-const DEVELOPMENT = 'development';
-const { NODE_ENV = DEVELOPMENT } = process.env;
-
-const outputPath = path.join(__dirname, 'distribution');
-
-
-const base = {
-    context: __dirname,
-    entry: {
-        contentscript: './src/js/contentscript.js',
-        popup: './src/js/popup.js',
-        options: './src/js/options.js',
-    },
-    resolve: {
-        extensions: [".ts", ".tsx", ".js", ".jsx"]
-    },
-    output: {
-        path: outputPath,
-        filename: '[name].js',
-    },
-    module: {
-        rules: [
-            {
-                test: /\.tsx?$/,
-                use: 'ts-loader',
-                exclude: /node_modules/,
-            },
-            {
-                test: /\.css$/,
-                use: 'css-loader',
-                exclude: /node_modules/,
-            },
-        ],
-    },
-    plugins: [
-        new CopyPlugin({
-            patterns: [
-                { from: './src/manifest.json', to: 'manifest.json' },
-                { from: './src/js/jquery-3.1.1.min.js', to: 'jquery-3.1.1.min.js' },
-                { from: './src/icons', to: 'icons' },
-                { from: './src/css', to: 'css' },
-                { from: './src/emiliani', to: 'emiliani' },
-            ],
-        }),
-        new HtmlWebpackPlugin({
-            template: './src/popup.html',
-            chunks: ['popup'],
-            filename: 'popup.html',
-        }),
-        new HtmlWebpackPlugin({
-            template: './src/options.html',
-            chunks: ['options'],
-            filename: 'options.html',
-        }),
-        new webpack.DefinePlugin({
-            'process.env': {
-                NODE_ENV: JSON.stringify(NODE_ENV),
-            },
-        }),
-    ],
-};
-
-
-const development = {
-    ...base,
-    mode: 'development',
-    devtool: false,
-};
-
-
-const production = {
-    ...base,
-    mode: 'production',
-    plugins: [
-        ...base.plugins,
-        new webpack.LoaderOptionsPlugin({
-            minimize: true,
-            debug: false,
-        }),
-    ],
-}
-
-
-if (NODE_ENV === DEVELOPMENT) {
-    module.exports = development;
-} else {
-    module.exports = production;
-}
+module.exports = (_environment, argv) => ({
+  context: __dirname,
+  mode: argv.mode ?? 'development',
+  target: ['web', 'es2022'],
+  entry: { contentscript: './src/contentscript.ts', background: './src/background.ts', popup: './src/popup.ts', options: './src/options.ts' },
+  output: { path: path.join(__dirname, 'distribution'), filename: '[name].js', clean: true },
+  devtool: argv.mode === 'production' ? false : 'source-map',
+  resolve: {
+    extensions: ['.ts', '.js'],
+    alias: { 'holocene-timestamp-parser': path.resolve(__dirname, '../holocene-timestamp-parser/src/index.ts') },
+  },
+  module: { rules: [{ test: /\.ts$/, use: { loader: 'ts-loader', options: { transpileOnly: true, configFile: path.resolve(__dirname, '../../tsconfig.json') } }, exclude: /node_modules/ }] },
+  plugins: [
+    new CopyPlugin({ patterns: [
+      { from: 'src/manifest.json', to: 'manifest.json', transform(content) { const manifest = JSON.parse(content.toString()); manifest.version = version; return JSON.stringify(manifest, null, 2) + '\n'; } },
+      { from: 'src/icons', to: 'icons' },
+      { from: 'src/css', to: 'css' },
+      { from: 'src/emiliani', to: 'emiliani' },
+    ] }),
+    ...['popup', 'options'].map(name => new HtmlWebpackPlugin({ template: `src/${name}.html`, chunks: [name], filename: `${name}.html`, scriptLoading: 'defer' })),
+  ],
+});

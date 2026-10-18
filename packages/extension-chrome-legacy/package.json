@@ -1,22 +1,28 @@
 {
-    "name": "holocene-timestamp-chome",
-    "version": "1.0.6",
-    "description": "Chrome Extension for Holocene Epoch Timestamp",
-    "author": "ly3xqhl8g9 <ly3xqhl8g9@plurid.com> (https://plurid.com)",
-    "license": "MIT",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/ly3xqhl8g9/holocene-timestamp"
-    },
-    "scripts": {
-        "clear": "rm -rf ./distribution",
-        "build.development": "pnpm clear && NODE_ENV=development webpack",
-        "build": "pnpm clear && NODE_ENV=production webpack"
-    },
-    "devDependencies": {
-        "copy-webpack-plugin": "^11.0.0",
-        "html-webpack-plugin": "^5.5.0",
-        "webpack": "^5.77.0",
-        "webpack-cli": "^5.0.1"
-    }
+  "name": "holocene-timestamp-chrome",
+  "version": "1.1.0",
+  "description": "Chrome Extension for Holocene Epoch Timestamp",
+  "author": "ly3xqhl8g9 <ly3xqhl8g9@plurid.com> (https://plurid.com)",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ly3xqhl8g9/holocene-timestamp"
+  },
+  "scripts": {
+    "dev": "webpack --mode development --watch",
+    "build.development": "webpack --mode development",
+    "build": "webpack --mode production"
+  },
+  "devDependencies": {
+    "copy-webpack-plugin": "14.0.0",
+    "html-webpack-plugin": "5.6.8",
+    "ts-loader": "9.6.2",
+    "typescript": "6.0.3",
+    "webpack": "5.112.0",
+    "webpack-cli": "7.2.3"
+  },
+  "private": true,
+  "dependencies": {
+    "holocene-timestamp-parser": "workspace:*"
+  }
 }

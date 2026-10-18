@@ -5,7 +5,7 @@
 
 <p align="center">
     <a href="https://chrome.google.com/webstore/detail/holocene-epoch-addverter/fbdlbdcmaglfifdihlihdpnnnidnippp">
-        <img src="https://img.shields.io/badge/chrome-v1.0.4-blue.svg?colorB=004F91&style=for-the-badge" alt="Chrome Version">
+        <img src="https://img.shields.io/badge/chrome-v1.0.6-blue.svg?colorB=004F91&style=for-the-badge" alt="Published Chrome Version">
     </a>
     <a href="https://github.com/ly3xqhl8g9/holocene-timestamp/blob/master/LICENSE">
         <img src="https://img.shields.io/badge/license-DEL-blue.svg?colorB=492356&style=for-the-badge" alt="License">
@@ -18,6 +18,23 @@
 
 Browser extension to add the Holocene Epoch timestamp before or after the timestamps read from the webpage (or replace them).
 
+The 1.1.0 source update preserves the existing interface and preferences while replacing the conversion engine. The shipping extension lives in `packages/extension-chrome-legacy`; `packages/holocene-timestamp-parser` supplies its shared parser. The older React prototype and website are outside the active pnpm workspace.
+
+### Development and releases
+
+Use Node 24 LTS (24.15 or newer) and pnpm 11.3.0:
+
+```sh
+pnpm install --frozen-lockfile
+pnpm exec playwright install chromium
+pnpm check
+pnpm package
+```
+
+`pnpm dev` watches the extension. Load `packages/extension-chrome-legacy/distribution` as an unpacked Chrome extension. Reload the extension after code changes and reload pages after preference changes.
+
+`pnpm test`, `pnpm typecheck`, `pnpm lint`, `pnpm build`, and `pnpm test:e2e` are also available individually. Packaging creates a validated ZIP and checksum under `release/`. See [architecture](docs/ARCHITECTURE.md), [release instructions](docs/RELEASE.md), [verification evidence](docs/VERIFICATION.md), and the [changelog](CHANGELOG.md).
+
 The Holocene Epoch sets the first year of the "recent" epoch 10,000 years before the first Anno Domini (1 AD) for a better grasping of the development of the human civilization. The proposal was advanced by Cesare Emiliani in 1993 (see more in the What is the Holocene Epoch? section below).
 
 e.g.
@@ -29,9 +46,9 @@ e.g.
 <br>
 
 
-+ [HET on Wikipedia](#hea-on-wikipedia)
-+ [HET Options](#hea-options)
-+ [What is the Holocene Epoch?](#what-is-the-holocene-epoch?)
++ [HET on Wikipedia](#het-on-wikipedia)
++ [HET Options](#het-options)
++ [What is the Holocene Epoch?](#what-is-the-holocene-epoch)
 
 
 
@@ -59,5 +76,5 @@ e.g.
 ### What is the Holocene Epoch?
 ###### [Holocene Epoch Wiki](https://en.wikipedia.org/wiki/Holocene)
 ###### [Holocene Calendar Wiki](https://en.wikipedia.org/wiki/Holocene_calendar)
-###### [Emiliani’s Proposal](https://github.com/ly3xqhl8g9/holocene-timestamp/blob/master/chrome/development/emiliani/emilianisproposal.pdf)
+###### [Emiliani’s Proposal](packages/extension-chrome-legacy/src/emiliani/emilianisproposal.pdf)
 ###### [Kurzgesagt’s Summary](https://www.youtube.com/watch?v=czgOWmtGVGs)

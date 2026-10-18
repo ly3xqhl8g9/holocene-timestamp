@@ -24,7 +24,7 @@ export const gregorianToHolocene = (year: GregorianYear): HoloceneYear => {
         return holoceneYear;
     } else {
         const value = HE_TIMEBASE - year.value;
-        if (value > 0) {
+        if (value >= 0) {
             const holoceneYear: HoloceneYear = {
                 value: value + 1,
                 type: HOLOCENE_YEAR_TYPES.HE,

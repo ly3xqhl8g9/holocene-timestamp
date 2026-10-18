@@ -17,11 +17,10 @@ describe('Holocene Timestamp Parser basic', () => {
         replaceTimestamp: true,
     };
 
-    it.only('converts with default options', () => {
+    it('converts with default options', () => {
         const data = 'words_one 2019 words_two 2017 words_three 2019 words_four';
         const hetParser = new HoloceneTimestampParser(data);
         const text = hetParser.text(cleanOptions);
-        console.log(text.HE);
         expect(text.HE).toBe('words_one 12019 HE words_two 12017 HE words_three 12019 HE words_four');
     });
 
@@ -43,7 +42,7 @@ describe('Holocene Timestamp Parser basic', () => {
         const data = 'words 100 words'
         const hetParser = new HoloceneTimestampParser(data);
         const text = hetParser.text();
-        expect(text.HE).toBe(`words 100 [10100 ${HE_ANCHOR}] words`);
+        expect(text.HE).toBe('words 100 words');
     });
 
     it('converts with options: replaceTimestamp false', () => {

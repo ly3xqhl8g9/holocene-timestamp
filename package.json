@@ -1,0 +1,32 @@
+{
+  "name": "holocene-timestamp-workspace",
+  "version": "1.1.0",
+  "private": true,
+  "packageManager": "pnpm@11.3.0",
+  "engines": { "node": ">=24.15.0" },
+  "scripts": {
+    "dev": "pnpm --filter holocene-timestamp-chrome dev",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "build": "pnpm --filter holocene-timestamp-parser build && pnpm --filter holocene-timestamp-chrome build",
+    "test:e2e": "playwright test",
+    "test:bundle": "node scripts/check-bundle.mjs",
+    "check": "pnpm test && pnpm typecheck && pnpm lint && pnpm build && pnpm test:bundle && pnpm test:e2e",
+    "package": "pnpm build && node scripts/package.mjs"
+  },
+  "devDependencies": {
+    "@eslint/js": "10.0.1",
+    "@playwright/test": "1.64.1",
+    "@types/chrome": "0.3.5",
+    "@types/node": "24.19.2",
+    "eslint": "10.13.0",
+    "fflate": "0.8.3",
+    "jsdom": "30.1.3",
+    "typescript": "6.0.3",
+    "typescript-eslint": "8.71.2",
+    "vite": "8.3.4",
+    "vitest": "5.0.5"
+  }
+}

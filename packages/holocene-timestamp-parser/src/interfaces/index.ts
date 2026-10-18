@@ -21,7 +21,7 @@ export interface GregorianYear {
 
 
 export interface IHoloceneTimestampParser {
-    text: (options: Partial<HoloceneTimestampParserOptions>) => HoloceneTimestampParsed | undefined;
+    text: (options?: Partial<HoloceneTimestampParserOptions>) => HoloceneTimestampParsed | undefined;
 }
 
 
