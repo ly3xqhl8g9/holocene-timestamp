@@ -1,10 +1,10 @@
 # 1.1.0 verification
 
-**Partially verified.** The code, production bundles, release archive, and live-site checks using the installed extension in Chrome passed the checks below. The reported conversions were checked in insertion and replacement modes. The owner's latest GitHub Actions log reports four of five automated browser scenarios passing, including fresh installation and options persistence; the large-article scenario failed because its fixture was decoded incorrectly. The fixture correction described below still needs a complete browser rerun. Popup/options visual comparison also remains pending. Run `pnpm check` in an unrestricted development environment or CI and complete the remaining browser review in `RELEASE.md` before submitting the ZIP.
+**Automated verification passed.** [GitHub Actions run #3](https://github.com/ly3xqhl8g9/holocene-timestamp/actions/runs/39119401360), at commit `8535dd7c21d2048f07a1eab4bc1134032b43a5d5`, completed successfully on 18 October 2026. The workflow and job results were independently confirmed through GitHub's API: frozen installation, Chromium installation, `pnpm check`, packaging, and artifact uploads all passed. This completes the automated browser verification that was previously pending. Local checks and live-site testing of the installed extension in insertion and replacement modes also passed. The owner's final popup/options appearance review and Store submission remain manual steps in `RELEASE.md`.
 
 ## Executed checks
 
-Environment: macOS ARM64, Node **24.22.0**, pnpm **11.3.0**, TypeScript **6.0.3**.
+Local environment: macOS ARM64, Node **24.22.0**, pnpm **11.3.0**, TypeScript **6.0.3**. CI environment: Ubuntu, Node **24**, pnpm **11.3.0**, and Playwright's bundled Chromium.
 
 | Check | Result |
 | --- | --- |
@@ -18,9 +18,11 @@ Environment: macOS ARM64, Node **24.22.0**, pnpm **11.3.0**, TypeScript **6.0.3*
 | Independent ZIP inspection | Passed: CRC, 15 assets, manifest, permissions, checksum, and byte-for-byte match with the production build |
 | Fresh frozen dependency installation | Passed in a separate workspace with `pnpm install --offline --frozen-lockfile`: all 318 supply-chain checks passed using authentic npm publication metadata and cached public package archives |
 | `pnpm test:e2e --list` | Five browser scenarios discovered; discovery is not an execution pass |
-| `pnpm test:e2e --max-failures=1` | Blocked before extension loading: required Chromium executable missing; one infrastructure failure, four scenarios not run |
-| Owner-provided GitHub Actions log, `setup: package #2` | Four browser scenarios passed; the large-article fixture failed with corrupted Unicode punctuation |
+| Local `pnpm test:e2e --max-failures=1` | Blocked before extension loading: required Chromium executable missing; browser execution subsequently verified in CI |
+| Earlier owner-provided GitHub Actions log, `setup: package #2` | Four browser scenarios passed; the large-article fixture failed with corrupted Unicode punctuation, corrected before run #3 |
 | Corrected large-article fixture, production-bundle DOM simulation | Passed: UTF-8 wire bytes decoded correctly, all 2,000 paragraphs converted exactly, and the page timer ran between conversion batches; this is not a browser E2E pass |
+| GitHub Actions run #3, `pnpm check` | Passed: unit/DOM tests, type checking, lint, production builds, bundle smoke checks, and the full five-scenario Playwright suite |
+| GitHub Actions run #3, packaging and uploads | Passed: `pnpm package`, `holocene-epoch-timestamp` artifact, and `verification-evidence` artifact |
 | `git diff --check` | Passed |
 | Existing CSS, icons, and bundled proposal PDF | Unchanged from the repository's initial revision |
 | Documentation references | All 11 relative links resolve across the 9 active/archival documents reviewed |
@@ -41,7 +43,7 @@ The second implementation review added 37 regression checks and fixed additional
 - Original text is restored when a region becomes editable or hidden, then converted again if the region becomes eligible.
 - Explicitly undefined optional parser properties retain their defaults.
 
-The production-bundle smoke check now exercises these date formats and editing transitions. The Playwright scenario for these formats passed in the owner's subsequent CI log; the complete suite still needs a successful rerun after the fixture correction below. README links were repaired, the [current architecture](ARCHITECTURE.md) was documented, and old implementation notes were marked archival.
+The production-bundle smoke check now exercises these date formats and editing transitions. The complete Playwright suite subsequently passed in CI run #3 after the fixture correction below. README links were repaired, the [current architecture](ARCHITECTURE.md) was documented, and old implementation notes were marked archival.
 
 ## Installed-extension live checks — 18 October 2026
 
@@ -80,13 +82,13 @@ The failure was reproduced by decoding the actual UTF-8 fixture bytes with the s
 
 Every mocked HTML response now shares an explicit `text/html; charset=utf-8` content type. The large-article scenario also asserts `document.characterSet` is `UTF-8` before checking the converted result. A production-bundle DOM replay of the corrected wire-byte fixture converted all 2,000 paragraphs to the exact expected text and allowed the page timer to run between batches. All 573 tests, type checking, linting, production-bundle checks, and discovery of the five browser scenarios passed after the fixture change.
 
-No production source or release ZIP changed. The complete Playwright suite still needs a successful CI rerun; the local environment remains unable to launch Chromium. No fully passing remote workflow is claimed.
+No production source or release ZIP changed. The complete Playwright suite subsequently passed as part of `pnpm check` in CI run #3. The local environment remains unable to launch Chromium; its launch restrictions are separate from the successful CI browser execution.
 
-## Browser checks still required
+## Browser coverage and remaining manual review
 
 A cached Chromium launch terminated before loading the extension (`SIGABRT`, with host permission errors during cleanup). The follow-up audit reran `pnpm test:e2e --max-failures=1`; it stopped before browser launch because the matching `chromium-1248` executable was missing from the default cache. Browser URL policy also blocked local fixtures and `chrome://extensions`. Public-page testing became possible after the owner installed the unpacked extension and performed the required reload/settings clicks; those results are recorded above.
 
-The included Playwright suite uses a temporary profile, loads the real production extension, and supplies deterministic HTTPS page fixtures without a local server. It tests the reported date shapes, fresh installation, popup/options persistence, activation scope, dynamic content, link interaction, and responsiveness on a large article. CI is configured to run this suite after installing Playwright's matching Chromium build. The owner-provided CI log confirms the first four scenarios passed. A successful run of all five scenarios after the encoding correction and a popup/options visual comparison remain required.
+The included Playwright suite uses a temporary profile, loads the real production extension, and supplies deterministic HTTPS page fixtures without a local server. It tests the reported date shapes, fresh installation, popup/options persistence, activation scope, dynamic content, link interaction, and responsiveness on a large article. All five scenarios are included in the successful `pnpm check` step in [CI run #3's verify job](https://github.com/ly3xqhl8g9/holocene-timestamp/actions/runs/39119401360/job/117651722837). The owner's final popup/options appearance comparison remains a manual release check; automated behavior checks have passed.
 
 ## Release artifact
 
@@ -94,4 +96,4 @@ The included Playwright suite uses a temporary profile, loads the real productio
 
 The manifest remains V3, retains the existing name and permissions, and declares Chrome 95 or newer for the promise-based storage API. The original seven synchronized preference keys are retained. The extension UI has no design changes; its existing control behavior and markup defects were repaired. A visual browser comparison is still required.
 
-The archive is a release candidate until the remaining browser checks pass. No Chrome Web Store upload/publication or separate npm publication was performed. Submission is the owner's chosen next step.
+Automated release checks are complete. The owner's final visual review and Chrome Web Store submission are the remaining manual steps. No Chrome Web Store upload/publication or separate npm publication was performed. Submission is the owner's chosen next step.
