@@ -1,6 +1,6 @@
 # 1.1.0 verification
 
-**Partially verified.** The code, production bundles, release archive, and live-site checks using the installed extension in Chrome passed the checks below. The reported conversions were checked in insertion and replacement modes. The separate automated browser suite, fresh-install behavior in a browser, and popup/options visual comparison remain pending. Run `pnpm check` in an unrestricted development environment or CI and complete the remaining browser review in `RELEASE.md` before submitting the ZIP.
+**Partially verified.** The code, production bundles, release archive, and live-site checks using the installed extension in Chrome passed the checks below. The reported conversions were checked in insertion and replacement modes. The owner's latest GitHub Actions log reports four of five automated browser scenarios passing, including fresh installation and options persistence; the large-article scenario failed because its fixture was decoded incorrectly. The fixture correction described below still needs a complete browser rerun. Popup/options visual comparison also remains pending. Run `pnpm check` in an unrestricted development environment or CI and complete the remaining browser review in `RELEASE.md` before submitting the ZIP.
 
 ## Executed checks
 
@@ -19,6 +19,8 @@ Environment: macOS ARM64, Node **24.22.0**, pnpm **11.3.0**, TypeScript **6.0.3*
 | Fresh frozen dependency installation | Passed in a separate workspace with `pnpm install --offline --frozen-lockfile`: all 318 supply-chain checks passed using authentic npm publication metadata and cached public package archives |
 | `pnpm test:e2e --list` | Five browser scenarios discovered; discovery is not an execution pass |
 | `pnpm test:e2e --max-failures=1` | Blocked before extension loading: required Chromium executable missing; one infrastructure failure, four scenarios not run |
+| Owner-provided GitHub Actions log, `setup: package #2` | Four browser scenarios passed; the large-article fixture failed with corrupted Unicode punctuation |
+| Corrected large-article fixture, production-bundle DOM simulation | Passed: UTF-8 wire bytes decoded correctly, all 2,000 paragraphs converted exactly, and the page timer ran between conversion batches; this is not a browser E2E pass |
 | `git diff --check` | Passed |
 | Existing CSS, icons, and bundled proposal PDF | Unchanged from the repository's initial revision |
 | Documentation references | All 11 relative links resolve across the 9 active/archival documents reviewed |
@@ -39,7 +41,7 @@ The second implementation review added 37 regression checks and fixed additional
 - Original text is restored when a region becomes editable or hidden, then converted again if the region becomes eligible.
 - Explicitly undefined optional parser properties retain their defaults.
 
-The production-bundle smoke check now exercises these date formats and editing transitions. The Playwright fixtures also include them, but that automated suite is still pending. README links were repaired, the [current architecture](ARCHITECTURE.md) was documented, and old implementation notes were marked archival.
+The production-bundle smoke check now exercises these date formats and editing transitions. The Playwright scenario for these formats passed in the owner's subsequent CI log; the complete suite still needs a successful rerun after the fixture correction below. README links were repaired, the [current architecture](ARCHITECTURE.md) was documented, and old implementation notes were marked archival.
 
 ## Installed-extension live checks — 18 October 2026
 
@@ -68,13 +70,23 @@ The lockfile now selects `schema-utils@4.5.0` and `watchpack@2.6.1`, both within
 
 That verification also exposed a timing bug in `test:bundle`: it waited for one early example and could assert later examples before their conversion batch ran. The smoke check now waits for each expected result. A controlled one-block-per-batch reproduction fails with the old check and passes with the corrected check.
 
-All 573 tests, type checking, linting, and the production builds passed after the dependency correction. The rebuilt ZIP is byte-for-byte identical to the version tested in Chrome. The remote Actions workflow still needs to run after these changes are pushed; no remote CI pass is claimed here.
+All 573 tests, type checking, linting, and the production builds passed after the dependency correction. The rebuilt ZIP is byte-for-byte identical to the version tested in Chrome. The owner's subsequent Actions log confirms dependency installation, build, and bundle checks now pass; the browser suite reached the separate fixture failure described below.
+
+## CI fixture-encoding correction — 18 October 2026
+
+The owner's `setup: package #2` Actions log reports four browser scenarios passing: reported date shapes, fresh-install defaults and popup/options persistence, activation scope, and dynamic content with link interaction. The remaining large-article test received `1958â€“2009` instead of `1958–2009`. Its mocked HTTP response declared `text/html` without a character encoding or HTML charset declaration.
+
+The failure was reproduced by decoding the actual UTF-8 fixture bytes with the same missing charset: the DOM chose Windows-1252 and the production parser produced the exact corrupted output from CI. Declaring UTF-8 restores both range endpoints. This also revealed an independent fixture expectation mismatch: the parser treats the period in `BC.` as part of the era abbreviation, as its existing dotted-era tests specify. The stress fixture now uses `(470–399 BC).`, retaining an unambiguous sentence period outside the era label while still checking full BC range conversion and label removal.
+
+Every mocked HTML response now shares an explicit `text/html; charset=utf-8` content type. The large-article scenario also asserts `document.characterSet` is `UTF-8` before checking the converted result. A production-bundle DOM replay of the corrected wire-byte fixture converted all 2,000 paragraphs to the exact expected text and allowed the page timer to run between batches. All 573 tests, type checking, linting, production-bundle checks, and discovery of the five browser scenarios passed after the fixture change.
+
+No production source or release ZIP changed. The complete Playwright suite still needs a successful CI rerun; the local environment remains unable to launch Chromium. No fully passing remote workflow is claimed.
 
 ## Browser checks still required
 
 A cached Chromium launch terminated before loading the extension (`SIGABRT`, with host permission errors during cleanup). The follow-up audit reran `pnpm test:e2e --max-failures=1`; it stopped before browser launch because the matching `chromium-1248` executable was missing from the default cache. Browser URL policy also blocked local fixtures and `chrome://extensions`. Public-page testing became possible after the owner installed the unpacked extension and performed the required reload/settings clicks; those results are recorded above.
 
-The included Playwright suite uses a temporary profile, loads the real production extension, and supplies deterministic HTTPS page fixtures without a local server. It tests the reported date shapes, fresh installation, popup/options persistence, activation scope, dynamic content, link interaction, and responsiveness on a large article. CI is configured to run this suite after installing Playwright's matching Chromium build. Fresh installation, the full popup/options flow and visual comparison, activation/off modes, and the fixture stress tests still require that remaining browser verification.
+The included Playwright suite uses a temporary profile, loads the real production extension, and supplies deterministic HTTPS page fixtures without a local server. It tests the reported date shapes, fresh installation, popup/options persistence, activation scope, dynamic content, link interaction, and responsiveness on a large article. CI is configured to run this suite after installing Playwright's matching Chromium build. The owner-provided CI log confirms the first four scenarios passed. A successful run of all five scenarios after the encoding correction and a popup/options visual comparison remain required.
 
 ## Release artifact
 

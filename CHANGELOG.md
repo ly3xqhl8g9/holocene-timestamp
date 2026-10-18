@@ -15,3 +15,4 @@
 - Add automated conversion, DOM, settings, formatting, build, and browser tests, plus reproducible ZIP packaging.
 - Keep pnpm's 24-hour dependency release-age protection enabled, pin mature build dependencies, and migrate build permissions to pnpm 11 settings.
 - Wait for every batched conversion in the production-bundle smoke check to prevent timing-dependent CI failures.
+- Declare UTF-8 for browser-test HTML fixtures so Unicode date ranges reach the extension intact; keep stress-test sentence punctuation outside the era abbreviation.

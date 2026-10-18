@@ -2,6 +2,7 @@ import { test, expect } from './fixtures';
 import { defaults } from '../packages/extension-chrome-legacy/src/settings';
 
 const plain = { ...defaults, activeOptions: 'onSite', insertBetween: 'nothing', holoceneReplace: 'yesReplace', holoceneHeRemove: 'yesRemove' };
+const htmlContentType = 'text/html; charset=utf-8';
 const example = `<!doctype html><html lang="en"><meta charset="utf-8"><title>Date conversion fixtures</title><body>
   <p id="norwegian">Michael Jackson (1958–2009), i 1960-årene og 1980-årene.</p>
   <p id="english"><span class="bday" hidden>1958-08-29</span>August 29, 1958 – June 25, 2009</p>
@@ -17,7 +18,7 @@ const example = `<!doctype html><html lang="en"><meta charset="utf-8"><title>Dat
 test('production extension fixes every reported date shape', async ({ context, page, worker }) => {
   const errors: string[] = []; page.on('pageerror', error => errors.push(error.message));
   await worker.evaluate(values => chrome.storage.sync.set(values), plain);
-  await context.route('https://fixture.het.test/**', route => route.fulfill({ contentType: 'text/html; charset=utf-8', body: example }));
+  await context.route('https://fixture.het.test/**', route => route.fulfill({ contentType: htmlContentType, body: example }));
   await page.goto('https://fixture.het.test/article');
   await expect(page.locator('#norwegian')).toHaveText('Michael Jackson (11958–12009), i 11960-årene og 11980-årene.');
   await expect(page.locator('#english')).toHaveText('1958-08-29August 29, 11958 – June 25, 12009');
@@ -53,7 +54,7 @@ test('fresh-install defaults, popup selection, and options persistence work', as
   await expect(page.locator('#nothing')).toBeChecked(); await expect(page.locator('#before')).toBeDisabled();
   await page.screenshot({ path: testInfo.outputPath('options-saved.png'), fullPage: true });
 
-  await context.route('https://fixture.het.test/**', route => route.fulfill({ contentType: 'text/html', body: '<p>2026</p>' }));
+  await context.route('https://fixture.het.test/**', route => route.fulfill({ contentType: htmlContentType, body: '<p>2026</p>' }));
   const article = await context.newPage(); await article.goto('https://fixture.het.test/'); await expect(article.locator('p')).toHaveText('12026');
   await page.locator('#btn-reset').click(); await expect(page.locator('#status-default')).toHaveText('Options are default.');
   await expect(page.locator('#onWiki')).toBeChecked(); await expect(page.locator('#noReplace')).toBeChecked();
@@ -61,7 +62,7 @@ test('fresh-install defaults, popup selection, and options persistence work', as
 
 test('Wikipedia mode checks the hostname and off mode stays inactive', async ({ context, page, worker }) => {
   await worker.evaluate(values => chrome.storage.sync.set(values), { ...plain, activeOptions: 'onWiki' });
-  await context.route('https://**/*', route => route.fulfill({ contentType: 'text/html', body: '<p>2026</p>' }));
+  await context.route('https://**/*', route => route.fulfill({ contentType: htmlContentType, body: '<p>2026</p>' }));
   await page.goto('https://en.wikipedia.org/fixture'); await expect(page.locator('p')).toHaveText('12026');
   await page.goto('https://wikipedia.org.attacker.het.test/fixture'); await expect(page.locator('p')).toHaveText('2026');
   await worker.evaluate(() => chrome.storage.sync.set({ activeOptions: 'off' }));
@@ -70,7 +71,7 @@ test('Wikipedia mode checks the hostname and off mode stays inactive', async ({ 
 
 test('dynamic content is converted once and remains interactive', async ({ context, page, worker }) => {
   await worker.evaluate(values => chrome.storage.sync.set(values), plain);
-  await context.route('https://fixture.het.test/**', route => route.fulfill({ contentType: 'text/html', body: '<p id="date">2026</p><main></main>' }));
+  await context.route('https://fixture.het.test/**', route => route.fulfill({ contentType: htmlContentType, body: '<p id="date">2026</p><main></main>' }));
   await page.goto('https://fixture.het.test/'); await expect(page.locator('#date')).toHaveText('12026');
   await page.evaluate(() => {
     document.querySelector('main')!.innerHTML = '<p><a id="year" href="#clicked">1958</a>–2009</p><p id="bc">470–399 <i>BC</i></p>';
@@ -91,9 +92,11 @@ test('dynamic content is converted once and remains interactive', async ({ conte
 
 test('a large article yields between batches', async ({ context, page, worker }) => {
   await worker.evaluate(values => chrome.storage.sync.set(values), plain);
-  const paragraphs = Array.from({ length: 2000 }, (_, index) => `<p id="p${index}">1958–2009, the 1960s, 470–399 BC.</p>`).join('');
-  await context.route('https://fixture.het.test/**', route => route.fulfill({ contentType: 'text/html', body: `<script>window.ticks=0;setInterval(()=>window.ticks++,0)</script>${paragraphs}` }));
+  // A period directly after BC is part of that era abbreviation; keep sentence punctuation outside it.
+  const paragraphs = Array.from({ length: 2000 }, (_, index) => `<p id="p${index}">1958–2009, the 1960s, (470–399 BC).</p>`).join('');
+  await context.route('https://fixture.het.test/**', route => route.fulfill({ contentType: htmlContentType, body: `<script>window.ticks=0;setInterval(()=>window.ticks++,0)</script>${paragraphs}` }));
   await page.goto('https://fixture.het.test/');
-  await expect(page.locator('#p1999')).toHaveText('11958–12009, the 11960s, 9531–9602.', { timeout: 20_000 });
+  expect(await page.evaluate(() => document.characterSet)).toBe('UTF-8');
+  await expect(page.locator('#p1999')).toHaveText('11958–12009, the 11960s, (9531–9602).', { timeout: 20_000 });
   expect(await page.evaluate(() => (window as unknown as { ticks: number }).ticks)).toBeGreaterThan(1);
 });
